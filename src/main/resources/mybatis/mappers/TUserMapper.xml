@@ -8,14 +8,12 @@
         <result column="username" property="username" />
         <result column="password" property="password" />
         <result column="email" property="email" />
-        <result column="created" property="created" />
-        <result column="valid" property="valid" />
-        <result column="permission" property="permission" />
+        <result column="permisson" property="permisson" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, password, email, created, valid, permission
+        id, username, password, email, permisson
     </sql>
 
 </mapper>

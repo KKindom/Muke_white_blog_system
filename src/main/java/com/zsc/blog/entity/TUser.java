@@ -1,7 +1,6 @@
 package com.zsc.blog.entity;
 
 import com.baomidou.mybatisplus.enums.IdType;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -20,17 +19,27 @@ public class TUser extends Model<TUser> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 用户id
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-    private String username;
-    private String password;
-    private String email;
-    private Date created;
-    private Integer valid;
     /**
-     * 权限
+     * 用户名
      */
-    private String permission;
+    private String username;
+    /**
+     * 用户密码加密后的
+     */
+    private String password;
+    /**
+     * 用户邮箱(用于找回密码)
+     */
+    private String email;
+    /**
+     * 用户权限  为admin和client
+     */
+    private String permisson;
 
 
     public Integer getId() {
@@ -65,28 +74,12 @@ public class TUser extends Model<TUser> {
         this.email = email;
     }
 
-    public Date getCreated() {
-        return created;
+    public String getPermisson() {
+        return permisson;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Integer getValid() {
-        return valid;
-    }
-
-    public void setValid(Integer valid) {
-        this.valid = valid;
-    }
-
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
+    public void setPermisson(String permisson) {
+        this.permisson = permisson;
     }
 
     @Override
@@ -101,9 +94,7 @@ public class TUser extends Model<TUser> {
         ", username=" + username +
         ", password=" + password +
         ", email=" + email +
-        ", created=" + created +
-        ", valid=" + valid +
-        ", permission=" + permission +
+        ", permisson=" + permisson +
         "}";
     }
 }

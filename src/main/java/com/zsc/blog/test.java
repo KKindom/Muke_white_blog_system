@@ -37,9 +37,9 @@ public class test {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUrl("jdbc:mysql://localhost:3306/kkindom_jeedatabase?serverTimezone=UTC&useSSL=false&characterEncoding=utf-8&useUnicode=true");
+        dsc.setUrl("jdbc:mysql://101.132.134.111:3306/Blog_Database?serverTimezone=UTC&useSSL=false&characterEncoding=utf-8&useUnicode=true");
         dsc.setUsername("root");
-        dsc.setPassword("123");
+        dsc.setPassword("1234");
         mpg.setDataSource(dsc);
 
         // 策略配置
@@ -47,7 +47,7 @@ public class test {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         //strategy.setTablePrefix(new String[] { "SYS_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] {"t_article","t_user"}); // 需要生成的表
+        strategy.setInclude(new String[] {"t_article","t_user","t_comment","t_statistic"}); // 需要生成的表
         mpg.setStrategy(strategy);
 
         // 包配置
