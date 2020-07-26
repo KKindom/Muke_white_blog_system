@@ -45,8 +45,8 @@ System.out.println("--------------------------");
 
         JSONObject jsonObject=new JSONObject();
         userUtil userUtil=new userUtil();
-        TUser userForBase=itUserService.selectById(username);
-        System.out.println(username);
+        TUser userForBase=itUserService.selectByname(username);
+        System.out.println(userForBase);
         if(userForBase==null){
             jsonObject.put("message","登录失败,用户不存在");
             return jsonObject;
