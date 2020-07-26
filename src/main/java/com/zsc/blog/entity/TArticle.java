@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author mff
- * @since 2020-07-25
+ * @since 2020-07-26
  */
 @TableName("t_article")
 public class TArticle extends Model<TArticle> {

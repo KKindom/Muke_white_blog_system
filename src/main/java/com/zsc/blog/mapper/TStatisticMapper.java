@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author mff
- * @since 2020-07-25
+ * @since 2020-07-26
  */
 public interface TStatisticMapper extends BaseMapper<TStatistic> {
 

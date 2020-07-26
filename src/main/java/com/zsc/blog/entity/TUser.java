@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author mff
- * @since 2020-07-25
+ * @since 2020-07-26
  */
 @TableName("t_user")
 public class TUser extends Model<TUser> {
@@ -40,6 +40,10 @@ public class TUser extends Model<TUser> {
      * 用户权限  为admin和client
      */
     private String permisson;
+    /**
+     * 用户头像 有一个默认的
+     */
+    private String profilephoto;
 
 
     public Integer getId() {
@@ -82,6 +86,14 @@ public class TUser extends Model<TUser> {
         this.permisson = permisson;
     }
 
+    public String getProfilephoto() {
+        return profilephoto;
+    }
+
+    public void setProfilephoto(String profilephoto) {
+        this.profilephoto = profilephoto;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -95,6 +107,7 @@ public class TUser extends Model<TUser> {
         ", password=" + password +
         ", email=" + email +
         ", permisson=" + permisson +
+        ", profilephoto=" + profilephoto +
         "}";
     }
 }

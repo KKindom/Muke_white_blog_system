@@ -9,11 +9,12 @@
         <result column="password" property="password" />
         <result column="email" property="email" />
         <result column="permisson" property="permisson" />
+        <result column="profilephoto" property="profilephoto" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, password, email, permisson
+        id, username, password, email, permisson, profilephoto
     </sql>
 
 </mapper>

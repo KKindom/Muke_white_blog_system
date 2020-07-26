@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.service.IService;
  * </p>
  *
  * @author mff
- * @since 2020-07-25
+ * @since 2020-07-26
  */
 public interface ITUserService extends IService<TUser> {
-    public TUser selectByname(String name);
+
 }

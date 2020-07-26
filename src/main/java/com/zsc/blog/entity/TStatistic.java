@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author mff
- * @since 2020-07-25
+ * @since 2020-07-26
  */
 @TableName("t_statistic")
 public class TStatistic extends Model<TStatistic> {

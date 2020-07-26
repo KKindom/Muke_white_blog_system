@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author mff
- * @since 2020-07-25
+ * @since 2020-07-26
  */
 @Service
 public class TStatisticServiceImpl extends ServiceImpl<TStatisticMapper, TStatistic> implements ITStatisticService {
