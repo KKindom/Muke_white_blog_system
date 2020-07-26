@@ -1,7 +1,7 @@
 package com.zsc.blog.mapper;
 
 import com.zsc.blog.entity.TStatistic;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>

@@ -1,11 +1,9 @@
 package com.zsc.blog.entity;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import java.time.LocalDate;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 /**
@@ -16,7 +14,6 @@ import java.io.Serializable;
  * @author mff
  * @since 2020-07-26
  */
-@TableName("t_article")
 public class TArticle extends Model<TArticle> {
 
     private static final long serialVersionUID = 1L;
@@ -26,35 +23,42 @@ public class TArticle extends Model<TArticle> {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
     /**
      * 文章标题
      */
     private String title;
+
     /**
      * 文章具体内容
      */
     private String content;
+
     /**
      * 发表时间
      */
-    private Date created;
+    private LocalDate created;
+
     /**
      * 修改时间
      */
-    private Date modified;
+    private LocalDate modified;
+
     /**
      * 文章分类
      */
     private String categories;
+
     /**
      * 文章标签
      */
     private String tags;
+
     /**
      * 是否允许评论
      */
-    @TableField("allow_comment")
-    private Integer allowComment;
+    private Boolean allowComment;
+
     /**
      * 文章缩略图
      */
@@ -85,19 +89,19 @@ public class TArticle extends Model<TArticle> {
         this.content = content;
     }
 
-    public Date getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 
-    public Date getModified() {
+    public LocalDate getModified() {
         return modified;
     }
 
-    public void setModified(Date modified) {
+    public void setModified(LocalDate modified) {
         this.modified = modified;
     }
 
@@ -117,11 +121,11 @@ public class TArticle extends Model<TArticle> {
         this.tags = tags;
     }
 
-    public Integer getAllowComment() {
+    public Boolean getAllowComment() {
         return allowComment;
     }
 
-    public void setAllowComment(Integer allowComment) {
+    public void setAllowComment(Boolean allowComment) {
         this.allowComment = allowComment;
     }
 

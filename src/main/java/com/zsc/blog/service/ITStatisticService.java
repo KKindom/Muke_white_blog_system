@@ -1,7 +1,7 @@
 package com.zsc.blog.service;
 
 import com.zsc.blog.entity.TStatistic;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>

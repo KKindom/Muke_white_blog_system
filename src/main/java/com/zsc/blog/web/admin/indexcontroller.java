@@ -6,6 +6,7 @@ import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.Utils.userUtil;
 import com.zsc.blog.config.UserLoginToken;
 import com.zsc.blog.entity.TUser;
+import com.zsc.blog.mapper.TUserMapper;
 import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITUserService;
 import org.jasypt.util.text.BasicTextEncryptor;
@@ -23,7 +24,7 @@ import java.util.List;
  * @author: Mr.Wang
  * @create: 2020-07-24 15:00
  **/
-@Controller
+@Controller("/user")
 public class indexcontroller {
     @Autowired
     ITArticleService itArticleService;
@@ -67,6 +68,20 @@ System.out.println("--------------------------");
         List<Object> list = new ArrayList<>();
         list.addAll(itUserService.selectList(null));
         list.add("asdasadada");
+
+
+        //加密密码
+//        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+//        textEncryptor.setPassword("password");
+//        String newPassword = textEncryptor.encrypt("123456");
+//        System.out.println(newPassword);
+//        TUser tUser=new TUser();
+//        tUser.setUsername("mff");
+//        tUser.setEmail("1184045779@qq.com");
+//        tUser.setPermisson("admin");
+//        tUser.setPassword(newPassword);
+//        itUserService.insert_user(tUser);
+//        System.out.println(tUser);
         return ResponseData.out(CodeEnum.SUCCESS, list);
     }
     @RequestMapping("/tt")

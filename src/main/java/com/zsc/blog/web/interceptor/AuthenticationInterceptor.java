@@ -65,7 +65,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 String dataString = verify.getClaim("data").asString();
                 userId =  JSON.parseObject(dataString).getString("id");
                 permission = JSON.parseObject(dataString).getString("permission");
-                Object obj = redisTemplate.opsForValue().get("Token_"+userId);
+                Object obj = redisTemplate.opsForValue().get("accessToken_"+userId);
                 if(obj==null){
 
                     TUser user = itUserService.selectById(userId);
@@ -74,7 +74,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                         //return false;
                         throw new MyException("用户不存在，请重新登录");
                     }
-                    redisTemplate.opsForValue().set("Token_"+userId,user);
+                    redisTemplate.opsForValue().set("accessToken_"+userId,user);
                 }
 
                 httpServletRequest.getServletContext().setAttribute("userId",userId);

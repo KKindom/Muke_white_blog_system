@@ -1,10 +1,8 @@
 package com.zsc.blog.entity;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 /**
@@ -15,26 +13,26 @@ import java.io.Serializable;
  * @author mff
  * @since 2020-07-26
  */
-@TableName("t_statistic")
 public class TStatistic extends Model<TStatistic> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
     /**
      * 关联的文章id
      */
-    @TableField("article_id")
     private Integer articleId;
+
     /**
      * 文章点击总量
      */
     private Integer hits;
+
     /**
      * 文章评论量
      */
-    @TableField("comments_num")
     private Integer commentsNum;
 
 

@@ -3,7 +3,7 @@ package com.zsc.blog.service.impl;
 import com.zsc.blog.entity.TArticle;
 import com.zsc.blog.mapper.TArticleMapper;
 import com.zsc.blog.service.ITArticleService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

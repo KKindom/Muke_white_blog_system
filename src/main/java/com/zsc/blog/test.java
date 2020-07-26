@@ -1,9 +1,9 @@
 package com.zsc.blog;
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 import java.util.*;
@@ -18,7 +18,7 @@ public class test {
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("D:/DRend/work/src/main/java");
+        gc.setOutputDir("D:/blog_system_f/src/main/java");
         gc.setFileOverride(true);
         gc.setActiveRecord(true);
         gc.setEnableCache(false);// XML 二级缓存

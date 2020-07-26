@@ -1,9 +1,8 @@
 package com.zsc.blog.entity;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 /**
@@ -14,7 +13,6 @@ import java.io.Serializable;
  * @author mff
  * @since 2020-07-26
  */
-@TableName("t_user")
 public class TUser extends Model<TUser> {
 
     private static final long serialVersionUID = 1L;
@@ -24,22 +22,27 @@ public class TUser extends Model<TUser> {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
     /**
      * 用户名
      */
     private String username;
+
     /**
      * 用户密码加密后的
      */
     private String password;
+
     /**
      * 用户邮箱(用于找回密码)
      */
     private String email;
+
     /**
      * 用户权限  为admin和client
      */
     private String permisson;
+
     /**
      * 用户头像 有一个默认的
      */

@@ -1,11 +1,9 @@
 package com.zsc.blog.entity;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import java.time.LocalDate;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 /**
@@ -16,7 +14,6 @@ import java.io.Serializable;
  * @author mff
  * @since 2020-07-26
  */
-@TableName("t_comment")
 public class TComment extends Model<TComment> {
 
     private static final long serialVersionUID = 1L;
@@ -26,27 +23,32 @@ public class TComment extends Model<TComment> {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
     /**
      * 关联的文章id
      */
-    @TableField("article_id")
     private Integer articleId;
+
     /**
      * 评论时间
      */
-    private Date created;
+    private LocalDate created;
+
     /**
      * 评论用户登录的ip地址
      */
     private String ip;
+
     /**
      * 评论内容
      */
     private String content;
+
     /**
      * 评论状态
      */
     private String status;
+
     /**
      * 评论用户用户名
      */
@@ -69,11 +71,11 @@ public class TComment extends Model<TComment> {
         this.articleId = articleId;
     }
 
-    public Date getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 

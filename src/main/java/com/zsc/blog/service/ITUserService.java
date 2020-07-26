@@ -1,7 +1,9 @@
 package com.zsc.blog.service;
 
 import com.zsc.blog.entity.TUser;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.Collection;
 
 /**
  * <p>
@@ -13,4 +15,11 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface ITUserService extends IService<TUser> {
 
+     void insert_user(TUser tUser);
+
+    Collection<?> selectList(Object o);
+
+    TUser selectByname(String username);
+
+    TUser selectById(String userId);
 }
