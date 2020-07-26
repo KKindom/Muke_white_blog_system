@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Login_RController {
     @Autowired
     ITUserService itUserService;
 
-    public BasicTextEncryptor textEncryptor;
+    @ResponseBody
     @PostMapping("/login")
     public ResponseData<List<Object>> login(@RequestParam("username") String username, @RequestParam("password") String password)
     {
@@ -36,9 +37,12 @@ public class Login_RController {
         TUser back_user=itUserService.selectByname(username);
         if(back_user!=null)
         {
+            BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
             String psw=back_user.getPassword();
+            System.out.println(psw);
+            textEncryptor.setPassword("password");
             psw= textEncryptor.decrypt(psw);
-            if (back_user.getPassword().equals(password))
+            if (psw.equals(password))
             {    userUtil userUtil=new userUtil();
                 JSONObject jsonObject=new JSONObject();
                 String token = userUtil.getToken(back_user);

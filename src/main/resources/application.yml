@@ -1,7 +1,5 @@
 server:
-  port: 8080
-  servlet:
-    context-path: /demo
+  port: 80
   address: 127.0.0.1
 spring:
   profiles:
