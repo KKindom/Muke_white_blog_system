@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -30,9 +31,9 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     //根据名字查询
     @Override
     public TUser selectByname(String username) {
-        QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(TUser::getUsername,username);
-        return tUserMapper.selectOne(queryWrapper);
+//        QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.lambda().eq(TUser::getUsername,username);
+        return tUserMapper.selectbyname(username);
     }
     //根据id查询
     @Override

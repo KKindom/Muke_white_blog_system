@@ -24,14 +24,16 @@ import java.util.List;
  * @author: Mr.Wang
  * @create: 2020-07-24 15:00
  **/
-@Controller("/user")
+@Controller
 public class indexcontroller {
     @Autowired
     ITArticleService itArticleService;
     @Autowired
     ITUserService itUserService;
+
+   public BasicTextEncryptor textEncryptor;
     @ResponseBody
-    @PostMapping("/tet")
+    @PostMapping("/test")
     private Object  index( @RequestParam String username)
     {BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
 textEncryptor.setPassword("password");
@@ -90,6 +92,7 @@ System.out.println("--------------------------");
         return "test";
 
     }
+
 
     @UserLoginToken
     @ResponseBody
