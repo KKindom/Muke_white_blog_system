@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: demo
@@ -31,28 +33,23 @@ public class Login_RController {
 
     @ResponseBody
     @PostMapping("/login")
-    public ResponseData<List<Object>> login(@RequestParam("username") String username, @RequestParam("password") String password)
+    public ResponseData<Map<String,String>> login(@RequestParam("username") String username, @RequestParam("password") String password)
     {
-        System.out.println(username+password);
         TUser back_user=itUserService.selectByname(username);
         if(back_user!=null)
         {
             BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
             String psw=back_user.getPassword();
-            System.out.println(psw);
             textEncryptor.setPassword("password");
             psw= textEncryptor.decrypt(psw);
             if (psw.equals(password))
             {    userUtil userUtil=new userUtil();
-                JSONObject jsonObject=new JSONObject();
-                String token = userUtil.getToken(back_user);
-                jsonObject.put("token", token);
-                jsonObject.put("user", back_user);
-                List<Object> list=new ArrayList<>();
-                list.add(jsonObject);
-                System.out.println(list);
+                Map<String,String> data=new HashMap<>();
 
-                return ResponseData.out(CodeEnum.SUCCESS, list);
+                String token = userUtil.getToken(back_user);
+                data.put("token",token);
+
+                return ResponseData.out(CodeEnum.SUCCESS, data);
             }
         }
         return ResponseData.out(CodeEnum.FAILURE, null);

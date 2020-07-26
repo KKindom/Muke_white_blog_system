@@ -10,7 +10,8 @@ import java.util.Date;
 @Repository
 public class userUtil {
     private String secret = "jung";
-    public String getToken(TUser user) {
+    public String getToken(TUser user)
+    {
         System.out.println(user);
         Algorithm algorithm = Algorithm.HMAC256(secret);
         String token="";
