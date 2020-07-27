@@ -1,6 +1,5 @@
 package com.zsc.blog.web.client;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -11,34 +10,26 @@ import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.service.ITUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
-
 public class GetUserInfo {
     @Autowired
     ITUserService itUserService;
 
-    @PostMapping("/userInfo")
-    public ResponseData<Map<String,String>> GetInfo() {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        String token = request.getHeader("token");
+    @ResponseBody
+    @PostMapping("user/userInfo")
+    public ResponseData<Map<String,String>> GetInfo(@RequestHeader("token") String token) {
         /*if (StringUtils.isEmpty(token)) {
             token = request.getParameter("token");
         }*/
 
-        //解密
         DecodedJWT jwt = null;
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256("jung")).build();
         jwt = verifier.verify(token);
