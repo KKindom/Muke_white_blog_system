@@ -22,14 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 
 public class GetUserInfo {
     @Autowired
     ITUserService itUserService;
 
-    @ResponseBody
     @PostMapping("/userInfo")
     public ResponseData<Map<String,String>> GetInfo() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -39,6 +38,7 @@ public class GetUserInfo {
             token = request.getParameter("token");
         }*/
 
+        //解密
         DecodedJWT jwt = null;
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256("jung")).build();
         jwt = verifier.verify(token);
