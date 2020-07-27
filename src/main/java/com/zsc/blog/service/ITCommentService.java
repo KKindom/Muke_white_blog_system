@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITCommentService extends IService<TComment> {
 
+    Object selectList(Object o);
 }

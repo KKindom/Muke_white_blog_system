@@ -51,11 +51,6 @@ public class TArticle extends Model<TArticle> {
 
 
     /**
-     * 是否允许评论
-     */
-    private Boolean allowComment;
-
-    /**
      * 文章缩略图
      */
     private String thumbnail;
@@ -109,15 +104,6 @@ public class TArticle extends Model<TArticle> {
         this.categories = categories;
     }
 
-
-    public Boolean getAllowComment() {
-        return allowComment;
-    }
-
-    public void setAllowComment(Boolean allowComment) {
-        this.allowComment = allowComment;
-    }
-
     public String getThumbnail() {
         return thumbnail;
     }
@@ -140,7 +126,6 @@ public class TArticle extends Model<TArticle> {
         ", created=" + created +
         ", modified=" + modified +
         ", categories=" + categories +
-        ", allowComment=" + allowComment +
         ", thumbnail=" + thumbnail +
         "}";
     }

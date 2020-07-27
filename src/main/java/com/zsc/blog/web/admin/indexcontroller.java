@@ -8,6 +8,7 @@ import com.zsc.blog.config.UserLoginToken;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.mapper.TUserMapper;
 import com.zsc.blog.service.ITArticleService;
+import com.zsc.blog.service.ITCommentService;
 import com.zsc.blog.service.ITUserService;
 import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class indexcontroller {
     ITArticleService itArticleService;
     @Autowired
     ITUserService itUserService;
-
+    @Autowired
+    ITCommentService itCommentService;
    public BasicTextEncryptor textEncryptor;
     @ResponseBody
     @PostMapping("/test")
@@ -70,6 +72,7 @@ System.out.println("--------------------------");
         List<Object> list = new ArrayList<>();
         list.addAll(itUserService.selectList(null));
         list.addAll(itArticleService.selectList(null));
+        list.add(itCommentService.selectList(null));
         list.add("asdasadada");
 
 

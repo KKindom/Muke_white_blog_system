@@ -7,7 +7,6 @@
         <id column="id" property="id" />
         <result column="article_id" property="articleId" />
         <result column="created" property="created" />
-        <result column="ip" property="ip" />
         <result column="content" property="content" />
         <result column="status" property="status" />
         <result column="author" property="author" />
@@ -15,7 +14,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, article_id AS articleId, created, ip, content, status, author
+        id, article_id AS articleId, created, content, status, author
     </sql>
 
 </mapper>

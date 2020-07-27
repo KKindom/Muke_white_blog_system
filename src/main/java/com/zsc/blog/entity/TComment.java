@@ -35,11 +35,6 @@ public class TComment extends Model<TComment> {
     private LocalDate created;
 
     /**
-     * 评论用户登录的ip地址
-     */
-    private String ip;
-
-    /**
      * 评论内容
      */
     private String content;
@@ -79,14 +74,6 @@ public class TComment extends Model<TComment> {
         this.created = created;
     }
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
     public String getContent() {
         return content;
     }
@@ -122,7 +109,6 @@ public class TComment extends Model<TComment> {
         "id=" + id +
         ", articleId=" + articleId +
         ", created=" + created +
-        ", ip=" + ip +
         ", content=" + content +
         ", status=" + status +
         ", author=" + author +

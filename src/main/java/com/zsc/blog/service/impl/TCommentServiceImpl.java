@@ -4,6 +4,7 @@ import com.zsc.blog.entity.TComment;
 import com.zsc.blog.mapper.TCommentMapper;
 import com.zsc.blog.service.ITCommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,5 +17,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> implements ITCommentService {
-
+    @Autowired
+    TCommentMapper tCommentMapper;
+    @Override
+    public Object selectList(Object o) {
+        return tCommentMapper.selectList(null);
+    }
 }

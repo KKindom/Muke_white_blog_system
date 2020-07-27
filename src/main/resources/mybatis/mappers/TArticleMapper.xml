@@ -10,13 +10,12 @@
         <result column="created" property="created" />
         <result column="modified" property="modified" />
         <result column="categories" property="categories" />
-        <result column="allow_comment" property="allowComment" />
         <result column="thumbnail" property="thumbnail" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, content, created, modified, categories, allow_comment AS allowComment, thumbnail
+        id, title, content, created, modified, categories, thumbnail
     </sql>
 
 </mapper>
