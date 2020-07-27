@@ -41,6 +41,7 @@ public class Login_RController {
             BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
             String psw=back_user.getPassword();
             textEncryptor.setPassword("password");
+            //解密数据库传来的密码
             psw= textEncryptor.decrypt(psw);
             if (psw.equals(password))
             {    userUtil userUtil=new userUtil();
@@ -51,7 +52,8 @@ public class Login_RController {
 
                 return ResponseData.out(CodeEnum.SUCCESS, data);
             }
+            return ResponseData.out(CodeEnum.FAILURE_error_password, null);
         }
-        return ResponseData.out(CodeEnum.FAILURE, null);
+        return ResponseData.out(CodeEnum.FAILURE_no_username,null);
     }
 }

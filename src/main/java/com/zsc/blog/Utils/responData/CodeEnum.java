@@ -1,6 +1,7 @@
 package com.zsc.blog.Utils.responData;
 
 import lombok.Data;
+import org.omg.CORBA.PUBLIC_MEMBER;
 
 /**
  * 统一返回状态码
@@ -9,29 +10,32 @@ public enum CodeEnum {
     /* 成功状态码 */
     SUCCESS(200, "成功"),
     /* 失败状态码 */
-    FAILURE(500, "失败");
+    FAILURE(500, "失败"),
+    /* 无用户名登录失败*/
+    FAILURE_no_username(500,"对不起，没有查询到该用户名！请检查是否输入错误！"),
+    /* 密码错误登录失败*/
+    FAILURE_error_password(500,"对不起，密码错误，请检查密码是否有误！");
 
 
-    private Integer code;
-    private String  msg;
-
-    CodeEnum(Integer code, String message) {
+    public int code;
+    public String  msg;
+      CodeEnum(int code, String message) {
         this.code = code;
         this. msg = message;
     }
 
-    public Integer code() {
+    public int code() {
         return this.code;
     }
 
     public String message() {
         return this. msg;
     }
-    public Integer getCode()
+    public int getCode()
     {
         return this.code;
     }
-    public void setCode(Integer Code)
+    public void setCode(int Code)
     {
          this.code=Code;
     }

@@ -1,6 +1,7 @@
 package com.zsc.blog.web.admin;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zsc.blog.Utils.MailUtils;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.Utils.userUtil;
@@ -33,6 +34,8 @@ public class indexcontroller {
     ITUserService itUserService;
     @Autowired
     ITCommentService itCommentService;
+    @Autowired
+    MailUtils mailUtils;
    public BasicTextEncryptor textEncryptor;
     @ResponseBody
     @PostMapping("/test")
@@ -90,9 +93,11 @@ System.out.println("--------------------------");
 //        System.out.println(tUser);
         return ResponseData.out(CodeEnum.SUCCESS, list);
     }
-    @RequestMapping("/tt")
+    //测试发送邮件
+    @RequestMapping("/test")
     private String  login()
     {
+        mailUtils.sendSimpleEmail("1184045779@qq.com","个人博客系统密码找回","您的密码已重置为：123456");
         return "test";
 
     }

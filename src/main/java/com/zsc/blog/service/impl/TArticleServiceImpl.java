@@ -22,7 +22,6 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     @Autowired
     private  TArticleMapper tArticleMapper;
     @Override
-
     public Collection<?> selectList(Object o) {
         return tArticleMapper.selectList(null);
     }

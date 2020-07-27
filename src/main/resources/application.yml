@@ -4,7 +4,7 @@ server:
 spring:
   profiles:
     # 外置jdbc、redis和mail配置文件
-    active: jdbc,redis
+    active: jdbc,redis,mail
   servlet:
     multipart:
       max-file-size: 50MB

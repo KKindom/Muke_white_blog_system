@@ -17,7 +17,7 @@ public class ResponseData<T> extends BaseResponse {
     private T data;
     private Integer num;
 
-    private ResponseData(CodeEnum code) {
+    public ResponseData(CodeEnum code) {
         super(code);
     }
 
