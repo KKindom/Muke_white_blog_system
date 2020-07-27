@@ -30,7 +30,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     }
     //根据名字查询
     @Override
-    public TUser selectByname(String username) {
+    public TUser selectByusername(String username) {
 //        QueryWrapper<TUser> queryWrapper = new QueryWrapper<>();
 //        queryWrapper.lambda().eq(TUser::getUsername,username);
         return tUserMapper.selectbyname(username);

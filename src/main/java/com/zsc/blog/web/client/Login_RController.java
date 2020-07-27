@@ -35,7 +35,7 @@ public class Login_RController {
     @PostMapping("/login")
     public ResponseData<Map<String,String>> login(@RequestParam("username") String username, @RequestParam("password") String password)
     {
-        TUser back_user=itUserService.selectByname(username);
+        TUser back_user=itUserService.selectByusername(username);
         if(back_user!=null)
         {
             BasicTextEncryptor textEncryptor = new BasicTextEncryptor();

@@ -20,7 +20,7 @@ public interface ITUserService extends IService<TUser> {
 
     Collection<?> selectList(Object o);
 
-    TUser selectByname(String username);
+    TUser selectByusername(String username);
 
     TUser selectById(String userId);
 }

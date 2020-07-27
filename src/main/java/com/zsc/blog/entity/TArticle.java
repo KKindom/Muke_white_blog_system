@@ -49,10 +49,6 @@ public class TArticle extends Model<TArticle> {
      */
     private String categories;
 
-    /**
-     * 文章标签
-     */
-    private String tags;
 
     /**
      * 是否允许评论
@@ -113,13 +109,6 @@ public class TArticle extends Model<TArticle> {
         this.categories = categories;
     }
 
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
 
     public Boolean getAllowComment() {
         return allowComment;
@@ -151,7 +140,6 @@ public class TArticle extends Model<TArticle> {
         ", created=" + created +
         ", modified=" + modified +
         ", categories=" + categories +
-        ", tags=" + tags +
         ", allowComment=" + allowComment +
         ", thumbnail=" + thumbnail +
         "}";

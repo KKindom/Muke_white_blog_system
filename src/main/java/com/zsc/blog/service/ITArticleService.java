@@ -3,6 +3,8 @@ package com.zsc.blog.service;
 import com.zsc.blog.entity.TArticle;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Collection;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITArticleService extends IService<TArticle> {
 
+    Collection<?> selectList(Object o);
 }

@@ -9,7 +9,8 @@
         <result column="password" property="password" />
         <result column="email" property="email" />
         <result column="permisson" property="permisson" />
-        <result column="profilephoto" property="profilephoto" />
+        <result column="profilephoto" property="profilephoto"/>
+        <result column="nickname" property="nickname"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

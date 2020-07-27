@@ -47,7 +47,10 @@ public class TUser extends Model<TUser> {
      * 用户头像 有一个默认的
      */
     private String profilephoto;
-
+    /*
+    * 用户昵称
+    * */
+    private String nickname;
 
     public Integer getId() {
         return id;
@@ -96,6 +99,13 @@ public class TUser extends Model<TUser> {
     public void setProfilephoto(String profilephoto) {
         this.profilephoto = profilephoto;
     }
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     @Override
     protected Serializable pkVal() {
@@ -111,6 +121,7 @@ public class TUser extends Model<TUser> {
         ", email=" + email +
         ", permisson=" + permisson +
         ", profilephoto=" + profilephoto +
+                ",nickname="+nickname+
         "}";
     }
 }

@@ -48,7 +48,7 @@ System.out.println("--------------------------");
 
         JSONObject jsonObject=new JSONObject();
         userUtil userUtil=new userUtil();
-        TUser userForBase=itUserService.selectByname(username);
+        TUser userForBase=itUserService.selectByusername(username);
         System.out.println(userForBase);
         if(userForBase==null){
             jsonObject.put("message","登录失败,用户不存在");
@@ -69,6 +69,7 @@ System.out.println("--------------------------");
     public ResponseData<List<Object>> userInfo() {
         List<Object> list = new ArrayList<>();
         list.addAll(itUserService.selectList(null));
+        list.addAll(itArticleService.selectList(null));
         list.add("asdasadada");
 
 
@@ -99,6 +100,8 @@ System.out.println("--------------------------");
     @GetMapping("/fu")
     public String say(HttpServletRequest httpServletRequest) {
         System.out.println("Hello springboot");
+
+        System.out.println( httpServletRequest.getServletContext().getAttribute("permission"));
         return "hello,this is a springboot demo！~";
     }
 }
