@@ -51,9 +51,9 @@ public class Login_RController {
         }
         return ResponseData.out(CodeEnum.FAILURE_no_username,null);
     }
-    @ResponseBody
-    @PostMapping("/logout")
-    public ResponseData<Map<String,String>> logout(@RequestHeader("token") String token) {
-        return ResponseData.out(CodeEnum.SUCCESS, null);
-    }
+//    @ResponseBody
+//    @PostMapping("/logout")
+//    public ResponseData<Map<String,String>> logout(@RequestHeader("token") String token) {
+//        return ResponseData.out(CodeEnum.SUCCESS, null);
+//    }
 }
