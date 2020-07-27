@@ -49,6 +49,7 @@ public class Login_RController {
 
                 String token = userUtil.getToken(back_user);
                 data.put("token",token);
+                data.put("nickName",back_user.getNickname());
 
                 return ResponseData.out(CodeEnum.SUCCESS, data);
             }
