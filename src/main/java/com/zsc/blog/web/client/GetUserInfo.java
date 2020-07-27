@@ -23,18 +23,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/user")
 
 public class GetUserInfo {
     @Autowired
     ITUserService itUserService;
 
     @ResponseBody
-    @PostMapping("/userInfo")
-    public ResponseData<Map<String,String>> GetInfo() {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        String token = request.getHeader("token");
+    @PostMapping("user/userInfo")
+    public ResponseData<Map<String,String>> GetInfo(@RequestHeader("token") String token) {
         /*if (StringUtils.isEmpty(token)) {
             token = request.getParameter("token");
         }*/
