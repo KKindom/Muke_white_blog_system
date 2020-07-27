@@ -1,4 +1,4 @@
-package com.zsc.blog.web.admin;
+package com.zsc.blog.web.AdminController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zsc.blog.Utils.MailUtils;
@@ -7,7 +7,6 @@ import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.Utils.userUtil;
 import com.zsc.blog.config.UserLoginToken;
 import com.zsc.blog.entity.TUser;
-import com.zsc.blog.mapper.TUserMapper;
 import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITCommentService;
 import com.zsc.blog.service.ITUserService;
@@ -87,7 +86,7 @@ System.out.println("--------------------------");
 //        TUser tUser=new TUser();
 //        tUser.setUsername("mff");
 //        tUser.setEmail("1184045779@qq.com");
-//        tUser.setPermisson("admin");
+//        tUser.setPermisson("AdminController");
 //        tUser.setPassword(newPassword);
 //        itUserService.insert_user(tUser);
 //        System.out.println(tUser);

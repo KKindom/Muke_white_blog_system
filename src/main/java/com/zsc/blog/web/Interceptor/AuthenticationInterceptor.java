@@ -1,4 +1,4 @@
-package com.zsc.blog.web.interceptor;
+package com.zsc.blog.web.Interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;

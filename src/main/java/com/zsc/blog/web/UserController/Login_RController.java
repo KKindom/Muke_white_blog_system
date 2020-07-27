@@ -1,6 +1,5 @@
-package com.zsc.blog.web.client;
+package com.zsc.blog.web.UserController;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.Utils.userUtil;
@@ -9,14 +8,9 @@ import com.zsc.blog.service.ITUserService;
 import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,5 +50,10 @@ public class Login_RController {
             return ResponseData.out(CodeEnum.FAILURE_error_password, null);
         }
         return ResponseData.out(CodeEnum.FAILURE_no_username,null);
+    }
+    @ResponseBody
+    @PostMapping("/logout")
+    public ResponseData<Map<String,String>> logout(@RequestHeader("token") String token) {
+        return ResponseData.out(CodeEnum.SUCCESS, null);
     }
 }

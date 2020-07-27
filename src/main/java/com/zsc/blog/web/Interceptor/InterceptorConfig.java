@@ -1,4 +1,4 @@
-package com.zsc.blog.web.interceptor;
+package com.zsc.blog.web.Interceptor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
