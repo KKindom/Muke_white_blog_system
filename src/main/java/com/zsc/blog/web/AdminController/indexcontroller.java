@@ -43,16 +43,17 @@ public class indexcontroller {
     @ResponseBody
     @PostMapping("/test")
     private Object  index( @RequestParam String username)
-    {BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
-textEncryptor.setPassword("password");
-String newPassword = textEncryptor.encrypt("123456");
-System.out.println(newPassword);
-// 解密
-BasicTextEncryptor textEncryptor2 = new BasicTextEncryptor();
-textEncryptor2.setPassword("password");
-String oldPassword = textEncryptor2.decrypt(newPassword);
-System.out.println(oldPassword);
-System.out.println("--------------------------");
+    {
+        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+        textEncryptor.setPassword("password");
+        String newPassword = textEncryptor.encrypt("123456");
+        System.out.println(newPassword);
+        // 解密
+        BasicTextEncryptor textEncryptor2 = new BasicTextEncryptor();
+        textEncryptor2.setPassword("password");
+        String oldPassword = textEncryptor2.decrypt(newPassword);
+        System.out.println(oldPassword);
+        System.out.println("--------------------------");
 
         JSONObject jsonObject=new JSONObject();
         userUtil userUtil=new userUtil();
@@ -68,7 +69,6 @@ System.out.println("--------------------------");
                 jsonObject.put("user", userForBase);
                 System.out.println(jsonObject);
                 return jsonObject;
-
         }
     }
     @ResponseBody

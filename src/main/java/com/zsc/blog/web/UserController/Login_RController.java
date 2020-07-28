@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,8 +28,9 @@ public class Login_RController {
 
     @ResponseBody
     @PostMapping("/login")
-    public ResponseData<Map<String,String>> login(@RequestParam("username") String username, @RequestParam("password") String password)
+    public ResponseData<Map<String,String>> login(String username,String password)
     {
+        System.out.println(username);
         TUser back_user=itUserService.selectByusername(username);
         if(back_user!=null)
         {
