@@ -27,20 +27,21 @@ import java.util.Map;
 public class Login_RController {
     @Autowired
     ITUserService itUserService;
-
     @ResponseBody
-    @PostMapping("/login")
-    public ResponseData<Map<String,String>> login(String username,String password)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public ResponseData<Map<String,String>> login(@RequestBody Map<String,String> userdata)
     {
-        System.out.println(username);
+        System.out.println(userdata);
+      String username=userdata.get("username");
+       String password=userdata.get("password");
         TUser back_user=itUserService.selectByusername(username);
         if(back_user!=null)
         {
-            BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
             String psw=back_user.getPassword();
+            BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
             textEncryptor.setPassword("password");
-            //解密数据库传来的密码
             psw= textEncryptor.decrypt(psw);
+            //解密数据库传来的密码
             if (psw.equals(password))
             {    userUtil userUtil=new userUtil();
                 Map<String,String> data=new HashMap<>();
@@ -55,36 +56,6 @@ public class Login_RController {
         }
         return ResponseData.out(CodeEnum.FAILURE_no_username,null);
     }
-//@ResponseBody
-//@PostMapping("/login")
-//public ResponseData<Map<String,String>> login( @RequestBody MultiValueMap<String, String> C)
-//{
-//    System.out.println(C);
-//    String username="111";
-//    String password="111";
-//    System.out.println(username);
-//    TUser back_user=itUserService.selectByusername(username);
-//    if(back_user!=null)
-//    {
-//        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
-//        String psw=back_user.getPassword();
-//        textEncryptor.setPassword("password");
-//        //解密数据库传来的密码
-//        psw= textEncryptor.decrypt(psw);
-//        if (psw.equals(password))
-//        {    userUtil userUtil=new userUtil();
-//            Map<String,String> data=new HashMap<>();
-//
-//            String token = userUtil.getToken(back_user);
-//            data.put("token",token);
-//            data.put("nickName",back_user.getNickname());
-//
-//            return ResponseData.out(CodeEnum.SUCCESS, data);
-//        }
-//        return ResponseData.out(CodeEnum.FAILURE_error_password, null);
-//    }
-//    return ResponseData.out(CodeEnum.FAILURE_no_username,null);
-//}
 //    @ResponseBody
 //    @PostMapping("/logout")
 //    public ResponseData<Map<String,String>> logout(@RequestHeader("token") String token) {
