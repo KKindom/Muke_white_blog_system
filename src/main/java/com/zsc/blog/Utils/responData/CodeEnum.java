@@ -14,8 +14,9 @@ public enum CodeEnum {
     /* 无用户名登录失败*/
     FAILURE_no_username(500,"对不起，没有查询到该用户名！请检查是否输入错误！"),
     /* 密码错误登录失败*/
-    FAILURE_error_password(500,"对不起，密码错误，请检查密码是否有误！");
-
+    FAILURE_error_password(500,"对不起，密码错误，请检查密码是否有误！"),
+    /* 存在此用户失败码*/
+    FAILURE_error_username(500,"对不起，已存在此用户！");
 
     public int code;
     public String  msg;

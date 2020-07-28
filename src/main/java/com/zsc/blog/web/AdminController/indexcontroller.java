@@ -1,6 +1,7 @@
 package com.zsc.blog.web.AdminController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zsc.blog.Utils.Encrypt_DecryptUtil;
 import com.zsc.blog.Utils.MailUtils;
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.Utils.responData.CodeEnum;
@@ -39,7 +40,8 @@ public class indexcontroller {
     MailUtils mailUtils;
     @Resource
     RedisUtil redisUtil;
-   public BasicTextEncryptor textEncryptor;
+    @Autowired
+    Encrypt_DecryptUtil encrypt_decryptUtil;
     @ResponseBody
     @PostMapping("/test")
     private Object  index( @RequestParam String username)
@@ -102,19 +104,23 @@ public class indexcontroller {
     private String  login()
     {   TUser tUser;
         //redisUtil.del("马飞凡");
-        if(redisUtil.get("admin")==null) {
-            tUser = itUserService.selectByusername("admin");
-            System.out.println("已添加缓存");
-            redisUtil.set("admin",tUser);
-        }
-        else
-        {
-            tUser=(TUser) redisUtil.get("admin");
-            System.out.println("现在从换成你数据");
-        }
-        return tUser.getNickname();
+        //测试缓存功能
+//        if(redisUtil.get("admin")==null) {
+//            tUser = itUserService.selectByusername("admin");
+//            System.out.println("已添加缓存");
+//            redisUtil.set("admin",tUser);
+//        }
+//        else
+//        {
+//            tUser=(TUser) redisUtil.get("admin");
+//            System.out.println("现在从换成你数据");
+//        }
+//        return tUser.getNickname();
+        //测试加密解密工具类
+        System.out.println(encrypt_decryptUtil.Encrypt("12345"));
+        System.out.println(encrypt_decryptUtil.Decrypt("DtlH4obuiLYz6U9ALRbofA=="));
         //mailUtils.sendSimpleEmail("1184045779@qq.com","个人博客系统密码找回","您的密码已重置为：123456");
-        //return "test";
+        return "test";
     }
 
     @UserLoginToken
