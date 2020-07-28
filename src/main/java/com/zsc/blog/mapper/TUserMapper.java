@@ -2,6 +2,7 @@ package com.zsc.blog.mapper;
 
 import com.zsc.blog.entity.TUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Select;
 
 /**

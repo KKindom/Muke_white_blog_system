@@ -2,6 +2,7 @@ package com.zsc.blog.web.AdminController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zsc.blog.Utils.MailUtils;
+import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.Utils.userUtil;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,8 @@ public class indexcontroller {
     ITCommentService itCommentService;
     @Autowired
     MailUtils mailUtils;
+    @Resource
+    RedisUtil redisUtil;
    public BasicTextEncryptor textEncryptor;
     @ResponseBody
     @PostMapping("/test")
@@ -93,14 +97,25 @@ System.out.println("--------------------------");
         return ResponseData.out(CodeEnum.SUCCESS, list);
     }
     //测试发送邮件
-    @RequestMapping("/test")
+    @ResponseBody
+    @GetMapping("/test")
     private String  login()
-    {
-        mailUtils.sendSimpleEmail("1184045779@qq.com","个人博客系统密码找回","您的密码已重置为：123456");
-        return "test";
-
+    {   TUser tUser;
+        //redisUtil.del("马飞凡");
+        if(redisUtil.get("admin")==null) {
+            tUser = itUserService.selectByusername("admin");
+            System.out.println("已添加缓存");
+            redisUtil.set("admin",tUser);
+        }
+        else
+        {
+            tUser=(TUser) redisUtil.get("admin");
+            System.out.println("现在从换成你数据");
+        }
+        return tUser.getNickname();
+        //mailUtils.sendSimpleEmail("1184045779@qq.com","个人博客系统密码找回","您的密码已重置为：123456");
+        //return "test";
     }
-
 
     @UserLoginToken
     @ResponseBody

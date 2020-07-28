@@ -63,7 +63,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 //取token里面的data里面的用户信息
                 verify = verifier.verify(token);
                 String dataString = verify.getClaim("data").asString();
-                userId =  JSON.parseObject(dataString).getString("id");
+                 userId =  JSON.parseObject(dataString).getString("id");
                 permission = JSON.parseObject(dataString).getString("permission");
                 Object obj = redisTemplate.opsForValue().get("token_"+userId);
                 if(obj==null){
