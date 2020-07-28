@@ -1,5 +1,6 @@
 package com.zsc.blog.web.UserController;
 
+import com.alibaba.fastjson.JSON;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.Utils.userUtil;
@@ -8,6 +9,7 @@ import com.zsc.blog.service.ITUserService;
 import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +55,36 @@ public class Login_RController {
         }
         return ResponseData.out(CodeEnum.FAILURE_no_username,null);
     }
+//@ResponseBody
+//@PostMapping("/login")
+//public ResponseData<Map<String,String>> login( @RequestBody MultiValueMap<String, String> C)
+//{
+//    System.out.println(C);
+//    String username="111";
+//    String password="111";
+//    System.out.println(username);
+//    TUser back_user=itUserService.selectByusername(username);
+//    if(back_user!=null)
+//    {
+//        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+//        String psw=back_user.getPassword();
+//        textEncryptor.setPassword("password");
+//        //解密数据库传来的密码
+//        psw= textEncryptor.decrypt(psw);
+//        if (psw.equals(password))
+//        {    userUtil userUtil=new userUtil();
+//            Map<String,String> data=new HashMap<>();
+//
+//            String token = userUtil.getToken(back_user);
+//            data.put("token",token);
+//            data.put("nickName",back_user.getNickname());
+//
+//            return ResponseData.out(CodeEnum.SUCCESS, data);
+//        }
+//        return ResponseData.out(CodeEnum.FAILURE_error_password, null);
+//    }
+//    return ResponseData.out(CodeEnum.FAILURE_no_username,null);
+//}
 //    @ResponseBody
 //    @PostMapping("/logout")
 //    public ResponseData<Map<String,String>> logout(@RequestHeader("token") String token) {
