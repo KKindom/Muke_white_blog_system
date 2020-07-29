@@ -2,11 +2,8 @@ package com.zsc.blog.web.Interceptor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
 /**
  * @program: demo
  * @description: mff
@@ -39,4 +36,14 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
+    @Value("${file.staticAccessPath}")
+    private String staticAccessPath;
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler(staticAccessPath).addResourceLocations("file:/" + uploadFolder);
+        WebMvcConfigurer.super.addResourceHandlers(registry);
+
+    }
 }

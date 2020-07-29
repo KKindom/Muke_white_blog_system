@@ -31,3 +31,11 @@ COOKIE:
     hiddenmethod:
       filter:
         enabled: true
+
+file:
+  #文件上传目录（注意Linux和Windows上的目录结构不同）
+  uploadFolder: C:/File_rec/
+  #静态资源对外暴露的访问路径
+  staticAccessPath: /uploadfile/**
+  # 上传的服务器上的映射文件夹
+  accessPath: /uploadfile/

@@ -1,12 +1,10 @@
 package com.zsc.blog.web.AdminController;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zsc.blog.Utils.Encrypt_DecryptUtil;
-import com.zsc.blog.Utils.MailUtils;
-import com.zsc.blog.Utils.RedisUtil;
+import com.zsc.blog.Utils.*;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
-import com.zsc.blog.Utils.userUtil;
+import com.zsc.blog.config.PassToken;
 import com.zsc.blog.config.UserLoginToken;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.service.ITArticleService;
@@ -14,11 +12,15 @@ import com.zsc.blog.service.ITCommentService;
 import com.zsc.blog.service.ITUserService;
 import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,10 @@ public class indexcontroller {
     RedisUtil redisUtil;
     @Autowired
     Encrypt_DecryptUtil encrypt_decryptUtil;
+    @Autowired
+    FileUploadUtils fileUploadUtils;
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
     @ResponseBody
     @PostMapping("/test")
     private Object  index( @RequestParam String username)
@@ -123,7 +129,23 @@ public class indexcontroller {
         return "test";
     }
 
-    @UserLoginToken
+    //测试发送邮件
+    @PassToken
+    @ResponseBody
+    @PostMapping("/test3333")
+    private String  aaa(@RequestParam(name = "file", required = false) MultipartFile file)
+    {
+        try {
+            fileUploadUtils.upload(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "s";
+    }
+
+
+
+        @UserLoginToken
     @ResponseBody
     @GetMapping("/fu")
     public String say(HttpServletRequest httpServletRequest) {
