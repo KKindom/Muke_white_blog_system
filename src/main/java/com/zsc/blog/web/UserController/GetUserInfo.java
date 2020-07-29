@@ -43,6 +43,7 @@ public class GetUserInfo {
         data.put("nickname", user.getNickname());
         data.put("imgurl", user.getProfilephoto());
         data.put("permissions", user.getPermisson());
+        data.put("email",user.getEmail());
 
         return ResponseData.out(CodeEnum.SUCCESS, data);
     }

@@ -140,7 +140,7 @@ public class indexcontroller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "s";
+        return "test";
     }
 
 
