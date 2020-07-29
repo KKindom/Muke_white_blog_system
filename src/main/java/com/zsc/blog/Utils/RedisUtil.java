@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @program: blog_system_f
- * @description: mff
+ * @description: 缓存管理工具类
  * @author: Mr.Wang
  * @create: 2020-07-28 07:37
  **/

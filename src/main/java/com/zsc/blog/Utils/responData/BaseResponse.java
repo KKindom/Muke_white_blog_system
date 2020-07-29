@@ -4,8 +4,8 @@ import lombok.Data;
 
 /**
  * @program: demo
- * @description: mff
- * @author: Mr.Wang
+ * @description: 响应体基类
+ * @author: 某网络大神
  * @create: 2020-07-24 17:24
  **/
 @Data

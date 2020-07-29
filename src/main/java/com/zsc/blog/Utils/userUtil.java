@@ -6,7 +6,12 @@ import com.zsc.blog.entity.TUser;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
-
+/**
+ * @program: blog_system_f
+ * @description: 获取token管理工具类
+ * @author: Mr.Wang
+ * @create: 2020-07-28 07:37
+ **/
 @Repository
 public class userUtil {
     private String secret = "jung";
