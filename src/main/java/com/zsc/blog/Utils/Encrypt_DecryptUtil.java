@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class Encrypt_DecryptUtil
 {
-    private BasicTextEncryptor textEncryptor1=new BasicTextEncryptor();
-    private BasicTextEncryptor textEncryptor2=new BasicTextEncryptor();
+
     public String Encrypt(String password)
     {
+        BasicTextEncryptor textEncryptor1=new BasicTextEncryptor();
         textEncryptor1.setPassword("password");
         System.out.println("密码已加密");
         String psw=textEncryptor1.encrypt(password);
@@ -24,6 +24,7 @@ public class Encrypt_DecryptUtil
 
     public String Decrypt(String password)
     {
+        BasicTextEncryptor textEncryptor2=new BasicTextEncryptor();
         textEncryptor2.setPassword("password");
         System.out.println("密码已解密");
     String    psw=textEncryptor2.decrypt(password);

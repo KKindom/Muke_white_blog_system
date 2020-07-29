@@ -29,7 +29,7 @@ public class AdminLogin {
         if (back_user != null) {
             Map<String, String>data = new HashMap<>();
             //判断权限
-            if(back_user.getPermisson() != "admin") {
+            if(!back_user.getPermisson().equals("admin")) {
                 data.put("error", "Illegal account!");
                 return ResponseData.out(CodeEnum.FAILURE, data);
             }
