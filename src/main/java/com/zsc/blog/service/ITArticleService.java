@@ -20,8 +20,10 @@ import java.util.List;
 public interface ITArticleService extends IService<TArticle> {
 
     Collection<?> selectList(Object o);
-    //查询第几页数据
+    //顺序查询第几页数据
     List<Page_article> select_page(int st,int en,int num);
+    //根据最新时间返回页数据
+    List<Page_article> select_newpage(int st,int en,int num);
     //返回一共有多少条数据
     int allarticle();
 }

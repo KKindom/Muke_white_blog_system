@@ -64,4 +64,31 @@ public class ArticleController {
 
         return ResponseData.out(CodeEnum.SUCCESS, page_articles,num_all);
     }
+    @ResponseBody
+    @RequestMapping(value = "/article/getnewList",method = RequestMethod.POST)
+    public ResponseData<Object> Get_newArticleList(@RequestBody Map<String,String>  pageNo)
+    {   //获得总共数据条数
+        int num_all=itArticleService.allarticle();
+        int MAX_Page=num_all/4+1;
+        int last=num_all%4;
+        //获取需要第几页
+        int nowpage= Integer.parseInt( pageNo.get("pageNo") );
+        List<Page_article> page_articles;
+        if(MAX_Page>nowpage)
+        {
+            page_articles= itArticleService.select_newpage(nowpage*4-4,4,nowpage);
+        }
+        else
+        {
+            page_articles= itArticleService.select_newpage(nowpage*4-4,last,nowpage);
+        }
+        System.out.println(page_articles);
+        if(page_articles.size()==0)
+        {
+            return ResponseData.out(CodeEnum.FAILURE, null);
+        }
+
+
+        return ResponseData.out(CodeEnum.SUCCESS, page_articles,num_all);
+    }
 }

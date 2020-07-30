@@ -39,24 +39,42 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
 
     @Override
     public List<Page_article> select_page(int st, int en,int num) {
-        List<Page_article> a;
+        List<Page_article> resultlist;
         if (redisUtil.get("page_"+num)==null)
         {
             System.out.println("我查数据库");
-            a=tArticleMapper.selectpage(st, en);
+            resultlist=tArticleMapper.selectpage(st, en);
             System.out.println("查询" +st+en);
-            redisUtil.set("page_"+num,a);
+            redisUtil.set("page_"+num,resultlist);
         }
         else
         {
             System.out.println("我没查数据库");
-            a =(List<Page_article>)redisUtil.get("page_"+num);
+            resultlist =(List<Page_article>)redisUtil.get("page_"+num);
         }
-        return a;
+        return resultlist;
     }
 
     @Override
     public int allarticle() {
         return tArticleMapper.selectCount(null);
+    }
+
+    @Override
+    public List<Page_article> select_newpage(int st, int en, int num) {
+        List<Page_article> resultlist;
+        if (redisUtil.get("newpage_"+num)==null)
+        {
+            System.out.println("我查数据库");
+            resultlist=tArticleMapper.selectnewpage(st, en);
+            System.out.println("查询" +st+en);
+            redisUtil.set("newpage_"+num,resultlist);
+        }
+        else
+        {
+            System.out.println("我没查数据库");
+            resultlist =(List<Page_article>)redisUtil.get("newpage_"+num);
+        }
+        return resultlist;
     }
 }
