@@ -51,17 +51,16 @@ public class AdminGetArticleList {
         List<Page_article> page_articles;
         if(MAX_Page>pageNo)
         {
-            page_articles= itArticleService.select_page(pageNo*pageSize-pageSize,pageSize,pageNo);
+            page_articles= itArticleService.admin_select_page((pageNo - 1)*pageSize,pageSize,pageNo);
         }
         else
         {
-            page_articles= itArticleService.select_page(pageNo*pageSize-pageSize,last,pageNo);
+            page_articles= itArticleService.admin_select_page((pageNo - 1)*pageSize,last,pageNo);
         }
         if(page_articles.size() == 0)
         {
             return ResponseData.out(CodeEnum.FAILURE, null);
         }
-
         return ResponseData.out(CodeEnum.SUCCESS, page_articles, articleCount);
     }
 }
