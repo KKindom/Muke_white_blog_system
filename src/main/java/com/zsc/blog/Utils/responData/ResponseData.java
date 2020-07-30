@@ -25,6 +25,11 @@ public class ResponseData<T> extends BaseResponse {
         super(code);
         this.data = data;
     }
+    public ResponseData(CodeEnum code, T data,int num) {
+        super(code);
+        this.data = data;
+        this.num=num;
+    }
 
     /**
      * 对外开放基础响应体已供调用，可用于增、删、改接口操作
@@ -40,4 +45,7 @@ public class ResponseData<T> extends BaseResponse {
         return new ResponseData<>(code, data);
     }
     // 省略get/set方法
+    public static <T> ResponseData<T> out(CodeEnum code, T data,int num) {
+        return new ResponseData<>(code, data,num);
+    }
 }
