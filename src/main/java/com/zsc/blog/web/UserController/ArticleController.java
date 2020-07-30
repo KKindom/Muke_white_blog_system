@@ -82,7 +82,7 @@ public class ArticleController {
         {
             page_articles= itArticleService.select_newpage(nowpage*4-4,last,nowpage);
         }
-        System.out.println(page_articles);
+        //System.out.println(page_articles);
         if(page_articles.size()==0)
         {
             return ResponseData.out(CodeEnum.FAILURE, null);

@@ -17,8 +17,13 @@ public enum CodeEnum {
     /* 存在此用户失败码*/
     FAILURE_error_username(500,"对不起，已存在此用户！"),
     /* 权限错误登陆失败*/
-    FAILURE_error_permisson(500,"对不起，没有管理员权限！");
-
+    FAILURE_error_permisson(500,"对不起，没有管理员权限！"),
+    /* 验证码错误*/
+    FAILURE_error_vcode(500,"对不起，验证码错误！"),
+    /*注册成功*/
+    SUCCESS_registeruser(500,"恭喜你注册成功!"),
+    /*发送验证码成功*/
+    SUCCESS_sendvcode(500,"验证码发送成功！请检查邮箱 若没收到请检查邮箱是否设置相关属性！");
     public int code;
     public String  msg;
       CodeEnum(int code, String message) {

@@ -16,9 +16,12 @@ public class MailUtils {
     private JavaMailSenderImpl mailSender;
     @Value("${spring.mail.username}")
     private String mailfrom;
+    private String title="个人博客官方";
+    private String content="您好，您的验证码为：";
 
     // 发送简单邮件
-    public void sendSimpleEmail(String mailto, String title, String content) {
+    public void sendSimpleEmail(String mailto, int code) {
+        content+=code;
         //  定制邮件发送内容
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(mailfrom);
