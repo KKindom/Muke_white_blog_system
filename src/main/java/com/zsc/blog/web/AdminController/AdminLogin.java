@@ -30,8 +30,8 @@ public class AdminLogin {
             Map<String, String>data = new HashMap<>();
             //判断权限
             if(!back_user.getPermisson().equals("admin")) {
-                data.put("error", "Illegal account!");
-                return ResponseData.out(CodeEnum.FAILURE, data);
+                //data.put("error", "Illegal account!");
+                return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
             }
 
             String psw = back_user.getPassword();
