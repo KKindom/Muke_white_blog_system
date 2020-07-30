@@ -42,11 +42,11 @@ public class AdminGetArticleList {
         if(!permissions.equals("admin")) {
             return new ResponseData(CodeEnum.FAILURE_error_permisson, null);
         }*/
+        int articleCount = itArticleService.allarticle();
         int pageNo = Integer.parseInt(Body.get("pageNo"));
         int pageSize = Integer.parseInt(Body.get("pageSize"));
-
-        int MAX_Page=itArticleService.allarticle()/pageSize+1;
-        int last=itArticleService.allarticle()%pageSize;
+        int MAX_Page= articleCount/pageSize+1;
+        int last= articleCount%pageSize;
 
         List<Page_article> page_articles;
         if(MAX_Page>pageNo)
@@ -57,11 +57,11 @@ public class AdminGetArticleList {
         {
             page_articles= itArticleService.select_page(pageNo*pageSize-pageSize,last,pageNo);
         }
-        if(page_articles==null)
+        if(page_articles.size() == 0)
         {
             return ResponseData.out(CodeEnum.FAILURE, null);
         }
 
-        return ResponseData.out(CodeEnum.SUCCESS, page_articles);
+        return ResponseData.out(CodeEnum.SUCCESS, page_articles, articleCount);
     }
 }
