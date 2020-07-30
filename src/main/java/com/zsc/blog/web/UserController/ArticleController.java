@@ -56,7 +56,7 @@ public class ArticleController {
         {
             page_articles= itArticleService.select_page(nowpage*4-4,last,nowpage);
         }
-        if(page_articles==null)
+        if(page_articles.size()==0)
         {
             return ResponseData.out(CodeEnum.FAILURE, null);
         }
