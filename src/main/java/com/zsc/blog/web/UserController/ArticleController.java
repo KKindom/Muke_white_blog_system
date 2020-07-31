@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
-import com.zsc.blog.entity.Page_article;
 import com.zsc.blog.entity.TArticle;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.mapper.TArticleMapper;
