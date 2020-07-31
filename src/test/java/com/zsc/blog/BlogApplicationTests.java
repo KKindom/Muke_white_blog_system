@@ -1,6 +1,5 @@
 package com.zsc.blog;
 
-import com.zsc.blog.entity.Page_article;
 import com.zsc.blog.mapper.TArticleMapper;
 import com.zsc.blog.service.ITArticleService;
 import org.junit.jupiter.api.Test;
