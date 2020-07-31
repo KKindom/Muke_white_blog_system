@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -57,21 +55,30 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     }
 
     @Override
-    public List<Page_article> admin_select_page(int st, int en,int num) {
-        List<Page_article> resultlist;
+    public List<Map<String, Object>> admin_select_page(int st, int en,int num) {
+        List<Map<String, Object>> tempResultList;
+        List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
         if (redisUtil.get("pageNo_"+num)==null)
         {
             System.out.println("我查数据库");
-            resultlist=tArticleMapper.selectnewpage(st, en);
+            tempResultList=tArticleMapper.admin_selectPage(st, en);
+            Iterator<Map<String, Object>> it = tempResultList.iterator();
+            while(it.hasNext()) {
+                Map<String, Object> now = (Map<String, Object>)it.next();
+
+                /*now.put("comment", tArticleMapper.commentCount(now.getId()));
+                now.setComments_num(tArticleMapper.commentCount(now.getId()));*/
+                resultList.add(now);
+            }
             System.out.println("查询" +st+en);
-            redisUtil.set("pageNo_"+num,resultlist);
+            redisUtil.set("pageNo_"+num,resultList);
         }
         else
         {
             System.out.println("我没查数据库");
-            resultlist =(List<Page_article>)redisUtil.get("pageNo_"+num);
+            resultList =(List<Map<String, Object>>)redisUtil.get("pageNo_"+num);
         }
-        return resultlist;
+        return resultList;
     }
 
     @Override
