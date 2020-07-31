@@ -1,7 +1,6 @@
 package com.zsc.blog.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zsc.blog.entity.Page_article;
 import com.zsc.blog.entity.TArticle;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.omg.CORBA.PUBLIC_MEMBER;
