@@ -3,7 +3,6 @@ package com.zsc.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zsc.blog.Utils.RedisUtil;
-import com.zsc.blog.entity.Page_article;
 import com.zsc.blog.entity.TArticle;
 import com.zsc.blog.mapper.TArticleMapper;
 import com.zsc.blog.service.ITArticleService;
