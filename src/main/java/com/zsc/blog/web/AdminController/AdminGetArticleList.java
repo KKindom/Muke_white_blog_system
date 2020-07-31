@@ -32,7 +32,7 @@ public class AdminGetArticleList {
 
     @ResponseBody
     @PostMapping("admin/article/getList")
-    public ResponseData<Object> GetList(@RequestHeader("token") String token, @RequestBody Map<String, String> Body) {
+    public ResponseData<Object>GetList(@RequestHeader("token") String token, @RequestBody Map<String, String> Body) {
         /*验证权限，备用
         DecodedJWT jwt = null;
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256("jung")).build();
@@ -48,7 +48,7 @@ public class AdminGetArticleList {
         int MAX_Page= articleCount/pageSize+1;
         int last= articleCount%pageSize;
 
-        List<Page_article> page_articles;
+        List<Map<String, Object>> page_articles;
         if(MAX_Page>pageNo)
         {
             page_articles= itArticleService.admin_select_page((pageNo - 1)*pageSize,pageSize,pageNo);
