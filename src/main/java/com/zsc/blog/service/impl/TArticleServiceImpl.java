@@ -56,20 +56,11 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
 
     @Override
     public List<Map<String, Object>> admin_select_page(int st, int en,int num) {
-        List<Map<String, Object>> tempResultList;
-        List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> resultList;
         if (redisUtil.get("pageNo_"+num)==null)
         {
             System.out.println("我查数据库");
-            tempResultList=tArticleMapper.admin_selectPage(st, en);
-            Iterator<Map<String, Object>> it = tempResultList.iterator();
-            while(it.hasNext()) {
-                Map<String, Object> now = (Map<String, Object>)it.next();
-
-                /*now.put("comment", tArticleMapper.commentCount(now.getId()));
-                now.setComments_num(tArticleMapper.commentCount(now.getId()));*/
-                resultList.add(now);
-            }
+            resultList=tArticleMapper.admin_selectPage(st, en);
             System.out.println("查询" +st+en);
             redisUtil.set("pageNo_"+num,resultList);
         }
