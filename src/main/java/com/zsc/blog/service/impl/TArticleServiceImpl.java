@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -38,19 +39,19 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
 
 
     @Override
-    public List<Page_article> select_page(int st, int en,int num) {
-        List<Page_article> resultlist;
+    public List<Map<String, Object>> select_page(int st, int en,int num) {
+        List<Map<String, Object>> resultlist;
         if (redisUtil.get("page_"+num)==null)
         {
-            System.out.println("我查数据库");
-            resultlist=tArticleMapper.selectpage(st, en);
+            System.out.println("page我查数据库");
+            resultlist=tArticleMapper.selectpagetest(st, en);
             System.out.println("查询" +st+en);
             redisUtil.set("page_"+num,resultlist,1800);
         }
         else
         {
-            System.out.println("我没查数据库");
-            resultlist =(List<Page_article>)redisUtil.get("page_"+num);
+            System.out.println("page我没查数据库");
+            resultlist =(List<Map<String, Object>>)redisUtil.get("page_"+num);
         }
         return resultlist;
     }
@@ -79,20 +80,22 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     }
 
     @Override
-    public List<Page_article> select_newpage(int st, int en, int num) {
-        List<Page_article> resultlist;
+    public List<Map<String, Object>> select_newpage(int st, int en, int num) {
+        List<Map<String, Object>> resultlist;
         if (redisUtil.get("newpage_"+num)==null)
         {
-            System.out.println("我查数据库");
-            resultlist=tArticleMapper.selectnewpage(st, en);
+            System.out.println("new我查数据库");
+            resultlist=tArticleMapper.selectnewpagetest(st, en);
             System.out.println("查询" +st+en);
             redisUtil.set("newpage_"+num,resultlist,1800);
         }
         else
         {
-            System.out.println("我没查数据库");
-            resultlist =(List<Page_article>)redisUtil.get("newpage_"+num);
+            System.out.println("new我没查数据库");
+            resultlist =(List<Map<String,Object>>)redisUtil.get("newpage_"+num);
         }
         return resultlist;
     }
+
+
 }

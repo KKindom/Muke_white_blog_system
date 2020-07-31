@@ -12,18 +12,13 @@ import java.util.List;
 
 @SpringBootTest
 class BlogApplicationTests {
-    @Autowired
-    ITArticleService itArticleService;
-    @Autowired
-    TArticleMapper tArticleMapper;
     @Test
     void contextLoads() {
     }
     @Test
     void savefile()
     {
-      List<Page_article> page_articles= itArticleService.select_page(3,4,9);
-        System.out.println(page_articles);
+
     }
 
 }

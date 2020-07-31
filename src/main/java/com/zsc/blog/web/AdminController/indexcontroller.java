@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: demo
@@ -145,13 +146,13 @@ public class indexcontroller {
 
 
 
-        @UserLoginToken
+        //@UserLoginToken
     @ResponseBody
     @GetMapping("/fu")
     public String say(HttpServletRequest httpServletRequest) {
         System.out.println("Hello springboot");
-
-        System.out.println( httpServletRequest.getServletContext().getAttribute("permission"));
-        return "hello,this is a springboot demo！~";
+        return  "111";
+        //System.out.println( httpServletRequest.getServletContext().getAttribute("permission"));
+        //return itArticleService.tt(0,4,1);
     }
 }

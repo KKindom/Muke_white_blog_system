@@ -47,7 +47,7 @@ public class ArticleController {
         int last=num_all%4;
         //获取需要第几页
         int nowpage= Integer.parseInt( pageNo.get("pageNo") );
-        List<Page_article> page_articles;
+        List<Map<String,Object>> page_articles;
         if(MAX_Page>nowpage)
         {
             page_articles= itArticleService.select_page(nowpage*4-4,4,nowpage);
@@ -61,7 +61,6 @@ public class ArticleController {
             return ResponseData.out(CodeEnum.FAILURE, null);
         }
 
-
         return ResponseData.out(CodeEnum.SUCCESS, page_articles,num_all);
     }
     @ResponseBody
@@ -73,7 +72,7 @@ public class ArticleController {
         int last=num_all%4;
         //获取需要第几页
         int nowpage= Integer.parseInt( pageNo.get("pageNo") );
-        List<Page_article> page_articles;
+        List<Map<String,Object>> page_articles;
         if(MAX_Page>nowpage)
         {
             page_articles= itArticleService.select_newpage(nowpage*4-4,4,nowpage);
@@ -87,8 +86,6 @@ public class ArticleController {
         {
             return ResponseData.out(CodeEnum.FAILURE, null);
         }
-
-
         return ResponseData.out(CodeEnum.SUCCESS, page_articles,num_all);
     }
 }

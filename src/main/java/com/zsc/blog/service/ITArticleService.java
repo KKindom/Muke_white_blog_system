@@ -8,6 +8,7 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -21,9 +22,9 @@ public interface ITArticleService extends IService<TArticle> {
 
     Collection<?> selectList(Object o);
     //顺序查询第几页数据
-    List<Page_article> select_page(int st,int en,int num);
+    List<Map<String, Object>> select_page(int st,int en,int num);
     //根据最新时间返回页数据
-    List<Page_article> select_newpage(int st,int en,int num);
+    List<Map<String, Object>> select_newpage(int st,int en,int num);
     //返回一共有多少条数据
 
     public List<Page_article> admin_select_page(int st, int en,int num);
