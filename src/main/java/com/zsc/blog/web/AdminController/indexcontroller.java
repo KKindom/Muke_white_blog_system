@@ -137,7 +137,7 @@ public class indexcontroller {
     private String  aaa(@RequestParam(name = "file", required = false) MultipartFile file)
     {
         try {
-            fileUploadUtils.upload(file);
+            fileUploadUtils.upload(file,1);
         } catch (IOException e) {
             e.printStackTrace();
         }

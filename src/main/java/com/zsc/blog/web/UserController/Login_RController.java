@@ -69,7 +69,7 @@ public class Login_RController {
     }
 
     @ResponseBody
-    @PostMapping("/logout2")
+    @PostMapping("/logout")
     public ResponseData<Map<String, String>> logout(@RequestHeader("token") String token) {
         return ResponseData.out(CodeEnum.SUCCESS, null);
     }
@@ -103,19 +103,20 @@ public class Login_RController {
             return ResponseData.out(CodeEnum.SUCCESS_registeruser, newuser);
         }
 
-
-
     }
 //获取验证码
     @ResponseBody
     @PostMapping("/Register_vcode")
     public ResponseData<Map<String, Integer>> getvcode(@RequestBody Map<String, String> Email)
     {
-
+        //设置需要发送邮箱
         String email=Email.get("mail");
+        //设置随机数
         int vcode=(int)((Math.random()*9+1)*1000);
         Identifying_code=vcode+"";
+        //发送邮件
         mailUtils.sendSimpleEmail(email,vcode);
+        //返回验证码
         Map<String ,Integer> codemap=new HashMap<>();
         codemap.put("code",vcode);
         return ResponseData.out(CodeEnum.SUCCESS_sendvcode,codemap);

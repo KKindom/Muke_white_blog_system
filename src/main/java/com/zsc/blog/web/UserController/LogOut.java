@@ -12,7 +12,7 @@ import java.util.Map;
 @Controller
 public class LogOut {
     @ResponseBody
-    @PostMapping("user/logout")
+    @PostMapping("user/logout2")
     public ResponseData<Map<String,String>> logout(@RequestHeader("token") String token) {
         return ResponseData.out(CodeEnum.SUCCESS, null);
     }

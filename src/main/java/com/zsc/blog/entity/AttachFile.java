@@ -11,10 +11,6 @@ import java.util.Date;
 @Data
 public class AttachFile {
     /**
-     * 上传文件的UUID
-     */
-    String fileUUID;
-    /**
      * 保存后的文件名
      */
     String filename;

@@ -30,20 +30,43 @@ public class FileUploadUtils {
     @Value("${file.accessPath}")
     private String accessPath;
 
-    public  AttachFile upload(MultipartFile file) throws IOException {
-        //获得后缀
+    public  AttachFile upload(MultipartFile file,int type) throws IOException {
+//        //获得后缀
+//        String fileName = file.getOriginalFilename();
+//        String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
+//        System.out.println(fileSuffix);
+//        // 文件唯一的名字
+//        fileName = UUID.randomUUID().toString()  +fileSuffix;
+//        Date todayDate = new Date();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String today = dateFormat.format(todayDate);
+//        // 域名访问的相对路径（通过浏览器访问的链接-虚拟路径）
+//        String saveToPath = accessPath + today + "/";
+//        // 真实路径，实际储存的路径
+//        String realPath = realBasePath + today + "/";
+//        // 储存文件的物理路径，使用本地路径储存
+//        String filepath = realPath;
+//        System.out.println("上传图片名为：" + fileName+"--虚拟文件路径为：" + saveToPath +"--物理文件路径为：" + realPath);
+//        System.out.println("需要传回的图片url为：http://localhost:8080"+saveToPath+fileName);
+
+        String saveToPath,realPath;
+        //保存文件名
         String fileName = file.getOriginalFilename();
-        String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
-        System.out.println(fileSuffix);
-        // 文件唯一的名字
-        fileName = UUID.randomUUID().toString()  +fileSuffix;
-        Date todayDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String today = dateFormat.format(todayDate);
-        // 域名访问的相对路径（通过浏览器访问的链接-虚拟路径）
-        String saveToPath = accessPath + today + "/";
-        // 真实路径，实际储存的路径
-        String realPath = realBasePath + today + "/";
+        System.out.println("获得文件名"+fileName);
+       //type=1,时表示存储图片
+        if(type==1) {
+            // 域名访问的相对路径（通过浏览器访问的链接-虚拟路径）
+            saveToPath = accessPath + "user_profile_photo" + "/";
+            // 真实路径，实际储存的路径
+            realPath = realBasePath + "user_profile_photo" + "/";
+        }
+        else
+        {
+            // 域名访问的相对路径（通过浏览器访问的链接-虚拟路径）
+            saveToPath = accessPath + "article" + "/";
+            // 真实路径，实际储存的路径
+            realPath = realBasePath + "article" + "/";
+        }
         // 储存文件的物理路径，使用本地路径储存
         String filepath = realPath;
         System.out.println("上传图片名为：" + fileName+"--虚拟文件路径为：" + saveToPath +"--物理文件路径为：" + realPath);
@@ -64,7 +87,6 @@ public class FileUploadUtils {
         attachFile.setFilename(fileName);
         attachFile.setType(file.getContentType());
         attachFile.setFileSize(file.getSize());
-        attachFile.setFileUUID(UUID.randomUUID().toString());
         attachFile.setUploadTime(new Date());
         System.out.println("文件"+attachFile+"上传成功！");
     }
