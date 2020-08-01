@@ -104,7 +104,7 @@ public class Login_RController {
         }
 
     }
-//获取验证码
+    //注册时获取验证码
     @ResponseBody
     @PostMapping("/Register_vcode")
     public ResponseData<Map<String, Integer>> getvcode(@RequestBody Map<String, String> Email)

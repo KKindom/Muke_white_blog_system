@@ -14,7 +14,9 @@ import org.apache.ibatis.annotations.Select;
  * @since 2020-07-26
  */
 public interface TUserMapper extends BaseMapper<TUser> {
-@Select("Select * from t_user where username=#{username}")
+    //根据uername查找用户
+    @Select("Select * from t_user where username=#{username}")
     public TUser selectbyname(String username);
+
 
 }

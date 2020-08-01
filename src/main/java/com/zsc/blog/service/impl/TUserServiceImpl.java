@@ -53,4 +53,15 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         redisUtil.set(tUser.getUsername(),tUser);
         tUserMapper.insert(tUser);
     }
+
+    @Override
+    public void updata_I(TUser tUser) {
+        tUserMapper.updateById(tUser);
+    }
+
+    @Override
+    public int find_usercount(String username) {
+      int count=  tUserMapper.selectCount(new QueryWrapper<TUser>().eq("username", username));
+        return count;
+    }
 }

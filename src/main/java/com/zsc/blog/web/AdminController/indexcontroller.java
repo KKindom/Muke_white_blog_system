@@ -5,7 +5,6 @@ import com.zsc.blog.Utils.*;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.config.PassToken;
-import com.zsc.blog.config.UserLoginToken;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITCommentService;
@@ -14,7 +13,6 @@ import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @program: demo
@@ -150,7 +147,11 @@ public class indexcontroller {
     @ResponseBody
     @GetMapping("/fu")
     public String say(HttpServletRequest httpServletRequest) {
-        System.out.println("Hello springboot");
+        TUser tUser=itUserService.selectByusername("mff");
+        tUser.setNickname("niubi");
+        tUser.setPermisson("admin");
+        itUserService.updata_I(tUser);
+        System.out.println("asdsad");
         return  "111";
         //System.out.println( httpServletRequest.getServletContext().getAttribute("permission"));
         //return itArticleService.tt(0,4,1);
