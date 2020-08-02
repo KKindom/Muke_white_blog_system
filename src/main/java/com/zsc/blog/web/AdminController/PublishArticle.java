@@ -1,6 +1,9 @@
 package com.zsc.blog.web.AdminController;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import com.zsc.blog.Utils.FileUploadUtils;
+import com.zsc.blog.Utils.responData.CodeEnum;
+import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.AttachFile;
 import com.zsc.blog.entity.TArticle;
 import com.zsc.blog.service.ITArticleService;
@@ -22,18 +25,18 @@ public class PublishArticle {
 
     @ResponseBody
     @PostMapping("admin/article/newarticle")
-    public void newArticle(@RequestParam(value = "file", required = false)MultipartFile file,
-                           @RequestParam("content")String content,
-                           @RequestParam("title")String title,
-                           @RequestParam("categories")String categories,
-                           @RequestHeader("token")String token) {
+    public ResponseData<Object> newArticle(@RequestParam(value = "file", required = false)MultipartFile file,
+                                           @RequestParam("content")String content,
+                                           @RequestParam("title")String title,
+                                           @RequestParam("categories")String categories,
+                                           @RequestHeader("token")String token) {
 
         FileUploadUtils fileUploadUtils = new FileUploadUtils();
         AttachFile attachFile = new AttachFile();
         try {
             attachFile = fileUploadUtils.upload(file, 1);
         } catch (IOException e) {
-            e.printStackTrace();
+            return ResponseData.out(CodeEnum.FAILURE, e.getMessage());
         }
         TArticle article = new TArticle();
         article.setCreated(LocalDate.now());
@@ -43,5 +46,6 @@ public class PublishArticle {
         article.setThumbnail(attachFile.getOriginalFilename());
 
         itArticleService.publish(article);
+        return ResponseData.out(CodeEnum.SUCCESS, null);
     }
 }
