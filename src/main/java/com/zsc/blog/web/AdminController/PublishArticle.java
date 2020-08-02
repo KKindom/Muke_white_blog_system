@@ -34,7 +34,7 @@ public class PublishArticle {
         FileUploadUtils fileUploadUtils = new FileUploadUtils();
         AttachFile attachFile = new AttachFile();
         try {
-            attachFile = fileUploadUtils.upload(file, 1);
+            attachFile = fileUploadUtils.upload(file, 3);
         } catch (IOException e) {
             return ResponseData.out(CodeEnum.FAILURE, e.getMessage());
         }
@@ -43,7 +43,7 @@ public class PublishArticle {
         article.setContent(content);
         article.setTitle(title);
         article.setCategories(categories);
-        article.setThumbnail(attachFile.getOriginalFilename());
+        article.setThumbnail(attachFile.getVirtual_path());
 
         itArticleService.publish(article);
         return ResponseData.out(CodeEnum.SUCCESS, null);

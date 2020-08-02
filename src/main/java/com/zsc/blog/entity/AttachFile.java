@@ -14,7 +14,10 @@ public class AttachFile {
      * 保存后的文件名
      */
     String filename;
-    String originalFilename;
+    //文件虚拟路径
+    String Virtual_path;
+    //文件物理路径
+    String Physical_path;
     /**
      *  文件大小
      */

@@ -53,19 +53,28 @@ public class FileUploadUtils {
         //保存文件名
         String fileName = file.getOriginalFilename();
         System.out.println("获得文件名"+fileName);
-       //type=1,时表示存储图片
+       //type=1,时表示存储用户头像图片
         if(type==1) {
             // 域名访问的相对路径（通过浏览器访问的链接-虚拟路径）
             saveToPath = accessPath + "user_profile_photo" + "/";
             // 真实路径，实际储存的路径
             realPath = realBasePath + "user_profile_photo" + "/";
         }
-        else
+        //用于存储文章内容
+        else if(type==2)
         {
             // 域名访问的相对路径（通过浏览器访问的链接-虚拟路径）
             saveToPath = accessPath + "article" + "/";
             // 真实路径，实际储存的路径
             realPath = realBasePath + "article" + "/";
+        }
+        //用于存储文章封面图
+        else
+        {
+            // 域名访问的相对路径（通过浏览器访问的链接-虚拟路径）
+            saveToPath = accessPath + "article_photo" + "/";
+            // 真实路径，实际储存的路径
+            realPath = realBasePath + "article_photo" + "/";
         }
         // 储存文件的物理路径，使用本地路径储存
         String filepath = realPath;
@@ -83,7 +92,9 @@ public class FileUploadUtils {
     {
             File newfile = new File(dir, fileName);
             file.transferTo(newfile);
-        attachFile.setOriginalFilename(realPath);
+            //设置文件返回的虚拟路径
+        attachFile.setVirtual_path("http://localhost:8080"+saveToPath+fileName);
+        attachFile.setPhysical_path(filepath+fileName);
         attachFile.setFilename(fileName);
         attachFile.setType(file.getContentType());
         attachFile.setFileSize(file.getSize());
