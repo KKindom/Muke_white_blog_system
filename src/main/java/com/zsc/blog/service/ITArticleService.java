@@ -25,7 +25,13 @@ public interface ITArticleService extends IService<TArticle> {
     //根据最新时间返回页数据
     List<Map<String, Object>> select_newpage(int st,int en,int num);
     //返回一共有多少条数据
-    public List<Map<String, Object>> admin_select_page(int st, int en,int num);
+
     //管理员后台查询，根据时间排序
+    public List<Map<String, Object>> admin_select_page(int st, int en,int num);
     int allarticle();
+    //发布文章
+    public void publish(TArticle article);
+
+    //通过ID删除文章
+    public void deleteArticleWithId(int id);
 }
