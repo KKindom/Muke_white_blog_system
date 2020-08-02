@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.entity.TArticle;
 import com.zsc.blog.mapper.TArticleMapper;
+import com.zsc.blog.mapper.TCommentMapper;
+import com.zsc.blog.mapper.TStatisticMapper;
 import com.zsc.blog.service.ITArticleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.*;
 
 /**
@@ -25,6 +28,10 @@ import java.util.*;
 public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> implements ITArticleService {
     @Autowired
     TArticleMapper tArticleMapper;
+    @Autowired
+    TStatisticMapper tStatisticMapper;
+    @Autowired
+    TCommentMapper tCommentMapper;
     @Resource
     RedisUtil redisUtil;
 
@@ -94,5 +101,23 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         return resultlist;
     }
 
+    @Override
+    public void publish(TArticle article) {
+        tArticleMapper.publishArticle(article);
+        tStatisticMapper.addStatistic(article);
+    }
 
+    @Override
+    public void deleteArticleWithId(int id) {
+        /*删除文章封面文件 可选
+        TArticle article = tArticleMapper.selectArticleWithId(id);
+        String filepath = article.getThumbnail();
+        File file = new File(filepath);
+        if(file.exists()) {
+            file.delete();
+        }*/
+        tCommentMapper.deleteCommentWithId(id);
+        tArticleMapper.deleteArticleWithId(id);
+        tStatisticMapper.deleteStatisticWithId(id);
+    }
 }
