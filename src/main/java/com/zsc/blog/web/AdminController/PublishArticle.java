@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Controller
 public class PublishArticle {
@@ -42,7 +44,7 @@ public class PublishArticle {
             return ResponseData.out(CodeEnum.FAILURE, e.getMessage());
         }
         TArticle article = new TArticle();
-        article.setCreated(LocalDate.now());
+        article.setCreated(new Timestamp(new Date().getTime()));
         article.setContent(content);
         article.setTitle(title);
         article.setCategories(categories);
