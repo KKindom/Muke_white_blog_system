@@ -23,6 +23,9 @@ public class PublishArticle {
     @Autowired
     ITArticleService itArticleService;
 
+    @Autowired
+    FileUploadUtils fileUploadUtils;
+    
     @ResponseBody
     @PostMapping("admin/article/newarticle")
     public ResponseData<Object> newArticle(@RequestParam(value = "file", required = false)MultipartFile file,
@@ -31,7 +34,7 @@ public class PublishArticle {
                                            @RequestParam("categories")String categories,
                                            @RequestHeader("token")String token) {
 
-        FileUploadUtils fileUploadUtils = new FileUploadUtils();
+        //FileUploadUtils fileUploadUtils = new FileUploadUtils();
         AttachFile attachFile = new AttachFile();
         try {
             attachFile = fileUploadUtils.upload(file, 3);
