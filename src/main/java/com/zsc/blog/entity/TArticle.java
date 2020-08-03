@@ -37,12 +37,12 @@ public class TArticle extends Model<TArticle> {
     /**
      * 发表时间
      */
-    private LocalDate created;
+    private LocalDateTime created;
 
     /**
      * 修改时间
      */
-    private LocalDate modified;
+    private LocalDateTime modified;
 
     /**
      * 文章分类
@@ -80,19 +80,19 @@ public class TArticle extends Model<TArticle> {
         this.content = content;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public LocalDate getModified() {
+    public LocalDateTime getModified() {
         return modified;
     }
 
-    public void setModified(LocalDate modified) {
+    public void setModified(LocalDateTime modified) {
         this.modified = modified;
     }
 
