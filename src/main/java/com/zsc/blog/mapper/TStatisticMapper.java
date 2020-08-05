@@ -17,8 +17,7 @@ import org.apache.ibatis.annotations.Options;
  */
 public interface TStatisticMapper extends BaseMapper<TStatistic> {
     //新增文章对应的统计信息
-    @Insert("insert into t_statistic(article_id, hits, comments_num) values(#{id}, 0, 0)")
-    @Options(useGeneratedKeys=true, keyColumn = "id")
+    @Insert("insert into t_statistic(id, article_id, hits, comments_num) values(#{id}, #{id}, 0, 0)")
     public void addStatistic(TArticle article);
 
     //根据ID删除统计数据

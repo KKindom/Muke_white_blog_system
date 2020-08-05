@@ -38,10 +38,13 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     public List<Map<String, Object>> admin_selectPage(int st, int en);
 
     //发表文章
-    @Insert("insert into t_article (title, content, created, modified, categories, thumbnail) " +
-            "values(#{title}, #{content}, #{created}, #{modified}, #{categories}, #{thumbnail})")
-    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    @Insert("insert into t_article (id, title, content, created, modified, categories, thumbnail) " +
+            "values(#{id}, #{title}, #{content}, #{created}, #{modified}, #{categories}, #{thumbnail})")
     public Integer publishArticle(TArticle article);
+
+    //获取新文章id
+    @Select("select max(id) + 1 from t_article")
+    public Integer getNextId();
 
     //删除文章
     @Delete("delete from t_article where id = #{id}")
