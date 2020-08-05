@@ -102,9 +102,18 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     }
 
     @Override
-    public void publish(TArticle article) {
-        tArticleMapper.publishArticle(article);
+    public void publish(@Autowired TArticle article) {
+        article.setId(tArticleMapper.getNextId());
         tStatisticMapper.addStatistic(article);
+        tArticleMapper.publishArticle(article);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id", article.getId().toString());
+        hashMap.put("title", article.getTitle());
+        hashMap.put("content", article.getContent());
+        hashMap.put("created", article.getCreated());
+        //hashMap.put("modified", article.getModified().toString());
+        hashMap.put("categories", article.getCategories());
+        redisUtil.set("article_" + article.getId().toString(), hashMap);
     }
 
     @Override
@@ -116,6 +125,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         if(file.exists()) {
             file.delete();
         }*/
+        redisUtil.del("article_" + Integer.toString(id));
         tCommentMapper.deleteCommentWithId(id);
         tArticleMapper.deleteArticleWithId(id);
         tStatisticMapper.deleteStatisticWithId(id);
