@@ -17,4 +17,5 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     //通过文章ID删除评论信息
     @Delete("delete from t_comment where article_id = #{id}")
     public void deleteCommentWithId(Integer id);
+
 }

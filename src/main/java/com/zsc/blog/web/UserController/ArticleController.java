@@ -7,15 +7,19 @@ import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.TArticle;
+import com.zsc.blog.entity.TComment;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.mapper.TArticleMapper;
+import com.zsc.blog.mapper.TCommentMapper;
 import com.zsc.blog.service.ITArticleService;
+import com.zsc.blog.service.ITCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.net.www.protocol.http.HttpURLConnection;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -35,6 +39,8 @@ public class ArticleController {
     ITArticleService itArticleService;
     @Autowired
     TArticleMapper tArticleMapper;
+    @Autowired
+    ITCommentService itCommentService;
     @Resource
     RedisUtil redisUtil;
     @ResponseBody
@@ -87,4 +93,26 @@ public class ArticleController {
         }
         return ResponseData.out(CodeEnum.SUCCESS, page_articles,num_all);
     }
+    //点击显示文字内容以及评论
+    @ResponseBody
+    @RequestMapping(value = "/article/showarticle",method = RequestMethod.POST)
+    public ResponseData<Object> Show_article(@RequestBody Map<String,String>  requestdata)
+    {
+        String id=requestdata.get("id");
+        TArticle tArticle=tArticleMapper.selectArticleWithId(Integer.parseInt(id) );
+        List<TComment> tCommentList=itCommentService.SelectByArticle_id(Integer.parseInt(id));
+        Map<String,Object> map=new HashMap<>();
+        map.put("article",tArticle);
+        map.put("commentlist",tCommentList);
+        return ResponseData.out(CodeEnum.SUCCESS,map);
+    }
+    //添加评论
+    @ResponseBody
+    @RequestMapping(value = "/article/addcomment",method = RequestMethod.POST)
+    public ResponseData<Object> Add_comment(@RequestBody Map<String,String>  requestdata)
+    {
+        return ResponseData.out(CodeEnum.SUCCESS,null);
+    }
+
+
 }
