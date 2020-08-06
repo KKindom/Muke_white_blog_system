@@ -68,11 +68,20 @@ public class PIMController
     public ResponseData<Map<String,String>> updata_Pwd(@RequestBody Map<String, String> userdata)
     {
         String username=userdata.get("username");
+        String newpassword=userdata.get("newpassword");
         String password=userdata.get("password");
         TUser olduser=itUserService.selectByusername(username);
-        //加密密码
-        olduser.setPassword(encrypt_decryptUtil.Encrypt(password));
-        itUserService.updata_I(olduser);
+        //判定传来的原始密码和数据库原密码是否匹配
+        if(encrypt_decryptUtil.Decrypt(olduser.getPassword()).equals(password))
+        {
+            //加密密码
+            olduser.setPassword(encrypt_decryptUtil.Encrypt(newpassword));
+            itUserService.updata_I(olduser);
+        }
+        else
+        {
+            return  ResponseData.out(CodeEnum.FAILURE,null);
+        }
         return ResponseData.out(CodeEnum.SUCCESS,null);
     }
 
