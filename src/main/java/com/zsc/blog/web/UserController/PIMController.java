@@ -42,6 +42,7 @@ public class PIMController
     public ResponseData<Map<String,String>> updata_photo(@RequestParam(name = "file", required = false) MultipartFile file,
                                                         @RequestBody Map<String, String> userdata)
     {
+
         return ResponseData.out(CodeEnum.SUCCESS,null);
     }
     //修改 用户名 昵称

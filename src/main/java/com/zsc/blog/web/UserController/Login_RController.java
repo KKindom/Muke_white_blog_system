@@ -60,7 +60,7 @@ public class Login_RController {
                 String token = userUtil.getToken(back_user);
                 data.put("token", token);
                 data.put("nickName", back_user.getNickname());
-
+                data.put("emil",back_user.getEmail());
                 return ResponseData.out(CodeEnum.SUCCESS, data);
             }
             return ResponseData.out(CodeEnum.FAILURE_error_password, null);
