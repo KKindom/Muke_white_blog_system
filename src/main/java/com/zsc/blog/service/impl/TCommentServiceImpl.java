@@ -32,4 +32,10 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     public List<TComment> SelectByArticle_id(int id) {
         return tCommentMapper.selectList(new QueryWrapper<TComment>().eq("article_id", id));
     }
+
+    @Override
+    public void insertcomment(TComment tComment) {
+        tCommentMapper.insert(tComment);
+        System.out.println("插入评论成功！");
+    }
 }

@@ -19,4 +19,8 @@ public interface ITCommentService extends IService<TComment> {
 
     //查找评论根据文章id
     List<TComment> SelectByArticle_id(int id);
+
+    //插入评论
+
+    void insertcomment(TComment tComment);
 }

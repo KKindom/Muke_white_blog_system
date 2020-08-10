@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import sun.net.www.protocol.http.HttpURLConnection;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +113,22 @@ public class ArticleController {
     @RequestMapping(value = "/article/addcomment",method = RequestMethod.POST)
     public ResponseData<Object> Add_comment(@RequestBody Map<String,String>  requestdata)
     {
-        return ResponseData.out(CodeEnum.SUCCESS,null);
+        String article_id=requestdata.get("article_id");
+        String created=requestdata.get("created");
+        String content=requestdata.get("content");
+        String author=requestdata.get("author");
+        String status=requestdata.get("status");
+        //string 转 LocalDate格式
+        LocalDate ldt = LocalDate.parse(created);
+        //初始化赋值评论
+        TComment newcomment=new TComment();
+        newcomment.setArticleId(Integer.valueOf(article_id));
+        newcomment.setAuthor(author);
+        newcomment.setContent(content);
+        newcomment.setCreated(ldt);
+        newcomment.setStatus(status);
+        itCommentService.insertcomment(newcomment);
+        return ResponseData.out(CodeEnum.SUCCESS_addcomment,null);
     }
 
 

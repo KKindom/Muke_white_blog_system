@@ -1,10 +1,12 @@
 package com.zsc.blog.web.UserController;
 
 import com.zsc.blog.Utils.Encrypt_DecryptUtil;
+import com.zsc.blog.Utils.FileUploadUtils;
 import com.zsc.blog.Utils.MailUtils;
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
+import com.zsc.blog.entity.AttachFile;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.service.ITUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,32 +37,44 @@ public class PIMController
     RedisUtil redisUtil;
     @Autowired
     Encrypt_DecryptUtil encrypt_decryptUtil;
+    @Autowired
+    FileUploadUtils fileUploadUtils;
     //验证码
     String  Identifying_code;
     //修改头像函数
     @ResponseBody
     @RequestMapping(value = "/updata_photo",method = RequestMethod.POST)
     public ResponseData<Map<String,String>> updata_photo(@RequestParam(name = "file", required = false) MultipartFile file,
-                                                        @RequestBody Map<String, String> userdata)
+                                                         @RequestParam("username")String username)
     {
+        //String username=userdata.get("username");
+        TUser user=itUserService.selectByusername(username);
+        try {
+            AttachFile attachFile = fileUploadUtils.upload(file, 1);
+            user.setProfilephoto(attachFile.getVirtual_path());
+            itUserService.updata_I(user);
 
-        return ResponseData.out(CodeEnum.SUCCESS,null);
+
+        } catch (IOException e) {
+            return ResponseData.out(CodeEnum.FAILURE_updataphoto,null);
+        }
+        return ResponseData.out(CodeEnum.SUCCESS_updataphoto,null);
     }
-    //修改 用户名 昵称
+    //修改用户名
     @ResponseBody
     @RequestMapping(value = "/updata_Uname",method = RequestMethod.POST)
     public ResponseData<Map<String,String>> updata_Uname(@RequestBody Map<String, String> userdata)
     {
-        String oldusername=userdata.get("oldusername");
-        String newusername=userdata.get("username");
-        String password=userdata.get("password");
-        int count=itUserService.find_usercount(oldusername);
+        String username=userdata.get("username");
+        String new_uname=userdata.get("new_uname");
+        int count=itUserService.find_usercount(new_uname);
         if(count>=1)
         {
             return ResponseData.out(CodeEnum.FAILURE_error_username,null);
         }
 
-        TUser newuser=itUserService.selectByusername(newusername);
+        TUser newuser=itUserService.selectByusername(username);
+        newuser.setUsername(new_uname);
         itUserService.updata_I(newuser);
         return ResponseData.out(CodeEnum.SUCCESS,null);
     }
@@ -71,6 +86,8 @@ public class PIMController
         String username=userdata.get("username");
         String newpassword=userdata.get("newpassword");
         String password=userdata.get("password");
+        System.out.println("原先密码为"+password);
+        System.out.println("现在密码为:"+newpassword);
         TUser olduser=itUserService.selectByusername(username);
         //判定传来的原始密码和数据库原密码是否匹配
         if(encrypt_decryptUtil.Decrypt(olduser.getPassword()).equals(password))
@@ -81,6 +98,7 @@ public class PIMController
         }
         else
         {
+            System.out.println("密码与原密码不匹配！");
             return  ResponseData.out(CodeEnum.FAILURE,null);
         }
         return ResponseData.out(CodeEnum.SUCCESS,null);
@@ -104,13 +122,15 @@ public class PIMController
         }
         return ResponseData.out(CodeEnum.FAILURE,null);
     }
-    //注册时获取验证码
+    //修改邮箱获取验证码
     @ResponseBody
     @PostMapping("/updata_vcode")
-    public ResponseData<Map<String, Integer>> getvcode(@RequestBody Map<String, String> Email)
+    public ResponseData<Map<String, Integer>> getvcode(@RequestBody Map<String, String> userdata)
     {
-        //设置需要发送邮箱
-        String email=Email.get("mail");
+        //设置需要发送邮箱的用户原邮箱
+        String username=userdata.get("username");
+        TUser tUser=itUserService.selectByusername(username);
+        String email=tUser.getEmail();
         //设置随机数
         int vcode=(int)((Math.random()*9+1)*1000);
         Identifying_code=vcode+"";
