@@ -1,4 +1,4 @@
-package com.zsc.blog.web.AdminController;
+package com.zsc.blog.web.UserController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zsc.blog.Utils.*;
@@ -6,6 +6,8 @@ import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.config.PassToken;
 import com.zsc.blog.entity.TUser;
+import com.zsc.blog.mapper.TCollectMapper;
+import com.zsc.blog.mapper.TCommentMapper;
 import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITCommentService;
 import com.zsc.blog.service.ITUserService;
@@ -44,6 +46,8 @@ public class indexcontroller {
     Encrypt_DecryptUtil encrypt_decryptUtil;
     @Autowired
     FileUploadUtils fileUploadUtils;
+    @Autowired
+    TCollectMapper tCollectMapper;
     @Value("${file.uploadFolder}")
     private String uploadFolder;
     @ResponseBody
@@ -124,6 +128,10 @@ public class indexcontroller {
         System.out.println(encrypt_decryptUtil.Encrypt("12345"));
         System.out.println(encrypt_decryptUtil.Decrypt("DtlH4obuiLYz6U9ALRbofA=="));
         //mailUtils.sendSimpleEmail("1184045779@qq.com","个人博客系统密码找回","您的密码已重置为：123456");
+
+        System.out.println(tCollectMapper.selectById(1));
+
+
         return "test";
     }
 
