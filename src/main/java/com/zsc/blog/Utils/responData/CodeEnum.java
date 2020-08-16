@@ -29,7 +29,7 @@ public enum CodeEnum {
     /*修改头像失败码*/
     FAILURE_updataphoto(500,"修改头像失败！"),
     /*新增评论成功码*/
-    SUCCESS_addcomment(500,"添加评论成功！");
+    SUCCESS_addcomment(200,"添加评论成功！");
 
     public int code;
     public String  msg;
