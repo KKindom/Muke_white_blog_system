@@ -21,11 +21,11 @@ public enum CodeEnum {
     /* 验证码错误*/
     FAILURE_error_vcode(500,"对不起，验证码错误！"),
     /*注册成功*/
-    SUCCESS_registeruser(500,"恭喜你注册成功!"),
+    SUCCESS_registeruser(200,"恭喜你注册成功!"),
     /*发送验证码成功*/
-    SUCCESS_sendvcode(500,"验证码发送成功！请检查邮箱 若没收到请检查邮箱是否设置相关属性！"),
+    SUCCESS_sendvcode(200,"验证码发送成功！请检查邮箱 若没收到请检查邮箱是否设置相关属性！"),
     /*修改头像成功码*/
-    SUCCESS_updataphoto(500,"修改头像成功！"),
+    SUCCESS_updataphoto(200,"修改头像成功！"),
     /*修改头像失败码*/
     FAILURE_updataphoto(500,"修改头像失败！"),
     /*新增评论成功码*/
