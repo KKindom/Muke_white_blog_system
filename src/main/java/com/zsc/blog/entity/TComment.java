@@ -2,6 +2,8 @@ package com.zsc.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -32,7 +34,7 @@ public class TComment extends Model<TComment> {
     /**
      * 评论时间
      */
-    private LocalDate created;
+    private Timestamp created;
 
     /**
      * 评论内容
@@ -66,11 +68,11 @@ public class TComment extends Model<TComment> {
         this.articleId = articleId;
     }
 
-    public LocalDate getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 

@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import sun.net.www.protocol.http.HttpURLConnection;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,12 +116,11 @@ public class ArticleController {
     public ResponseData<Object> Add_comment(@RequestBody Map<String,String>  requestdata)
     {
         String article_id=requestdata.get("article_id");
-        String created=requestdata.get("created");
         String content=requestdata.get("content");
         String author=requestdata.get("author");
         String status=requestdata.get("status");
-        //string 转 LocalDate格式
-        LocalDate ldt = LocalDate.parse(created);
+        //string 转 时间戳
+        Timestamp ldt =new Timestamp(new Date().getTime());
         //初始化赋值评论
         TComment newcomment=new TComment();
         newcomment.setArticleId(Integer.valueOf(article_id));
