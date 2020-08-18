@@ -13,6 +13,10 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
 
+mybatis-plus:
+  mapper-locations: classpath:mybatis/mappers/*.xml
+  type-aliases-package: com.zsc.blog.entity
+
 # MyBatis配置
 mybatis:
   configuration:
@@ -20,6 +24,7 @@ mybatis:
     map-underscore-to-camel-case: true
   #配置MyBatis的xml映射文件路径
   mapper-locations: classpath:mapper/*.xml
+
   #配置XML映射文件中指定的实体类别名路径
   type-aliases-package: com.kkindom_blog.model.domain
 

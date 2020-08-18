@@ -53,4 +53,7 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     //根据ID查询文章
     @Select("select * from t_article where id = #{id}")
     public TArticle selectArticleWithId(int id);
+
+    //根据ID更新文章
+    public void updateArticle(TArticle tArticle);
 }

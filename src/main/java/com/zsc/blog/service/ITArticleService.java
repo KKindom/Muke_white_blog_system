@@ -34,4 +34,10 @@ public interface ITArticleService extends IService<TArticle> {
 
     //通过ID删除文章
     public void deleteArticleWithId(int id);
+
+    //根据ID查询文章
+    public TArticle selectArticleWithId(int id);
+
+    //修改文章
+    public void updateArticle(TArticle tArticle);
 }

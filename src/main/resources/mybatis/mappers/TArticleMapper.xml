@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zsc.blog.mapper.TArticleMapper">
 
+    <!-- 更新文章 -->
+    <update id="updateArticle" parameterType="TArticle">
+            update t_article
+     <set>
+         <if test="title != null">
+             title = #{title},
+         </if>
+         <if test="created != null">
+             created = #{created},
+         </if>
+         <if test="modified != null">
+             modified = #{modified},
+         </if>
+         <if test="content != null">
+             content = #{content},
+         </if>
+         <if test="categories != null">
+             categories = #{categories},
+         </if>
+         <if test="thumbnail != null">
+             thumbnail = #{thumbnail},
+         </if>
+     </set>
+        where id = #{id}
+    </update>
+
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.zsc.blog.entity.TArticle">
         <id column="id" property="id" />
