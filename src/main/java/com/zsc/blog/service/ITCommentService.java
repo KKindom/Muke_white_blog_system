@@ -1,5 +1,6 @@
 package com.zsc.blog.service;
 
+import com.zsc.blog.entity.TCollect;
 import com.zsc.blog.entity.TComment;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -21,6 +22,12 @@ public interface ITCommentService extends IService<TComment> {
     List<TComment> SelectByArticle_id(int id);
 
     //插入评论
-
     void insertcomment(TComment tComment);
+
+
+    //查找评论根据用户名
+    public List<TComment> Selectbyuid(String username);
+
+    //删除评论
+    void Delcomment(int aid,String username);
 }

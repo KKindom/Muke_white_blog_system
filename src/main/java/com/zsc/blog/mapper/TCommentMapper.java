@@ -18,4 +18,7 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     @Delete("delete from t_comment where article_id = #{id}")
     public void deleteCommentWithId(Integer id);
 
+    @Delete("delete from t_comment where article_id = #{id} and author=#{username}")
+    public void deleteCommentWithauthor(Integer id,String username);
+
 }

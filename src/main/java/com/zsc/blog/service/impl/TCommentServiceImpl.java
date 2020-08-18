@@ -38,4 +38,14 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
         tCommentMapper.insert(tComment);
         System.out.println("插入评论成功！");
     }
+
+    @Override
+    public List<TComment> Selectbyuid(String username) {
+        return tCommentMapper.selectList(new QueryWrapper<TComment>().eq("author", username));
+    }
+
+    @Override
+    public void Delcomment(int aid, String username) {
+        tCommentMapper.deleteCommentWithauthor(aid,username);
+    }
 }
