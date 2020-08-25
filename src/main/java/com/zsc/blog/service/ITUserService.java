@@ -27,4 +27,6 @@ public interface ITUserService extends IService<TUser> {
     void updata_I(TUser tUser);
     //返回用户名数量
     int find_usercount(String usrname);
+    //查询用户数量
+    public int queryUserNumber();
 }

@@ -150,4 +150,9 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         redisUtil.set("article_" + article.getId().toString(), hashMap);
         tArticleMapper.updateArticle(article);
     }
+
+    @Override
+    public int queryArticleNumber() {
+        return tArticleMapper.queryCount();
+    }
 }

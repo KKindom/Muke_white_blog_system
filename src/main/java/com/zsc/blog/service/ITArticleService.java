@@ -40,4 +40,7 @@ public interface ITArticleService extends IService<TArticle> {
 
     //修改文章
     public void updateArticle(TArticle tArticle);
+
+    //查询文章数量
+    public int queryArticleNumber();
 }

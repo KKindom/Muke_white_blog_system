@@ -56,4 +56,8 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
 
     //根据ID更新文章
     public void updateArticle(TArticle tArticle);
+
+    //查询文章数量
+    @Select("Select count(*) from t_article")
+    public int queryCount();
 }

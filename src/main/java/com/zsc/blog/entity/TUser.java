@@ -52,6 +52,8 @@ public class TUser extends Model<TUser> {
     * */
     private String nickname;
 
+    private Boolean bloked;
+
     public Integer getId() {
         return id;
     }
@@ -106,6 +108,7 @@ public class TUser extends Model<TUser> {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
 
     @Override
     protected Serializable pkVal() {

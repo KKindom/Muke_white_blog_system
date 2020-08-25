@@ -18,5 +18,7 @@ public interface TUserMapper extends BaseMapper<TUser> {
     @Select("Select * from t_user where username=#{username}")
     public TUser selectbyname(String username);
 
-
+    //查询用户数量
+    @Select("Select count(*) from t_user")
+    public int queryCount();
 }

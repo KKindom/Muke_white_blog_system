@@ -48,4 +48,9 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     public void Delcomment(int aid, String username) {
         tCommentMapper.deleteCommentWithauthor(aid,username);
     }
+
+    @Override
+    public int queryCommentNumber() {
+        return tCommentMapper.queryCount();
+    }
 }

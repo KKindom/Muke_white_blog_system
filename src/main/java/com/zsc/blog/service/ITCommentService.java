@@ -24,10 +24,12 @@ public interface ITCommentService extends IService<TComment> {
     //插入评论
     void insertcomment(TComment tComment);
 
-
     //查找评论根据用户名
     public List<TComment> Selectbyuid(String username);
 
     //删除评论
     void Delcomment(int aid,String username);
+
+    //查询评论数量
+    public int queryCommentNumber();
 }

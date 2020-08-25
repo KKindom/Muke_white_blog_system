@@ -64,4 +64,9 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
       int count=  tUserMapper.selectCount(new QueryWrapper<TUser>().eq("username", username));
         return count;
     }
+
+    @Override
+    public int queryUserNumber(){
+        return tUserMapper.queryCount();
+    }
 }
