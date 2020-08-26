@@ -97,7 +97,8 @@ public class Login_RController {
             newuser.setNickname(Registerdata.get("nickname"));
             newuser.setEmail(Registerdata.get("mail"));
             newuser.setPassword(encrypt_decryptUtil.Encrypt(Registerdata.get("password")));
-            newuser.setProfilephoto("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596123710448&di=cc0bc85abd66d6562a4b9dbcdeb0da73&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F6e8f56b2543cce8bffa35b22d03684fae76a1b2c56c32-COdswi_fw658");
+            newuser.setProfilephoto("https://timgsa.baidu" +
+                    ".com/timg?image&quality=80&size=b9999_10000&sec=1596123710448&di=cc0bc85abd66d6562a4b9dbcdeb0da73&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F6e8f56b2543cce8bffa35b22d03684fae76a1b2c56c32-COdswi_fw658");
             newuser.setPermisson("cilent");
             itUserService.insert_user(newuser);
             return ResponseData.out(CodeEnum.SUCCESS_registeruser, newuser);

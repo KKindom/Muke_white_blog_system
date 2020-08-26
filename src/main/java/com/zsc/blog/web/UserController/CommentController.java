@@ -4,6 +4,7 @@ import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.TComment;
 import com.zsc.blog.entity.TUser;
+import com.zsc.blog.mapper.TCommentMapper;
 import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITCommentService;
 import com.zsc.blog.service.ITUserService;
@@ -33,6 +34,8 @@ public class CommentController
     ITUserService itUserService;
     @Autowired
     ITArticleService itArticleService;
+    @Autowired
+    TCommentMapper tCommentMapper;
     //查看评论列表
     @ResponseBody
     @RequestMapping(value = "/comment/getcomlist",method = RequestMethod.POST)
@@ -44,12 +47,29 @@ public class CommentController
         //int a_id=tUser.getId();
         if(tUser!=null)
         {
-          List<TComment> tCommentList=itCommentService.Selectbyuid(username);
+            List<Map<String,String>> tCommentList=itCommentService.Selectbyuid(username);
             System.out.println("查找评论成功！");
             return ResponseData.out(CodeEnum.SUCCESS, tCommentList);
         }
         return ResponseData.out(CodeEnum.FAILURE, null);
     }
+    @ResponseBody
+    @RequestMapping(value = "/comment/get",method = RequestMethod.POST)
+    public ResponseData<Object> ss(@RequestBody Map<String,String> userdata)
+    {
+        //用户名
+        String username=userdata.get("username");
+        TUser tUser=itUserService.selectByusername(username);
+        //int a_id=tUser.getId();
+        if(tUser!=null)
+        {
+            List<Map<String,String>> tCommentList=tCommentMapper.selcetcommentbyusername(username);
+            System.out.println("查找评论成功！");
+            return ResponseData.out(CodeEnum.SUCCESS, tCommentList);
+        }
+        return ResponseData.out(CodeEnum.FAILURE, null);
+    }
+
     //删除评论
     @ResponseBody
     @RequestMapping(value = "/comment/delcom",method = RequestMethod.POST)

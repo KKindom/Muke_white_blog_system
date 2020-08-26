@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  *  Mapper 接口
@@ -25,4 +28,7 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     //查询评论数量
     @Select("Select count(*) from t_comment")
     public int queryCount();
+
+    @Select("SELECT t_comment.*,t_article.title from t_comment,t_article where t_comment.author=#{username} and t_article.id=t_comment.article_id")
+    public List<Map<String,String>> selcetcommentbyusername(String username);
 }

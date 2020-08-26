@@ -5,6 +5,7 @@ import com.zsc.blog.entity.TComment;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,7 +26,7 @@ public interface ITCommentService extends IService<TComment> {
     void insertcomment(TComment tComment);
 
     //查找评论根据用户名
-    public List<TComment> Selectbyuid(String username);
+    public List<Map<String,String>> Selectbyuid(String username);
 
     //删除评论
     void Delcomment(int aid,String username);
