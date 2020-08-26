@@ -21,7 +21,7 @@ public class MailUtils {
 
     // 发送简单邮件
     public void sendSimpleEmail(String mailto, int code) {
-        content+=code;
+        content=code+"";
         //  定制邮件发送内容
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(mailfrom);

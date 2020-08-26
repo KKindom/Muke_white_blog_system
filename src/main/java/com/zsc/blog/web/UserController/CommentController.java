@@ -41,7 +41,7 @@ public class CommentController
         //用户名
         String username=userdata.get("username");
         TUser tUser=itUserService.selectByusername(username);
-        int a_id=tUser.getId();
+        //int a_id=tUser.getId();
         if(tUser!=null)
         {
           List<TComment> tCommentList=itCommentService.Selectbyuid(username);

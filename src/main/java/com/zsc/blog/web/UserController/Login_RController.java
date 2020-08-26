@@ -95,7 +95,7 @@ public class Login_RController {
             TUser newuser = new TUser();
             newuser.setUsername(R_username);
             newuser.setNickname(Registerdata.get("nickname"));
-            newuser.setEmail(Registerdata.get("emil"));
+            newuser.setEmail(Registerdata.get("mail"));
             newuser.setPassword(encrypt_decryptUtil.Encrypt(Registerdata.get("password")));
             newuser.setProfilephoto("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596123710448&di=cc0bc85abd66d6562a4b9dbcdeb0da73&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F6e8f56b2543cce8bffa35b22d03684fae76a1b2c56c32-COdswi_fw658");
             newuser.setPermisson("cilent");
@@ -114,6 +114,7 @@ public class Login_RController {
         //设置随机数
         int vcode=(int)((Math.random()*9+1)*1000);
         Identifying_code=vcode+"";
+        System.out.println(Identifying_code);
         //发送邮件
         mailUtils.sendSimpleEmail(email,vcode);
         //返回验证码
