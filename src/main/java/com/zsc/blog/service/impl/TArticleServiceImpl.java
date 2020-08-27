@@ -126,7 +126,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
             file.delete();
         }*/
         redisUtil.del("article_" + Integer.toString(id));
-        tCommentMapper.deleteCommentWithId(id);
+        tCommentMapper.deleteCommentWithAid(id);
         tArticleMapper.deleteArticleWithId(id);
         tStatisticMapper.deleteStatisticWithId(id);
     }

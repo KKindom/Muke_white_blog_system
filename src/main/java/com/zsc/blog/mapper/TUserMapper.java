@@ -27,8 +27,8 @@ public interface TUserMapper extends BaseMapper<TUser> {
     public int queryCount();
 
     //删除用户
-    @Delete("Delect * from t_user where id=#{id}")
-    public void delectUser(int id);
+    @Delete("Delete * from t_user where id=#{id}")
+    public void deleteUser(int id);
 
     //查询用户信息
     @Select("select * from t_user where permisson='cilent' order by id DESC limit #{st},#{en};")

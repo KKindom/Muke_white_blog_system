@@ -75,11 +75,11 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     }
 
     @Override
-    public void delectUserWithId(int id) {
+    public void deleteUserWithId(int id) {
         TUser tUser = tUserMapper.selectById(id);
         String username = tUser.getUsername();
         redisUtil.del(username);
-        tUserMapper.delectUser(id);
+        tUserMapper.deleteUser(id);
         tCommentMapper.deleteCommentWithauthor(id, username);
     }
 

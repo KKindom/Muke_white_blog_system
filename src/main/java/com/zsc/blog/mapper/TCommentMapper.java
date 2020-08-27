@@ -22,9 +22,9 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     @Select("select * from t_comment where article_id = #{id} order by created DESC,id DESC limit #{st},#{en};")
     public List<TComment> selectCommentPage(Integer id, Integer st, Integer en);
 
-    /*//通过文章ID删除评论信息
+    //通过文章ID删除评论信息
     @Delete("delete from t_comment where article_id = #{id}")
-    public void deleteCommentWithid(Integer id);*/
+    public void deleteCommentWithAid(Integer id);
 
     //通过评论ID删除评论
     @Delete("delete from t_comment where id = #{id}")

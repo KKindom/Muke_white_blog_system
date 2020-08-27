@@ -47,7 +47,7 @@ public class UserController {
     @PostMapping("admin/user/delete")
     public ResponseData<Object> deleteUser(@RequestHeader("token") String token, @RequestBody Map<String, Integer> data) {
         int id = data.get("id");
-        itUserService.delectUserWithId(id);
+        itUserService.deleteUserWithId(id);
         return ResponseData.out(CodeEnum.SUCCESS, null);
     }
 }

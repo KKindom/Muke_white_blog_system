@@ -31,7 +31,7 @@ public interface ITUserService extends IService<TUser> {
     //查询用户数量
     public int queryUserNumber();
     //删除用户
-    public void delectUserWithId(int it);
+    public void deleteUserWithId(int it);
     //分页查看用户列表
     public List<TUser> adminSelectUser(int st, int en, int num);
 }
