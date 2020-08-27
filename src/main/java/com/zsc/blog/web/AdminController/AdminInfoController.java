@@ -31,7 +31,7 @@ public class AdminInfoController {
 
     @ResponseBody
     @PostMapping("admin/userInfo")
-    public ResponseData<Map<String,String>> GetAdminInfo(@RequestHeader("token") String token) {
+    public ResponseData<Object> GetAdminInfo(@RequestHeader("token") String token) {
         /*if (StringUtils.isEmpty(token)) {
             token = request.getParameter("token");
         }*/
@@ -58,7 +58,7 @@ public class AdminInfoController {
 
     @ResponseBody
     @PostMapping("")
-    public ResponseData<Map<String, Integer>> GetBlogInfo() {
+    public ResponseData<Object> GetBlogInfo() {
         Map<String, Integer> data = new HashMap<>();
         data.put("user", itUserService.queryUserNumber());
         data.put("article", itArticleService.queryArticleNumber());

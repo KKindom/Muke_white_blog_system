@@ -31,6 +31,13 @@ public interface ITCommentService extends IService<TComment> {
     //删除评论
     void Delcomment(int aid,String username);
 
+    //根据评论ID删除评论
+    public void deleteCommentWithId(int id);
+
     //查询评论数量
     public int queryCommentNumber();
+
+    //根据ID分页查询文章评论
+    public List<TComment> selectCommentPage(int id, int st, int en, int num);
+    public int queryCommentWithId(int id);
 }

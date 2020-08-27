@@ -86,4 +86,25 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     public int queryCommentNumber() {
         return tCommentMapper.queryCount();
     }
+    @Override
+    public int queryCommentWithId(int id) { return tCommentMapper.queryCountWithId(id);}
+    @Override
+    public void deleteCommentWithId(int id) {
+        tCommentMapper.deleteCommentWithId(id);
+    }
+
+    @Override
+    public List<TComment> selectCommentPage(int id, int st, int en, int num) {
+        List<TComment> resultList;
+        if (redisUtil.get("CommentPageNo_"+num+"articleID_"+id)==null)
+        {
+            resultList=tCommentMapper.selectCommentPage(id, st, en);
+            redisUtil.set("CommentPageNo_"+num+"articleID_"+id,resultList);
+        }
+        else
+        {
+            resultList =(List<TComment>)redisUtil.get("CommentPageNo_"+num+"articleID_"+id);
+        }
+        return resultList;
+    }
 }

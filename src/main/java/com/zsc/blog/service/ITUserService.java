@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,4 +30,8 @@ public interface ITUserService extends IService<TUser> {
     int find_usercount(String usrname);
     //查询用户数量
     public int queryUserNumber();
+    //删除用户
+    public void delectUserWithId(int it);
+    //分页查看用户列表
+    public List<TUser> adminSelectUser(int st, int en, int num);
 }

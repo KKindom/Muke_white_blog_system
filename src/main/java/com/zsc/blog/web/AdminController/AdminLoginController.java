@@ -21,7 +21,7 @@ public class AdminLoginController {
 
     @ResponseBody
     @PostMapping("admin/login")
-    public ResponseData<Map<String, String>> login(@RequestBody Map<String, String> userdata) {
+    public ResponseData<Object> login(@RequestBody Map<String, String> userdata) {
         System.out.println(userdata);
         String username = userdata.get("username");
         String password = userdata.get("password");
@@ -55,7 +55,7 @@ public class AdminLoginController {
 
     @ResponseBody
     @PostMapping("admin/logout")
-    public ResponseData<Map<String, String>> logout(@RequestHeader("token") String token) {
+    public ResponseData<Object> logout(@RequestHeader("token") String token) {
         return ResponseData.out(CodeEnum.SUCCESS, null);
     }
 }

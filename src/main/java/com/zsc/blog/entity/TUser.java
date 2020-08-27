@@ -52,8 +52,6 @@ public class TUser extends Model<TUser> {
     * */
     private String nickname;
 
-    private Boolean bloked;
-
     public Integer getId() {
         return id;
     }

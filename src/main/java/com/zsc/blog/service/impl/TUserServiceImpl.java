@@ -3,6 +3,7 @@ package com.zsc.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.entity.TUser;
+import com.zsc.blog.mapper.TCommentMapper;
 import com.zsc.blog.mapper.TUserMapper;
 import com.zsc.blog.service.ITUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,6 +29,8 @@ import java.util.List;
 public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements ITUserService {
     @Autowired
     TUserMapper tUserMapper;
+    @Autowired
+    TCommentMapper tCommentMapper;
     @Resource
     RedisUtil redisUtil;
     //查询所有用户
@@ -68,5 +72,29 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     @Override
     public int queryUserNumber(){
         return tUserMapper.queryCount();
+    }
+
+    @Override
+    public void delectUserWithId(int id) {
+        TUser tUser = tUserMapper.selectById(id);
+        String username = tUser.getUsername();
+        redisUtil.del(username);
+        tUserMapper.delectUser(id);
+        tCommentMapper.deleteCommentWithauthor(id, username);
+    }
+
+    @Override
+    public List<TUser> adminSelectUser(int st, int en, int num) {
+        List<TUser> resultList;
+        if (redisUtil.get("userPageNo_"+num)==null)
+        {
+            resultList=tUserMapper.selectUser(st, en);
+            redisUtil.set("userPageNo_"+num,resultList);
+        }
+        else
+        {
+            resultList =(List<TUser>)redisUtil.get("userPageNo_"+num);
+        }
+        return resultList;
     }
 }
