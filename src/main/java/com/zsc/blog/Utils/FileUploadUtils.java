@@ -53,7 +53,7 @@ public class FileUploadUtils {
         //保存文件名
         String fileName = file.getOriginalFilename();
         String type2=file.getContentType();
-        fileName+=type2.split("/")[1];
+        fileName+='.'+type2.split("/")[1];
         System.out.println("获得文件名"+fileName);
        //type=1,时表示存储用户头像图片
         if(type==1) {
