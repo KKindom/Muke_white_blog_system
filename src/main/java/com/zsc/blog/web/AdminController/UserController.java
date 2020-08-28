@@ -27,16 +27,13 @@ public class UserController {
         int last= userCount%pageSize;
 
         List<TUser> page_user;
-        if(MAX_Page>pageNo)
-        {
-            page_user= itUserService.adminSelectUser((pageNo - 1)*pageSize,pageSize,pageNo);
+        if(MAX_Page>pageNo) {
+            page_user= itUserService.adminSelectUser((pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
         }
-        else
-        {
-            page_user= itUserService.adminSelectUser((pageNo - 1)*pageSize,last,pageNo);
+        else {
+            page_user= itUserService.adminSelectUser((pageNo - 1)*pageSize,last,pageNo,pageSize);
         }
-        if(page_user.size() == 0)
-        {
+        if(page_user.size() == 0) {
             return ResponseData.out(CodeEnum.FAILURE, null);
         }
         return ResponseData.out(CodeEnum.SUCCESS, page_user);

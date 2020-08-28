@@ -1,11 +1,13 @@
 package com.zsc.blog.Utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisOperations;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -104,4 +106,47 @@ public class RedisUtil {
         }
     }
 
+    /**
+     *  获取包括指定字符串的一系列key
+     *  使用scan命令代替keys, Redis是单线程处理，keys命令在KEY数量较多时，
+     *  操作效率极低【时间复杂度为O(N)】，该命令一旦执行会严重阻塞线上其它命令的正常请求
+     * @param keyInclusion
+     * @return
+     */
+    public Set<String> keys(String keyInclusion) {
+        String realKey = "*" + keyInclusion + "*";
+        try {
+            return redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
+                Set<String> binaryKeys = new HashSet<>();
+                Cursor<byte[]> cursor = connection.scan(new ScanOptions.ScanOptionsBuilder().match(realKey).count(Integer.MAX_VALUE).build());
+                while (cursor.hasNext()) {
+                    binaryKeys.add(new String(cursor.next()).replaceAll("\"", ""));
+                }
+                return binaryKeys;
+            });
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     *  删除包括指定字符串的一系列key
+     * @param keyInclusion
+     */
+    public void removeAll(String keyInclusion) {
+        //System.out.println(keyInclusion);
+        try {
+            Set<String> keys = keys(keyInclusion);
+            Iterator<String> it = keys.iterator();
+            //System.out.println(keys);
+            while (it.hasNext()) {
+                String str = it.next();
+                redisTemplate.delete(str);
+                //System.out.println(str);
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
 }

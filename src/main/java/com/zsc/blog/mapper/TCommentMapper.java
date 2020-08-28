@@ -21,6 +21,8 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     //分页查询评论
     @Select("select * from t_comment where article_id = #{id} order by created DESC,id DESC limit #{st},#{en};")
     public List<TComment> selectCommentPage(Integer id, Integer st, Integer en);
+    @Select("select * from t_comment order by created DESC,id DESC limit #{st},#{en};")
+    public List<TComment> selectCommentPageAll(Integer st, Integer en);
 
     //通过文章ID删除评论信息
     @Delete("delete from t_comment where article_id = #{id}")
@@ -29,6 +31,10 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     //通过评论ID删除评论
     @Delete("delete from t_comment where id = #{id}")
     public void deleteCommentWithId(Integer id);
+
+    //删除用户时删除所有相关评论
+    @Delete("delete from t_comment where author=#{username}")
+    public void deleteCommentWithUser(String username);
 
     @Delete("delete from t_comment where id = #{id} and author=#{username}")
     public void deleteCommentWithauthor(Integer id,String username);
@@ -42,6 +48,4 @@ public interface TCommentMapper extends BaseMapper<TComment> {
 
     @Select("SELECT t_comment.*,t_article.title from t_comment,t_article where t_comment.author=#{username} and t_article.id=t_comment.article_id")
     public List<Map<String,String>> selcetcommentbyusername(String username);
-
-
 }

@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.entity.TArticle;
+import com.zsc.blog.entity.TCollect;
 import com.zsc.blog.mapper.TArticleMapper;
+import com.zsc.blog.mapper.TCollectMapper;
 import com.zsc.blog.mapper.TCommentMapper;
 import com.zsc.blog.mapper.TStatisticMapper;
 import com.zsc.blog.service.ITArticleService;
@@ -30,6 +32,8 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     TArticleMapper tArticleMapper;
     @Autowired
     TStatisticMapper tStatisticMapper;
+    @Autowired
+    TCollectMapper tCollectMapper;
     @Autowired
     TCommentMapper tCommentMapper;
     @Resource
@@ -61,19 +65,19 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     }
 
     @Override
-    public List<Map<String, Object>> admin_select_page(int st, int en,int num) {
+    public List<Map<String, Object>> admin_select_page(int st, int en, int num, int pageSize) {
         List<Map<String, Object>> resultList;
-        if (redisUtil.get("pageNo_"+num)==null)
+        if (redisUtil.get("page_"+num+"pageSize_"+pageSize)==null)
         {
             System.out.println("我查数据库");
             resultList=tArticleMapper.admin_selectPage(st, en);
             System.out.println("查询" +st+en);
-            redisUtil.set("pageNo_"+num,resultList,10);
+            redisUtil.set("page_"+num+"pageSize_"+pageSize,resultList,10);
         }
         else
         {
             System.out.println("我没查数据库");
-            resultList =(List<Map<String, Object>>)redisUtil.get("pageNo_"+num);
+            resultList =(List<Map<String, Object>>)redisUtil.get("pageNo_"+num+"pageSize"+pageSize);
         }
         return resultList;
     }
@@ -125,7 +129,11 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         if(file.exists()) {
             file.delete();
         }*/
-        redisUtil.del("article_" + Integer.toString(id));
+        redisUtil.del("article_"+Integer.toString(id));
+        redisUtil.removeAll("comment");
+        redisUtil.removeAll("page");
+        redisUtil.removeAll("Afind");
+        tCollectMapper.deleteColletWithAid(id);
         tCommentMapper.deleteCommentWithAid(id);
         tArticleMapper.deleteArticleWithId(id);
         tStatisticMapper.deleteStatisticWithId(id);
@@ -140,6 +148,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     @Override
     public void updateArticle(TArticle article) {
         redisUtil.del("article_" + Integer.toString(article.getId()));
+        redisUtil.removeAll("page");
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", article.getId().toString());
         hashMap.put("title", article.getTitle());
@@ -187,7 +196,6 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         {
             tArticleList=( List<Map<String, String>>)redisUtil.get("Afindtype_"+type);
             System.out.println("现在从缓存拿数据");
-
         }
         return tArticleList;
     }

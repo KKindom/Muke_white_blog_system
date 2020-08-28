@@ -27,16 +27,36 @@ public class AdminCommentController {
         int last= commentCount%pageSize;
 
         List<TComment> page_user;
-        if(MAX_Page>pageNo)
-        {
-            page_user= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,pageSize,pageNo);
+        if(MAX_Page>pageNo) {
+            page_user= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
         }
-        else
-        {
-            page_user= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,last,pageNo);
+        else {
+            page_user= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,last,pageNo,pageSize);
         }
         if(page_user.size() == 0)
         {
+            return ResponseData.out(CodeEnum.FAILURE, null);
+        }
+        return ResponseData.out(CodeEnum.SUCCESS, page_user);
+    }
+
+    @ResponseBody
+    @PostMapping("admin/comment/getListAll")
+    public ResponseData<Object> getListAll(@RequestHeader("token") String token, @RequestBody Map<String, Integer> data) {
+        int commentCount = itCommentService.queryCommentNumber();
+        int pageNo = data.get("pageNo");
+        int pageSize = data.get("pageSize");
+        int MAX_Page= commentCount/pageSize+1;
+        int last= commentCount%pageSize;
+
+        List<TComment> page_user;
+        if(MAX_Page>pageNo) {
+            page_user= itCommentService.selectCommentPageAll((pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
+        }
+        else {
+            page_user= itCommentService.selectCommentPageAll((pageNo - 1)*pageSize,last,pageNo,pageSize);
+        }
+        if(page_user.size() == 0) {
             return ResponseData.out(CodeEnum.FAILURE, null);
         }
         return ResponseData.out(CodeEnum.SUCCESS, page_user);

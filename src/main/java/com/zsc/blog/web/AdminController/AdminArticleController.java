@@ -22,7 +22,6 @@ import java.util.Map;
 public class AdminArticleController {
     @Autowired
     ITArticleService itArticleService;
-
     @Autowired
     FileUploadUtils fileUploadUtils;
     @Autowired
@@ -47,16 +46,13 @@ public class AdminArticleController {
         int last= articleCount%pageSize;
 
         List<Map<String, Object>> page_articles;
-        if(MAX_Page>pageNo)
-        {
-            page_articles= itArticleService.admin_select_page((pageNo - 1)*pageSize,pageSize,pageNo);
+        if(MAX_Page>pageNo) {
+            page_articles= itArticleService.admin_select_page((pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
         }
-        else
-        {
-            page_articles= itArticleService.admin_select_page((pageNo - 1)*pageSize,last,pageNo);
+        else {
+            page_articles= itArticleService.admin_select_page((pageNo - 1)*pageSize,last,pageNo,pageSize);
         }
-        if(page_articles.size() == 0)
-        {
+        if(page_articles.size() == 0) {
             return ResponseData.out(CodeEnum.FAILURE, null);
         }
         return ResponseData.out(CodeEnum.SUCCESS, page_articles, articleCount);
@@ -134,11 +130,9 @@ public class AdminArticleController {
     //点击显示文字内容以及评论
     @ResponseBody
     @RequestMapping(value = "admin/article/showarticle",method = RequestMethod.POST)
-    public ResponseData<TArticle> Show_article(@RequestBody Map<String,String>  requestdata)
-    {
+    public ResponseData<TArticle> Show_article(@RequestBody Map<String,String>  requestdata) {
         String id=requestdata.get("id");
         TArticle tArticle=tArticleMapper.selectArticleWithId(Integer.parseInt(id) );
-
         return ResponseData.out(CodeEnum.SUCCESS,tArticle);
     }
 }

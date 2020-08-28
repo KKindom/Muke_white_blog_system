@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.TUser;
@@ -12,6 +13,7 @@ import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITCommentService;
 import com.zsc.blog.service.ITUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -28,6 +30,8 @@ public class AdminInfoController {
     ITCommentService itCommentService;
     @Autowired
     ITArticleService itArticleService;
+    @Autowired
+    RedisUtil redisUtil;
 
     @ResponseBody
     @PostMapping("admin/userInfo")

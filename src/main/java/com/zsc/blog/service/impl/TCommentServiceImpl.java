@@ -5,6 +5,7 @@ import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.entity.TComment;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.mapper.TCommentMapper;
+import com.zsc.blog.mapper.TStatisticMapper;
 import com.zsc.blog.service.ITCommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ import java.util.Map;
 public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> implements ITCommentService {
     @Autowired
     TCommentMapper tCommentMapper;
+    @Autowired
+    TStatisticMapper tStatisticMapper;
     @Resource
     RedisUtil redisUtil;
 
@@ -92,20 +95,38 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     public int queryCommentWithId(int id) { return tCommentMapper.queryCountWithId(id);}
     @Override
     public void deleteCommentWithId(int id) {
+        redisUtil.removeAll("comment");
+        TComment tComment = tCommentMapper.selectById(id);
+        tStatisticMapper.updateStatisticAfterDeleteComment(tComment.getArticleId());
         tCommentMapper.deleteCommentWithId(id);
     }
 
     @Override
-    public List<TComment> selectCommentPage(int id, int st, int en, int num) {
+    public List<TComment> selectCommentPage(int id, int st, int en, int num, int pageSize) {
         List<TComment> resultList;
-        if (redisUtil.get("CommentPageNo_"+num+"articleID_"+id)==null)
+        if (redisUtil.get("article_"+id+"commentPage_"+num+"pageSize_"+pageSize)==null)
         {
             resultList=tCommentMapper.selectCommentPage(id, st, en);
-            redisUtil.set("CommentPageNo_"+num+"articleID_"+id,resultList);
+            redisUtil.set("article_"+id+"commentPage_"+num+"pageSize_"+pageSize,resultList);
         }
         else
         {
-            resultList =(List<TComment>)redisUtil.get("CommentPageNo_"+num+"articleID_"+id);
+            resultList =(List<TComment>)redisUtil.get("article_"+id+"commentPage_"+num+"pageSize_"+pageSize);
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<TComment> selectCommentPageAll(int st, int en, int num, int pageSize) {
+        List<TComment> resultList;
+        if (redisUtil.get("commentPage_"+num+"pageSize_"+pageSize)==null)
+        {
+            resultList=tCommentMapper.selectCommentPageAll(st, en);
+            redisUtil.set("commentPage_"+num+"pageSize_"+pageSize,resultList);
+        }
+        else
+        {
+            resultList =(List<TComment>)redisUtil.get("commentPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }

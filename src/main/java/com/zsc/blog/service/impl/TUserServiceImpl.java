@@ -2,8 +2,11 @@ package com.zsc.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zsc.blog.Utils.RedisUtil;
+import com.zsc.blog.entity.TStatistic;
 import com.zsc.blog.entity.TUser;
+import com.zsc.blog.mapper.TCollectMapper;
 import com.zsc.blog.mapper.TCommentMapper;
+import com.zsc.blog.mapper.TStatisticMapper;
 import com.zsc.blog.mapper.TUserMapper;
 import com.zsc.blog.service.ITUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -31,6 +34,10 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     TUserMapper tUserMapper;
     @Autowired
     TCommentMapper tCommentMapper;
+    @Autowired
+    TCollectMapper tCollectMapper;
+    @Autowired
+    TStatisticMapper tStatisticMapper;
     @Resource
     RedisUtil redisUtil;
     //查询所有用户
@@ -79,21 +86,25 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         TUser tUser = tUserMapper.selectById(id);
         String username = tUser.getUsername();
         redisUtil.del(username);
+        redisUtil.removeAll("comment");
+        redisUtil.removeAll("userPage_");
         tUserMapper.deleteUser(id);
-        tCommentMapper.deleteCommentWithauthor(id, username);
+        tCollectMapper.deleteColletWithUid(id);
+        tCommentMapper.deleteCommentWithUser(username);
+        tStatisticMapper.updateStatisticComment();
     }
 
     @Override
-    public List<TUser> adminSelectUser(int st, int en, int num) {
+    public List<TUser> adminSelectUser(int st, int en, int num, int pageSize) {
         List<TUser> resultList;
-        if (redisUtil.get("userPageNo_"+num)==null)
+        if (redisUtil.get("userPage_"+num+"pageSize_"+pageSize)==null)
         {
             resultList=tUserMapper.selectUser(st, en);
-            redisUtil.set("userPageNo_"+num,resultList);
+            redisUtil.set("userPage_"+num+"pageSize_"+pageSize,resultList);
         }
         else
         {
-            resultList =(List<TUser>)redisUtil.get("userPageNo_"+num);
+            resultList =(List<TUser>)redisUtil.get("userPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }
