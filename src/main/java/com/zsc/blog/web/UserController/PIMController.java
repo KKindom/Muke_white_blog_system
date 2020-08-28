@@ -116,25 +116,25 @@ public class PIMController
 
     }
 
-    //修改 邮箱
-    @ResponseBody
-    @RequestMapping(value = "/updata_Emil",method = RequestMethod.POST)
-    public ResponseData<Map<String,String>> updata_Emil(@RequestBody Map<String, String> userdata)
-    {
-        String newemil=userdata.get("emil");
-        String vcode=userdata.get("code");
-        String username=userdata.get("username");
-        //验证原邮箱验证码
-        if (vcode.equals(Identifying_code))
-        {
-            TUser olduser=itUserService.selectByusername(username);
-            olduser.setEmail(newemil);
-            itUserService.updata_I(olduser);
-            return ResponseData.out(CodeEnum.SUCCESS,null);
-        }
-        return ResponseData.out(CodeEnum.FAILURE,null);
-    }
-    //修改邮箱获取验证码
+//    //修改 邮箱
+//    @ResponseBody
+//    @RequestMapping(value = "/updata_Emil",method = RequestMethod.POST)
+//    public ResponseData<Map<String,String>> updata_Emil(@RequestBody Map<String, String> userdata)
+//    {
+//        String newemil=userdata.get("emil");
+//        String vcode=userdata.get("code");
+//        String username=userdata.get("username");
+//        //验证原邮箱验证码
+//        if (vcode.equals(Identifying_code))
+//        {
+//            TUser olduser=itUserService.selectByusername(username);
+//            olduser.setEmail(newemil);
+//            itUserService.updata_I(olduser);
+//            return ResponseData.out(CodeEnum.SUCCESS,null);
+//        }
+//        return ResponseData.out(CodeEnum.FAILURE,null);
+//    }
+    //获取验证码
     @ResponseBody
     @PostMapping("/updata_vcode")
     public ResponseData<Map<String, Integer>> getvcode(@RequestBody Map<String, String> userdata)
