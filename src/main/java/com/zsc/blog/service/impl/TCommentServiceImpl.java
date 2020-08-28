@@ -59,7 +59,7 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
         if (redisUtil.get(  "commentlist_"+username) == null)
         {
             CommentList = tCommentMapper.selcetcommentbyusername(username);
-            redisUtil.set("commentlist_"+username,CommentList,18000);
+            redisUtil.set("commentlist_"+username,CommentList,180000);
 
         }
         else
@@ -78,7 +78,9 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
         }
         else
         {
+            //删除原有缓存
             redisUtil.del("commentlist_"+username);
+            tCommentMapper.deleteCommentWithauthor(aid, username);
         }
     }
 

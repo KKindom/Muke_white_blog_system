@@ -79,7 +79,7 @@ public class CommentController
         String username=userdata.get("username");
         TUser tUser=itUserService.selectByusername(username);
         //删除文章的文章id
-        String a_id=userdata.get("a_id");
+        String a_id=userdata.get("id");
         int aid=Integer.valueOf(a_id);
         if(tUser!=null)
         {
