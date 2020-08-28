@@ -2,10 +2,7 @@ package com.zsc.blog.mapper;
 
 import com.zsc.blog.entity.TArticle;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -60,4 +57,14 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     //查询文章数量
     @Select("Select count(*) from t_article")
     public int queryCount();
+
+    //模糊查询文章
+    @Select("SELECT id,title,categories,thumbnail FROM t_article WHERE title LIKE'%${con}%' OR content LIKE '%${con}%'")
+    public List<Map<String, String>> select_content_withAll(@Param("con") String con);
+
+    //按分类查询文章
+    @Select("SELECT id,title,categories,thumbnail FROM t_article WHERE categories=#{type}")
+    public  List<Map<String, String>> selectbytype(String type);
+
+
 }

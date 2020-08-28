@@ -150,6 +150,35 @@ public class ArticleController {
         return ResponseData.out(CodeEnum.SUCCESS_addcomment,null);
     }
 
+
+    //模糊搜索
+    @ResponseBody
+    @RequestMapping(value = "/article/checkkey",method = RequestMethod.POST)
+    public ResponseData<Object> checkkeylist(@RequestBody Map<String,String>  requestdata) {
+
+         String key= requestdata.get("key");
+          List<Map<String, String>> mapList=itArticleService.selectArticleby_key(key);
+          return ResponseData.out(CodeEnum.SUCCESS,mapList);
+    }
+    //按照分类查询
+    @ResponseBody
+    @RequestMapping(value = "/article/checktype",method = RequestMethod.POST)
+    public ResponseData<Object> checktypelist(@RequestBody Map<String,String>  requestdata) {
+
+        String type= requestdata.get("type");
+        List<Map<String, String>> mapList=itArticleService.selecttArticleby_categories(type);
+        return ResponseData.out(CodeEnum.SUCCESS,mapList);
+    }
+
+
+
+
+
+
+
+
+
+
     //检测是否存在今天的记录
     public TUsertime checktime(String username,String data)
     {

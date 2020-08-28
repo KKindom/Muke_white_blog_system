@@ -155,4 +155,40 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     public int queryArticleNumber() {
         return tArticleMapper.queryCount();
     }
+
+
+    @Override
+    public  List<Map<String, String>> selectArticleby_key(String key) {
+        List<Map<String, String>> tArticleList;
+        if(redisUtil.get("Afindlike_"+key)==null)
+        {
+            tArticleList=tArticleMapper.select_content_withAll(key);
+            redisUtil.set("Afindlike_"+key,tArticleList,180000);
+            System.out.println("添加缓存成功");
+        }
+        else
+        {
+            tArticleList=( List<Map<String, String>>)redisUtil.get("Afindlike_"+key);
+            System.out.println("现在从缓存拿数据");
+        }
+        return tArticleList;
+    }
+
+    @Override
+    public  List<Map<String, String>> selecttArticleby_categories(String type) {
+        List<Map<String, String>> tArticleList;
+        if(redisUtil.get("Afindtype_"+type)==null)
+        {
+            tArticleList=tArticleMapper.selectbytype(type);
+            redisUtil.set("Afindtype_"+type,tArticleList,180000);
+            System.out.println("添加缓存成功");
+        }
+        else
+        {
+            tArticleList=( List<Map<String, String>>)redisUtil.get("Afindtype_"+type);
+            System.out.println("现在从缓存拿数据");
+
+        }
+        return tArticleList;
+    }
 }

@@ -43,4 +43,10 @@ public interface ITArticleService extends IService<TArticle> {
 
     //查询文章数量
     public int queryArticleNumber();
+
+    //根据关键字模糊查询文章
+    public  List<Map<String, String>> selectArticleby_key(String key);
+
+    //根据类别搜索文章列表
+    public  List<Map<String, String>> selecttArticleby_categories(String type);
 }
