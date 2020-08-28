@@ -30,7 +30,7 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
 
     //管理员查询
     @Select("select " +
-            "a.id ,title as articleName, comments_num, created as time,hits as pageView,thumbnail as img from t_article as a,t_statistic as b  " +
+            "a.id ,title as articleName, comments_num, created as time,hits as pageView,thumbnail as img,categories as type from t_article as a,t_statistic as b  " +
             "where a.id=b.article_id order by created DESC limit #{st},#{en};")
     public List<Map<String, Object>> admin_selectPage(int st, int en);
 
