@@ -62,19 +62,14 @@ public class PIMController
     }
     //修改用户名
     @ResponseBody
-    @RequestMapping(value = "/updata_Uname",method = RequestMethod.POST)
+    @RequestMapping(value = "/updata_Nname",method = RequestMethod.POST)
     public ResponseData<Map<String,String>> updata_Uname(@RequestBody Map<String, String> userdata)
     {
+        String new_nickname=userdata.get("new_nickname");
         String username=userdata.get("username");
-        String new_uname=userdata.get("new_uname");
-        int count=itUserService.find_usercount(new_uname);
-        if(count>=1)
-        {
-            return ResponseData.out(CodeEnum.FAILURE_error_username,null);
-        }
 
         TUser newuser=itUserService.selectByusername(username);
-        newuser.setUsername(new_uname);
+        newuser.setNickname(new_nickname);
         itUserService.updata_I(newuser);
         return ResponseData.out(CodeEnum.SUCCESS,null);
     }
