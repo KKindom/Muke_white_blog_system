@@ -3,8 +3,8 @@ package com.zsc.blog.web.AdminController;
 import com.zsc.blog.Utils.FileUploadUtils;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
-import com.zsc.blog.entity.AttachFile;
-import com.zsc.blog.entity.TArticle;
+import com.zsc.blog.entity.*;
+import com.zsc.blog.mapper.TArticleMapper;
 import com.zsc.blog.service.ITArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,8 @@ public class AdminArticleController {
 
     @Autowired
     FileUploadUtils fileUploadUtils;
-
+    @Autowired
+    TArticleMapper tArticleMapper;
     //展示文章列表
     @ResponseBody
     @PostMapping("admin/article/getList")
@@ -126,5 +128,17 @@ public class AdminArticleController {
         }
         itArticleService.updateArticle(tArticle);
         return ResponseData.out(CodeEnum.SUCCESS, null);
+    }
+
+
+    //点击显示文字内容以及评论
+    @ResponseBody
+    @RequestMapping(value = "admin/article/showarticle",method = RequestMethod.POST)
+    public ResponseData<TArticle> Show_article(@RequestBody Map<String,String>  requestdata)
+    {
+        String id=requestdata.get("id");
+        TArticle tArticle=tArticleMapper.selectArticleWithId(Integer.parseInt(id) );
+
+        return ResponseData.out(CodeEnum.SUCCESS,tArticle);
     }
 }
