@@ -29,7 +29,11 @@ public enum CodeEnum {
     /*修改头像失败码*/
     FAILURE_updataphoto(500,"修改头像失败！"),
     /*新增评论成功码*/
-    SUCCESS_addcomment(200,"添加评论成功！");
+    SUCCESS_addcomment(200,"添加评论成功！"),
+    /* 修改密码失败*/
+    FAILURE_updatavcode(500,"对不起验证码验证失败，请检查是否输入正确4位验证码！"),
+    /* 修改密码失败*/
+    FAILURE_updatapsw(500,"对不起与原密码不符合，请检查是否输入正确的原密码！");
 
     public int code;
     public String  msg;

@@ -109,12 +109,13 @@ public class ArticleController {
         map.put("article",tArticle);
         map.put("commentlist",tCommentList);
 
-
-        //更新用户记录
-        TUsertime tUsertime= checktime(username,str);
-        tUsertime.setNum(tUsertime.getNum()+1);
-        itUsertimeService.updatanum(tUsertime);
-
+        if(username!=null)
+        {
+            //更新用户记录
+            TUsertime tUsertime = checktime(username, str);
+            tUsertime.setNum(tUsertime.getNum() + 1);
+            itUsertimeService.updatanum(tUsertime);
+        }
         //更新文章统计数
         TStatistic statistic=itStatisticService.findbyid(Integer.parseInt(id));
         statistic.setHits(statistic.getHits()+1);

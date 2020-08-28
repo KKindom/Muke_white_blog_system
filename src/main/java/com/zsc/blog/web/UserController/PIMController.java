@@ -84,24 +84,36 @@ public class PIMController
     public ResponseData<Map<String,String>> updata_Pwd(@RequestBody Map<String, String> userdata)
     {
         String username=userdata.get("username");
+        //新密码
         String newpassword=userdata.get("newpassword");
+        //旧密码
         String password=userdata.get("password");
+        //验证码
+        String vcode=userdata.get("code");
         System.out.println("原先密码为"+password);
         System.out.println("现在密码为:"+newpassword);
         TUser olduser=itUserService.selectByusername(username);
         //判定传来的原始密码和数据库原密码是否匹配
         if(encrypt_decryptUtil.Decrypt(olduser.getPassword()).equals(password))
         {
-            //加密密码
-            olduser.setPassword(encrypt_decryptUtil.Encrypt(newpassword));
-            itUserService.updata_I(olduser);
+            //验证验证码
+            if(vcode.equals(Identifying_code)) {
+                //加密密码
+                olduser.setPassword(encrypt_decryptUtil.Encrypt(newpassword));
+                itUserService.updata_I(olduser);
+                return ResponseData.out(CodeEnum.SUCCESS,null);
+            }
+            else
+            {
+                return  ResponseData.out(CodeEnum.FAILURE_updatavcode,null);
+            }
         }
         else
         {
             System.out.println("密码与原密码不匹配！");
-            return  ResponseData.out(CodeEnum.FAILURE,null);
+            return ResponseData.out(CodeEnum.FAILURE_updatapsw,null);
         }
-        return ResponseData.out(CodeEnum.SUCCESS,null);
+
     }
 
     //修改 邮箱

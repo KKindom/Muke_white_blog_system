@@ -47,7 +47,7 @@ public class TimeController {
     }
     //更新今日时间
     @ResponseBody
-    @RequestMapping(value = "/updatatime",method = RequestMethod.POST)
+    @RequestMapping(value = "/updatetime",method = RequestMethod.POST)
     public ResponseData<TUsertime> updatatime(@RequestBody Map<String, String> userdata) {
         String str = sdf.format(date);
         String s_time=userdata.get("time");
