@@ -12,7 +12,7 @@ import lombok.Data;
  * @create: 2020-08-13 22:00
  **/
 @Data
-public class TCollect extends Model<TArticle>
+public class TCollect extends Model<TCollect>
 {
     private static final long serialVersionUID = 1L;
 
