@@ -26,10 +26,10 @@ public interface ITCommentService extends IService<TComment> {
     void insertcomment(TComment tComment);
 
     //查找评论根据用户名
-    public List<Map<String,String>> Selectbyuid(String username);
+    public List<Map<String,String>> Selectbyusername(String username);
 
     //删除评论
-    void Delcomment(int aid,String username);
+    void Delcomment(int id,String username);
 
     //根据评论ID删除评论
     public void deleteCommentWithId(int id);

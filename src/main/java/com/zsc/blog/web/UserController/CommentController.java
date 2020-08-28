@@ -47,47 +47,42 @@ public class CommentController
         //int a_id=tUser.getId();
         if(tUser!=null)
         {
-            List<Map<String,String>> tCommentList=itCommentService.Selectbyuid(username);
+            List<Map<String,String>> tCommentList=itCommentService.Selectbyusername(username);
             System.out.println("查找评论成功！");
             return ResponseData.out(CodeEnum.SUCCESS, tCommentList);
         }
         return ResponseData.out(CodeEnum.FAILURE, null);
     }
-    @ResponseBody
-    @RequestMapping(value = "/comment/get",method = RequestMethod.POST)
-    public ResponseData<Object> ss(@RequestBody Map<String,String> userdata)
-    {
-        //用户名
-        String username=userdata.get("username");
-        TUser tUser=itUserService.selectByusername(username);
-        //int a_id=tUser.getId();
-        if(tUser!=null)
-        {
-            List<Map<String,String>> tCommentList=tCommentMapper.selcetcommentbyusername(username);
-            System.out.println("查找评论成功！");
-            return ResponseData.out(CodeEnum.SUCCESS, tCommentList);
-        }
-        return ResponseData.out(CodeEnum.FAILURE, null);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/comment/get",method = RequestMethod.POST)
+//    public ResponseData<Object> ss(@RequestBody Map<String,String> userdata)
+//    {
+//        //用户名
+//        String username=userdata.get("username");
+//        TUser tUser=itUserService.selectByusername(username);
+//        //int a_id=tUser.getId();
+//        if(tUser!=null)
+//        {
+//            List<Map<String,String>> tCommentList=tCommentMapper.selcetcommentbyusername(username);
+//            System.out.println("查找评论成功！");
+//            return ResponseData.out(CodeEnum.SUCCESS, tCommentList);
+//        }
+//        return ResponseData.out(CodeEnum.FAILURE, null);
+//    }
 
     //删除评论
     @ResponseBody
     @RequestMapping(value = "/comment/delcom",method = RequestMethod.POST)
     public ResponseData<Object> Ins_CollectList(@RequestBody Map<String,String> userdata)
     {
+        //评论id
+        String sid=userdata.get("id");
         //用户名
         String username=userdata.get("username");
-        TUser tUser=itUserService.selectByusername(username);
-        //删除文章的文章id
-        String a_id=userdata.get("id");
-        int aid=Integer.valueOf(a_id);
-        if(tUser!=null)
-        {
-            itCommentService.Delcomment(aid,username);
-            System.out.println("删除评论成功！");
-            return ResponseData.out(CodeEnum.SUCCESS, null);
-        }
-        return ResponseData.out(CodeEnum.FAILURE, null);
+        int id=Integer.valueOf(sid);
+        itCommentService.Delcomment(id,username);
+        System.out.println("删除评论成功！");
+        return ResponseData.out(CodeEnum.SUCCESS, null);
     }
 
 }

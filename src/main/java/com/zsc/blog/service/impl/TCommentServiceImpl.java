@@ -54,7 +54,7 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     }
 
     @Override
-    public List<Map<String,String>> Selectbyuid(String username) {
+    public List<Map<String,String>> Selectbyusername(String username) {
         List<Map<String,String>> CommentList;
         if (redisUtil.get(  "commentlist_"+username) == null)
         {
@@ -70,17 +70,17 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     }
 
     @Override
-    public void Delcomment(int aid, String username)
+    public void Delcomment(int id, String username)
     {
         if(redisUtil.get("commentlist_"+username)==null)
         {
-            tCommentMapper.deleteCommentWithauthor(aid, username);
+            tCommentMapper.deleteCommentWithauthor(id, username);
         }
         else
         {
             //删除原有缓存
             redisUtil.del("commentlist_"+username);
-            tCommentMapper.deleteCommentWithauthor(aid, username);
+            tCommentMapper.deleteCommentWithauthor(id, username);
         }
     }
 
