@@ -121,7 +121,6 @@ public class ArticleController {
         statistic.setHits(statistic.getHits()+1);
         itStatisticService.updatahits(statistic);
 
-
         return ResponseData.out(CodeEnum.SUCCESS,map);
     }
     //添加评论
