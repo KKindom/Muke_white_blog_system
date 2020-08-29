@@ -33,10 +33,7 @@ public class UserController {
         else {
             page_user= itUserService.adminSelectUser((pageNo - 1)*pageSize,last,pageNo,pageSize);
         }
-        if(page_user.size() == 0) {
-            return ResponseData.out(CodeEnum.FAILURE, null);
-        }
-        return ResponseData.out(CodeEnum.SUCCESS, page_user);
+        return ResponseData.out(CodeEnum.SUCCESS, page_user, userCount);
     }
 
     //删除用户
