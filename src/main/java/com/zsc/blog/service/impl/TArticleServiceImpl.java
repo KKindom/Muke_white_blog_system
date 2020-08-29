@@ -77,7 +77,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         else
         {
             System.out.println("我没查数据库");
-            resultList =(List<Map<String, Object>>)redisUtil.get("pageNo_"+num+"pageSize"+pageSize);
+            resultList =(List<Map<String, Object>>)redisUtil.get("page_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }
