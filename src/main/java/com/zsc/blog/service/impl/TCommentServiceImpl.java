@@ -102,8 +102,8 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     }
 
     @Override
-    public List<TComment> selectCommentPage(int id, int st, int en, int num, int pageSize) {
-        List<TComment> resultList;
+    public List<Map<String, Object>> selectCommentPage(int id, int st, int en, int num, int pageSize) {
+        List<Map<String, Object>> resultList;
         if (redisUtil.get("article_"+id+"commentPage_"+num+"pageSize_"+pageSize)==null)
         {
             resultList=tCommentMapper.selectCommentPage(id, st, en);
@@ -111,14 +111,14 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
         }
         else
         {
-            resultList =(List<TComment>)redisUtil.get("article_"+id+"commentPage_"+num+"pageSize_"+pageSize);
+            resultList =(List<Map<String, Object>>)redisUtil.get("article_"+id+"commentPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }
 
     @Override
-    public List<TComment> selectCommentPageAll(int st, int en, int num, int pageSize) {
-        List<TComment> resultList;
+    public List<Map<String, Object>> selectCommentPageAll(int st, int en, int num, int pageSize) {
+        List<Map<String, Object>> resultList;
         if (redisUtil.get("commentPage_"+num+"pageSize_"+pageSize)==null)
         {
             resultList=tCommentMapper.selectCommentPageAll(st, en);
@@ -126,7 +126,7 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
         }
         else
         {
-            resultList =(List<TComment>)redisUtil.get("commentPage_"+num+"pageSize_"+pageSize);
+            resultList =(List<Map<String, Object>>)redisUtil.get("commentPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }

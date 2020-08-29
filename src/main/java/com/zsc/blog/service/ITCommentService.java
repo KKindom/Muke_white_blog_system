@@ -38,9 +38,9 @@ public interface ITCommentService extends IService<TComment> {
     public int queryCommentNumber();
 
     //根据ID分页查询文章评论
-    public List<TComment> selectCommentPage(int id, int st, int en, int num, int pageSize);
+    public List<Map<String, Object>> selectCommentPage(int id, int st, int en, int num, int pageSize);
     public int queryCommentWithId(int id);
 
     //分页查询所有评论
-    public List<TComment> selectCommentPageAll(int st, int en, int num, int pageSize);
+    public List<Map<String, Object>> selectCommentPageAll(int st, int en, int num, int pageSize);
 }

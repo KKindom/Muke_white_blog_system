@@ -26,7 +26,7 @@ public class AdminCommentController {
         int MAX_Page= commentCount/pageSize+1;
         int last= commentCount%pageSize;
 
-        List<TComment> page_user;
+        List<Map<String, Object>> page_user;
         if(MAX_Page>pageNo) {
             page_user= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
         }
@@ -42,14 +42,14 @@ public class AdminCommentController {
 
     @ResponseBody
     @PostMapping("admin/comment/getListAll")
-    public ResponseData<Object> getListAll(@RequestHeader("token") String token, @RequestBody Map<String, Integer> data) {
+    public ResponseData<Object> getListAll(@RequestHeader("token") String token/*, @RequestBody Map<String, Integer> data*/) {
         int commentCount = itCommentService.queryCommentNumber();
-        int pageNo = data.get("pageNo");
-        int pageSize = data.get("pageSize");
+        int pageNo = 1/*data.get("pageNo")*/;
+        int pageSize = 20/*data.get("pageSize")*/;
         int MAX_Page= commentCount/pageSize+1;
         int last= commentCount%pageSize;
 
-        List<TComment> page_user;
+        List<Map<String, Object>> page_user;
         if(MAX_Page>pageNo) {
             page_user= itCommentService.selectCommentPageAll((pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
         }
