@@ -67,7 +67,6 @@ public class AdminInfoController {
         data.put("user", itUserService.queryUserNumber());
         data.put("article", itArticleService.queryArticleNumber());
         data.put("comment", itCommentService.queryCommentNumber());
-
         return ResponseData.out(CodeEnum.SUCCESS, data);
     }
 }

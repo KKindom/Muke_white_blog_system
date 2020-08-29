@@ -104,6 +104,7 @@ public class AdminArticleController {
                          @RequestHeader("token")String token) {
         TArticle tArticle = itArticleService.selectArticleWithId(id);
         tArticle.setModified(new Timestamp(new Date().getTime()));
+        System.out.println(tArticle.getModified());
         if(file != null) {
             AttachFile attachFile = new AttachFile();
             try {
