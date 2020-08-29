@@ -23,7 +23,7 @@ public interface TUserMapper extends BaseMapper<TUser> {
     public TUser selectbyname(String username);
 
     //查询用户数量
-    @Select("Select count(*) from t_user")
+    @Select("Select count(*) from t_user where permisson='cilent'")
     public int queryCount();
 
     //删除用户
