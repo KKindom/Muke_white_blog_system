@@ -95,16 +95,14 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     }
 
     @Override
-    public List<TUser> adminSelectUser(int st, int en, int num, int pageSize) {
-        List<TUser> resultList;
-        if (redisUtil.get("userPage_"+num+"pageSize_"+pageSize)==null)
-        {
+    public List<Map<String, Object>> adminSelectUser(int st, int en, int num, int pageSize) {
+        List<Map<String, Object>> resultList;
+        if (redisUtil.get("userPage_"+num+"pageSize_"+pageSize)==null) {
             resultList=tUserMapper.selectUser(st, en);
-            redisUtil.set("userPage_"+num+"pageSize_"+pageSize,resultList);
+            redisUtil.set("userPage_"+num+"pageSize_"+pageSize,resultList, 30);
         }
-        else
-        {
-            resultList =(List<TUser>)redisUtil.get("userPage_"+num+"pageSize_"+pageSize);
+        else {
+            resultList =(List<Map<String, Object>>)redisUtil.get("userPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }
