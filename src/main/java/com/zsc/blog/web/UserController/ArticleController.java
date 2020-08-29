@@ -103,7 +103,7 @@ public class ArticleController {
         String username=requestdata.get("username");
         String str = sdf.format(date);
         TArticle tArticle=tArticleMapper.selectArticleWithId(Integer.parseInt(id) );
-        List<TComment> tCommentList=itCommentService.SelectByArticle_id(Integer.parseInt(id));
+        List<Map<String ,String >> tCommentList=itCommentService.SelectByArticle_id(Integer.parseInt(id));
         Map<String,Object> map=new HashMap<>();
         map.put("article",tArticle);
         map.put("commentlist",tCommentList);

@@ -46,6 +46,12 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     @Select("Select count(*) from t_comment")
     public int queryCount();
 
-    @Select("SELECT t_comment.*,t_article.title from t_comment,t_article where t_comment.author=#{username} and t_article.id=t_comment.article_id")
+    //根据用户名返回用户的评论
+    @Select("SELECT t_comment.*,t_article.title ,t_user.profilephoto from t_comment,t_article,t_user where t_comment.author=#{username} and t_article.id=t_comment.article_id and t_user.username=#{username}")
     public List<Map<String,String>> selcetcommentbyusername(String username);
+
+    //根据文章id返回用户的评论
+    @Select("SELECT t_comment.*,t_user.profilephoto from t_comment,t_user where t_comment.article_id=#{id} and t_comment.author=t_user.username")
+    public List<Map<String,String>> selectcomlistby_a_id(Integer id);
+
 }

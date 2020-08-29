@@ -48,6 +48,8 @@ public class indexcontroller {
     FileUploadUtils fileUploadUtils;
     @Autowired
     TCollectMapper tCollectMapper;
+    @Resource
+    Photo_list photo_list;
     @Value("${file.uploadFolder}")
     private String uploadFolder;
     @ResponseBody
@@ -141,12 +143,13 @@ public class indexcontroller {
     @PostMapping("/test3333")
     private String  aaa(@RequestParam(name = "file", required = false) MultipartFile file)
     {
+       return photo_list.find_photo();
 //        try {
 //            fileUploadUtils.upload(file,1);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        return "test";
+        //return "test";
     }
 
 

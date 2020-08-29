@@ -20,7 +20,7 @@ public interface ITCommentService extends IService<TComment> {
     Object selectList(Object o);
 
     //查找评论根据文章id
-    List<TComment> SelectByArticle_id(int id);
+    List<Map<String ,String >> SelectByArticle_id(int id);
 
     //插入评论
     void insertcomment(TComment tComment);

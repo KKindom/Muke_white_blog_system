@@ -1,9 +1,6 @@
 package com.zsc.blog.web.UserController;
 
-import com.zsc.blog.Utils.Encrypt_DecryptUtil;
-import com.zsc.blog.Utils.FileUploadUtils;
-import com.zsc.blog.Utils.MailUtils;
-import com.zsc.blog.Utils.RedisUtil;
+import com.zsc.blog.Utils.*;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.AttachFile;
@@ -39,6 +36,7 @@ public class PIMController
     MailUtils mailUtils;
     @Resource
     RedisUtil redisUtil;
+
     @Autowired
     Encrypt_DecryptUtil encrypt_decryptUtil;
     @Autowired
@@ -120,7 +118,7 @@ public class PIMController
     public ResponseData<Map<String,String>> Apply_author(@RequestBody Map<String, String> userdata) {
         //获取申请用户的用户名
         String username=userdata.get("username");
-        if(redisUtil.get("Apply_Ahtuor_"+username)==null) {
+        if(redisUtil.get("Apply_Author_"+username)==null) {
             Date sDate = new Date();
             Calendar c = Calendar.getInstance();
             c.setTime(sDate);

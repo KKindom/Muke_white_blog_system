@@ -147,7 +147,17 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
 
     @Override
     public TArticle selectArticleWithId(int id) {
-        TArticle tArticle = tArticleMapper.selectArticleWithId(id);
+        TArticle tArticle;
+        if(redisUtil.get("article_"+id)==null)
+        {
+            tArticle= tArticleMapper.selectArticleWithId(id);
+            redisUtil.set("article_"+id,tArticle);
+        }
+        else
+        {
+            tArticle=(TArticle)redisUtil.get("article_"+id);
+        }
+
         return tArticle;
     }
 

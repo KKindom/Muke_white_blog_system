@@ -38,8 +38,20 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     }
 
     @Override
-    public List<TComment> SelectByArticle_id(int id) {
-        return tCommentMapper.selectList(new QueryWrapper<TComment>().eq("article_id", id));
+    public List<Map<String ,String >> SelectByArticle_id(int id) {
+        List<Map<String ,String >> list;
+        if(redisUtil.get("commentlistby_id_"+id)==null)
+        {
+            list=tCommentMapper.selectcomlistby_a_id(id);
+            redisUtil.set("commentlistby_id_"+id,list,18000);
+            System.out.println("commentlistby_id_"+id+"加入缓存成功！");
+        }
+        else
+        {
+            list=(List<Map<String ,String >>)redisUtil.get("commentlistby_id_"+id);
+            System.out.println("commentlistby_id_"+id+"从缓存读出！");
+        }
+        return list;
     }
 
     @Override

@@ -1,12 +1,9 @@
 package com.zsc.blog.web.UserController;
 
 import com.alibaba.fastjson.JSON;
-import com.zsc.blog.Utils.Encrypt_DecryptUtil;
-import com.zsc.blog.Utils.MailUtils;
-import com.zsc.blog.Utils.RedisUtil;
+import com.zsc.blog.Utils.*;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
-import com.zsc.blog.Utils.userUtil;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.service.ITUserService;
 import org.jasypt.util.text.BasicTextEncryptor;
@@ -36,6 +33,8 @@ public class Login_RController {
     MailUtils mailUtils;
     @Resource
     RedisUtil redisUtil;
+    @Resource
+    Photo_list photo_list;
     @Autowired
     Encrypt_DecryptUtil encrypt_decryptUtil;
     //验证码
@@ -93,13 +92,14 @@ public class Login_RController {
        //均满足后插入数据库
        else
         {
+            //随机获取头像
+            String photo=photo_list.find_photo();
             TUser newuser = new TUser();
             newuser.setUsername(R_username);
             newuser.setNickname(Registerdata.get("nickname"));
             newuser.setEmail(Registerdata.get("mail"));
             newuser.setPassword(encrypt_decryptUtil.Encrypt(Registerdata.get("password")));
-            newuser.setProfilephoto("https://timgsa.baidu" +
-                    ".com/timg?image&quality=80&size=b9999_10000&sec=1596123710448&di=cc0bc85abd66d6562a4b9dbcdeb0da73&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F6e8f56b2543cce8bffa35b22d03684fae76a1b2c56c32-COdswi_fw658");
+            newuser.setProfilephoto(photo);
             newuser.setPermisson("cilent");
             itUserService.insert_user(newuser);
             return ResponseData.out(CodeEnum.SUCCESS_registeruser, newuser);
