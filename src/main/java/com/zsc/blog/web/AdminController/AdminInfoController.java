@@ -61,7 +61,7 @@ public class AdminInfoController {
     }
 
     @ResponseBody
-    @PostMapping("")
+    @PostMapping("/main")
     public ResponseData<Object> GetBlogInfo() {
         Map<String, Integer> data = new HashMap<>();
         data.put("user", itUserService.queryUserNumber());
