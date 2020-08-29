@@ -16,6 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,7 +79,7 @@ public class PIMController
     }
     //修改 密码
     @ResponseBody
-    @RequestMapping(value = "/updata_Pwd",method = RequestMethod.POST)
+    @RequestMapping(value = "/update_Pwd",method = RequestMethod.POST)
     public ResponseData<Map<String,String>> updata_Pwd(@RequestBody Map<String, String> userdata)
     {
         String username=userdata.get("username");
@@ -110,7 +114,29 @@ public class PIMController
         }
 
     }
+    //提交申请成为创作者
+    @ResponseBody
+    @RequestMapping(value = "/Apply_author",method = RequestMethod.POST)
+    public ResponseData<Map<String,String>> Apply_author(@RequestBody Map<String, String> userdata) {
+        //获取申请用户的用户名
+        String username=userdata.get("username");
+        if(redisUtil.get("Apply_Ahtuor_"+username)==null) {
+            Date sDate = new Date();
+            Calendar c = Calendar.getInstance();
+            c.setTime(sDate);
+            c.add(Calendar.DAY_OF_MONTH, 1);
+            sDate = c.getTime();
+            Format f = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println("后台接到用户名为" + username + "用户的申请，申请成为创作者！\n 失效时间为:" + f.format(sDate));
+            redisUtil.set("Apply_Author_"+username,username,86400);
+            return ResponseData.out(CodeEnum.SUCCESS_apply_author,null);
+        }
+        else
+        {
+           return ResponseData.out(CodeEnum.FAILURE_apply_author,null);
+        }
 
+    }
 //    //修改 邮箱
 //    @ResponseBody
 //    @RequestMapping(value = "/updata_Emil",method = RequestMethod.POST)

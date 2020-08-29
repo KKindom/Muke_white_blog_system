@@ -141,11 +141,11 @@ public class indexcontroller {
     @PostMapping("/test3333")
     private String  aaa(@RequestParam(name = "file", required = false) MultipartFile file)
     {
-        try {
-            fileUploadUtils.upload(file,1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            fileUploadUtils.upload(file,1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return "test";
     }
 

@@ -49,4 +49,7 @@ public interface ITArticleService extends IService<TArticle> {
 
     //根据类别搜索文章列表
     public  List<Map<String, String>> selecttArticleby_categories(String type);
+
+    //根据作者搜索文章列表
+    public  List<Map<String,String>> selectArticleby_author(String author);
 }

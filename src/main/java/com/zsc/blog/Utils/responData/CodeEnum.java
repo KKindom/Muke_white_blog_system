@@ -26,6 +26,8 @@ public enum CodeEnum {
     SUCCESS_sendvcode(200,"验证码发送成功！请检查邮箱 若没收到请检查邮箱是否设置相关属性！"),
     /*修改头像成功码*/
     SUCCESS_updataphoto(200,"修改头像成功！"),
+    /*提交申请成功*/
+    SUCCESS_apply_author(200,"提交申请创作者成功！"),
     /*修改头像失败码*/
     FAILURE_updataphoto(500,"修改头像失败！"),
     /*新增评论成功码*/
@@ -33,7 +35,10 @@ public enum CodeEnum {
     /* 修改密码失败*/
     FAILURE_updatavcode(500,"对不起验证码验证失败，请检查是否输入正确4位验证码！"),
     /* 修改密码失败*/
-    FAILURE_updatapsw(500,"对不起与原密码不符合，请检查是否输入正确的原密码！");
+    FAILURE_updatapsw(500,"对不起与原密码不符合，请检查是否输入正确的原密码！"),
+    /* 提交申请重复*/
+    FAILURE_apply_author(500,"对不起，请不要重复申请，每次申请有效期为1天，请等待管理员的审批！");
+
 
     public int code;
     public String  msg;

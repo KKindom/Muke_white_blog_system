@@ -169,7 +169,15 @@ public class ArticleController {
         return ResponseData.out(CodeEnum.SUCCESS,mapList);
     }
 
+    //获得用户名下的文章
+    @ResponseBody
+    @RequestMapping(value = "/article/getListbyauthor",method = RequestMethod.POST)
+    public ResponseData<Object> getListbyauthor(@RequestBody Map<String,String>  requestdata) {
 
+        String author= requestdata.get("author");
+        List<Map<String, String>> mapList=itArticleService.selectArticleby_author(author);
+        return ResponseData.out(CodeEnum.SUCCESS,mapList);
+    }
 
 
 

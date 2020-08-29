@@ -57,6 +57,8 @@ public class TArticle extends Model<TArticle> {
      */
     private String thumbnail;
 
+    /*作者*/
+    private String author;
 
     public Integer getId() {
         return id;
@@ -113,6 +115,11 @@ public class TArticle extends Model<TArticle> {
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+    public String getAuthor() { return author; }
+
 
     @Override
     protected Serializable pkVal() {
@@ -129,6 +136,7 @@ public class TArticle extends Model<TArticle> {
         ", modified=" + modified +
         ", categories=" + categories +
         ", thumbnail=" + thumbnail +
+                ", author=" + author +
         "}";
     }
 }

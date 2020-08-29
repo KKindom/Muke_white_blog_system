@@ -133,6 +133,12 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         redisUtil.removeAll("comment");
         redisUtil.removeAll("page");
         redisUtil.removeAll("Afind");
+        //删除作者文章缓存
+        TArticle tArticle=tArticleMapper.selectById(id);
+        String author=tArticle.getAuthor();
+        redisUtil.del("Articlelist_"+author);
+
+
         tCollectMapper.deleteColletWithAid(id);
         tCommentMapper.deleteCommentWithAid(id);
         tArticleMapper.deleteArticleWithId(id);
@@ -197,6 +203,22 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
             tArticleList=( List<Map<String, String>>)redisUtil.get("Afindtype_"+type);
             System.out.println("现在从缓存拿数据");
         }
+        return tArticleList;
+    }
+
+    @Override
+    public List<Map<String,String>> selectArticleby_author(String author) {
+        List<Map<String,String>>  tArticleList;
+        if(redisUtil.get("Articlelist_"+author)==null)
+        {
+            tArticleList=tArticleMapper.select_list_withAuthor(author);
+            redisUtil.set("Articlelist_"+author,tArticleList,180000);
+        }
+        else
+        {
+            tArticleList=(List<Map<String,String>>)redisUtil.get("Articlelist_"+author);
+        }
+
         return tArticleList;
     }
 }

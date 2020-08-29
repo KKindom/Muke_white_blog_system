@@ -4,6 +4,7 @@ import com.zsc.blog.entity.TArticle;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 
+import javax.websocket.server.ServerEndpoint;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +66,9 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     //按分类查询文章
     @Select("SELECT id,title,categories,thumbnail FROM t_article WHERE categories=#{type}")
     public  List<Map<String, String>> selectbytype(String type);
+    //根据作者搜索作者的文章
+    @Select("SELECT id,title,categories,thumbnail FROM t_article WHERE author=#{author}")
+    public List<Map<String, String>> select_list_withAuthor(String author);
 
 
 }
