@@ -26,33 +26,33 @@ public class AdminCommentController {
         int MAX_Page= commentCount/pageSize+1;
         int last= commentCount%pageSize;
 
-        List<Map<String, Object>> page_user;
+        List<Map<String, Object>> page_comment;
         if(MAX_Page>pageNo) {
-            page_user= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
+            page_comment= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
         }
         else {
-            page_user= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,last,pageNo,pageSize);
+            page_comment= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,last,pageNo,pageSize);
         }
-        return ResponseData.out(CodeEnum.SUCCESS, page_user);
+        return ResponseData.out(CodeEnum.SUCCESS, page_comment, commentCount);
     }
 
     @ResponseBody
     @PostMapping("admin/comment/getListAll")
-    public ResponseData<Object> getListAll(@RequestHeader("token") String token/*, @RequestBody Map<String, Integer> data*/) {
+    public ResponseData<Object> getListAll(@RequestHeader("token") String token, @RequestBody Map<String, Integer> data) {
         int commentCount = itCommentService.queryCommentNumber();
-        int pageNo = 1/*data.get("pageNo")*/;
-        int pageSize = 20/*data.get("pageSize")*/;
+        int pageNo = data.get("pageNo");
+        int pageSize = data.get("pageSize");
         int MAX_Page= commentCount/pageSize+1;
         int last= commentCount%pageSize;
 
-        List<Map<String, Object>> page_user;
+        List<Map<String, Object>> page_comment;
         if(MAX_Page>pageNo) {
-            page_user= itCommentService.selectCommentPageAll((pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
+            page_comment= itCommentService.selectCommentPageAll((pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
         }
         else {
-            page_user= itCommentService.selectCommentPageAll((pageNo - 1)*pageSize,last,pageNo,pageSize);
+            page_comment= itCommentService.selectCommentPageAll((pageNo - 1)*pageSize,last,pageNo,pageSize);
         }
-        return ResponseData.out(CodeEnum.SUCCESS, page_user);
+        return ResponseData.out(CodeEnum.SUCCESS, page_comment, commentCount);
     }
 
     @ResponseBody
