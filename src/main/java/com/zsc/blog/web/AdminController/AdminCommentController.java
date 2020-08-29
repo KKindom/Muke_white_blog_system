@@ -33,10 +33,6 @@ public class AdminCommentController {
         else {
             page_user= itCommentService.selectCommentPage(articleId,(pageNo - 1)*pageSize,last,pageNo,pageSize);
         }
-        if(page_user.size() == 0)
-        {
-            return ResponseData.out(CodeEnum.FAILURE, null);
-        }
         return ResponseData.out(CodeEnum.SUCCESS, page_user);
     }
 
@@ -55,9 +51,6 @@ public class AdminCommentController {
         }
         else {
             page_user= itCommentService.selectCommentPageAll((pageNo - 1)*pageSize,last,pageNo,pageSize);
-        }
-        if(page_user.size() == 0) {
-            return ResponseData.out(CodeEnum.FAILURE, null);
         }
         return ResponseData.out(CodeEnum.SUCCESS, page_user);
     }
