@@ -55,7 +55,14 @@ public class Login_RController {
             if (psw.equals(password)) {
                 userUtil userUtil = new userUtil();
                 Map<String, String> data = new HashMap<>();
-
+                if(redisUtil.get("Apply_Author_"+username)==null)
+                {
+                    data.put("Apply","false");
+                }
+                else
+                {
+                    data.put("Apply","true");
+                }
                 String token = userUtil.getToken(back_user);
                 data.put("token", token);
                 data.put("permisson",back_user.getPermisson());

@@ -180,12 +180,6 @@ public class ArticleController {
     }
 
 
-
-
-
-
-
-
     //检测是否存在今天的记录
     public TUsertime checktime(String username,String data)
     {

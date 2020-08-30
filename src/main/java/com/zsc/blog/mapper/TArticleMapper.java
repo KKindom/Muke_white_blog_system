@@ -67,7 +67,7 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     @Select("SELECT id,title,categories,thumbnail FROM t_article WHERE categories=#{type}")
     public  List<Map<String, String>> selectbytype(String type);
     //根据作者搜索作者的文章
-    @Select("SELECT id,title,categories,thumbnail FROM t_article WHERE author=#{author}")
+    @Select("SELECT id,title,categories,thumbnail,created FROM t_article WHERE author=#{author}")
     public List<Map<String, String>> select_list_withAuthor(String author);
 
 
