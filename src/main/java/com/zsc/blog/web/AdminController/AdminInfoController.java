@@ -13,7 +13,6 @@ import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITCommentService;
 import com.zsc.blog.service.ITUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -39,7 +38,6 @@ public class AdminInfoController {
         /*if (StringUtils.isEmpty(token)) {
             token = request.getParameter("token");
         }*/
-
         DecodedJWT jwt = null;
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256("jung")).build();
         jwt = verifier.verify(token);
@@ -61,11 +59,11 @@ public class AdminInfoController {
     }
 
     @ResponseBody
-    @PostMapping("/main")
+    @PostMapping("admin")
     public ResponseData<Object> GetBlogInfo() {
         Map<String, Integer> data = new HashMap<>();
         data.put("user", itUserService.queryUserNumber());
-        data.put("article", itArticleService.queryArticleNumber());
+        data.put("article", itArticleService.allArticle());
         data.put("comment", itCommentService.queryCommentNumber());
         return ResponseData.out(CodeEnum.SUCCESS, data);
     }

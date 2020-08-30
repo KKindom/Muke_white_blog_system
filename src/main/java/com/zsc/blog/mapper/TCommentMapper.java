@@ -21,7 +21,7 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     //分页查询评论
     @Select("select * from t_comment where article_id = #{id} order by created DESC,id DESC limit #{st},#{en};")
     public List<Map<String, Object>> selectCommentPage(Integer id, Integer st, Integer en);
-    @Select("select b.id, b.created, b.content, status, b.author, title from t_article as a, t_comment as b where a.id = b.article_id order by b.created DESC,b.id DESC limit #{st},#{en};")
+    @Select("select b.id, b.created, b.content, status, a.author as articleAuthor, b.author as commentAuthor, title from t_article as a, t_comment as b where a.id = b.article_id order by b.created DESC,b.id DESC limit #{st},#{en};")
     public List<Map<String, Object>> selectCommentPageAll(Integer st, Integer en);
 
     //通过文章ID删除评论信息

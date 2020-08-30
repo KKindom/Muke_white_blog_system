@@ -17,7 +17,7 @@ public enum CodeEnum {
     /* 存在此用户失败码*/
     FAILURE_error_username(500,"对不起，已存在此用户！"),
     /* 权限错误登陆失败*/
-    FAILURE_error_permisson(500,"对不起，没有管理员权限！"),
+    FAILURE_error_permisson(401,"对不起，没有管理员权限！"),
     /* 验证码错误*/
     FAILURE_error_vcode(500,"对不起，验证码错误！"),
     /*注册成功*/

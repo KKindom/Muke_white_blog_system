@@ -1,14 +1,10 @@
 package com.zsc.blog.web.UserController;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.*;
 import com.zsc.blog.mapper.TArticleMapper;
-import com.zsc.blog.mapper.TCommentMapper;
 import com.zsc.blog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -53,7 +47,7 @@ public class ArticleController {
     @RequestMapping(value = "/article/getList",method = RequestMethod.POST)
     public ResponseData<Object> Get_ArticleList(@RequestBody Map<String,String>  pageNo)
     {   //获得总共数据条数
-        int num_all=itArticleService.allarticle();
+        int num_all=itArticleService.allArticle();
         int MAX_Page=num_all/4+1;
         int last=num_all%4;
         //获取需要第几页
@@ -77,7 +71,7 @@ public class ArticleController {
     @ResponseBody
     @RequestMapping(value = "/article/getnewList",method = RequestMethod.POST)
     public ResponseData<Object> Get_newArticleList(@RequestBody Map<String,String>  pageNo) {   //获得总共数据条数
-        int num_all = itArticleService.allarticle();
+        int num_all = itArticleService.allArticle();
         int MAX_Page = num_all / 4 + 1;
         int last = num_all % 4;
         //获取需要第几页
@@ -179,6 +173,12 @@ public class ArticleController {
         System.out.println(mapList);
         return ResponseData.out(CodeEnum.SUCCESS,mapList);
     }
+
+
+
+
+
+
 
 
     //检测是否存在今天的记录

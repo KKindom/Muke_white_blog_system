@@ -1,10 +1,7 @@
 package com.zsc.blog.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.entity.TArticle;
-import com.zsc.blog.entity.TCollect;
 import com.zsc.blog.mapper.TArticleMapper;
 import com.zsc.blog.mapper.TCollectMapper;
 import com.zsc.blog.mapper.TCommentMapper;
@@ -15,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.File;
 import java.util.*;
 
 /**
@@ -65,26 +61,39 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     }
 
     @Override
-    public List<Map<String, Object>> admin_select_page(int st, int en, int num, int pageSize) {
+    public List<Map<String, Object>> adminSelectPage(int st, int en, int num, int pageSize) {
         List<Map<String, Object>> resultList;
-        if (redisUtil.get("page_"+num+"pageSize_"+pageSize)==null)
-        {
-            System.out.println("我查数据库");
-            resultList=tArticleMapper.admin_selectPage(st, en);
-            System.out.println("查询" +st+en);
-            redisUtil.set("page_"+num+"pageSize_"+pageSize,resultList,10);
+        if (redisUtil.get("rootpage_"+num+"pageSize_"+pageSize)==null) {
+            resultList=tArticleMapper.adminSelectPage(st, en);
+            redisUtil.set("rootpage_"+num+"pageSize_"+pageSize,resultList,10);
         }
-        else
-        {
-            System.out.println("我没查数据库");
-            resultList =(List<Map<String, Object>>)redisUtil.get("page_"+num+"pageSize_"+pageSize);
+        else {
+            resultList =(List<Map<String, Object>>)redisUtil.get("rootpage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }
 
     @Override
-    public int allarticle() {
+    public List<Map<String, Object>> adminSelectPage(int adminId, int st, int en, int num, int pageSize) {
+        List<Map<String, Object>> resultList;
+        if (redisUtil.get("admin" + adminId + "page_"+num+"pageSize_"+pageSize)==null) {
+            resultList=tArticleMapper.adminSelectPage(adminId, st, en);
+            redisUtil.set("admin" + adminId + "page_"+num+"pageSize_"+pageSize,resultList,10);
+        }
+        else {
+            resultList =(List<Map<String, Object>>)redisUtil.get("admin" + adminId + "page_"+num+"pageSize_"+pageSize);
+        }
+        return resultList;
+    }
+
+    @Override
+    public int allArticle() {
         return tArticleMapper.selectCount(null);
+    }
+
+    @Override
+    public int allArticle(int adminId) {
+        return tArticleMapper.queryCount(adminId);
     }
 
     @Override
@@ -175,12 +184,6 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         redisUtil.set("article_" + article.getId().toString(), hashMap);
         tArticleMapper.updateArticle(article);
     }
-
-    @Override
-    public int queryArticleNumber() {
-        return tArticleMapper.queryCount();
-    }
-
 
     @Override
     public  List<Map<String, String>> selectArticleby_key(String key) {

@@ -6,6 +6,8 @@ import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.*;
 import com.zsc.blog.mapper.TArticleMapper;
 import com.zsc.blog.service.ITArticleService;
+import com.zsc.blog.service.impl.TUserServiceImpl;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,20 +27,19 @@ public class AdminArticleController {
     FileUploadUtils fileUploadUtils;
     @Autowired
     TArticleMapper tArticleMapper;
+    @Autowired
+    TUserServiceImpl tUserService;
+
     //展示文章列表
     @ResponseBody
     @PostMapping("admin/article/getList")
     public ResponseData<Object> GetList(@RequestHeader("token") String token, @RequestBody Map<String, String> Body) {
-        /*验证权限，备用
-        DecodedJWT jwt = null;
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256("jung")).build();
-        jwt = verifier.verify(token);
-        String dataString = jwt.getClaim("data").asString();
-        String permissions = JSON.parseObject(dataString).getString("permissions");
-        if(!permissions.equals("admin")) {
-            return new ResponseData(CodeEnum.FAILURE_error_permisson, null);
-        }*/
-        int articleCount = itArticleService.allarticle();
+        Pair<String, Integer> data = tUserService.checkPermisson(token);
+        if(data.getKey() != "admin" && data.getKey() != "root") {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
+        int adminId = data.getValue();
+        int articleCount = itArticleService.allArticle(adminId);
         int pageNo = Integer.parseInt(Body.get("pageNo"));
         int pageSize = Integer.parseInt(Body.get("pageSize"));
         int MAX_Page= articleCount/pageSize+1;
@@ -47,10 +47,10 @@ public class AdminArticleController {
 
         List<Map<String, Object>> page_articles;
         if(MAX_Page>pageNo) {
-            page_articles= itArticleService.admin_select_page((pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
+            page_articles= itArticleService.adminSelectPage(adminId,(pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
         }
         else {
-            page_articles= itArticleService.admin_select_page((pageNo - 1)*pageSize,last,pageNo,pageSize);
+            page_articles= itArticleService.adminSelectPage(adminId,(pageNo - 1)*pageSize,last,pageNo,pageSize);
         }
         if(page_articles.size() == 0) {
             return ResponseData.out(CodeEnum.FAILURE, null);

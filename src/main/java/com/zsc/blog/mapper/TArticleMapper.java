@@ -19,21 +19,25 @@ import java.util.Map;
 public interface TArticleMapper extends BaseMapper<TArticle> {
     //根据页数返回对应页数数据
     @Select("select " +
-            "a.id ,title as articleName,created as time,hits as pageView,thumbnail as img from t_article as a,t_statistic as b  " +
+            "a.id, title as articleName, created as time,hits as pageView,thumbnail as img from t_article as a,t_statistic as b  " +
             "where a.id=b.article_id order by a.id limit #{st},#{en};")
     public List<Map<String, Object>> selectpagetest(int st, int en);
 
     //根据页数返回对应页数数据
     @Select("select " +
-            "a.id ,title as articleName,created as time,hits as pageView,thumbnail as img from t_article as a,t_statistic as b  " +
+            "a.id, title as articleName,created as time,hits as pageView,thumbnail as img from t_article as a,t_statistic as b  " +
             "where a.id=b.article_id order by created DESC limit #{st},#{en};")
     public List<Map<String, Object>> selectnewpagetest(int st, int en);
 
-    //管理员查询
+    //admin和root查询
     @Select("select " +
-            "a.id ,title as articleName, comments_num, created as time,hits as pageView,thumbnail as img,categories as type from t_article as a,t_statistic as b  " +
+            "a.id, a.author, title as articleName, comments_num, created as time,hits as pageView,thumbnail as img,categories as type from t_article as a,t_statistic as b  " +
             "where a.id=b.article_id order by created DESC limit #{st},#{en};")
-    public List<Map<String, Object>> admin_selectPage(int st, int en);
+    public List<Map<String, Object>> adminSelectPage(int st, int en);
+    @Select("select " +
+            "a.id, a.author, title as articleName, comments_num, created as time,hits as pageView,thumbnail as img,categories as type from t_article as a,t_statistic as b  " +
+            "where a.id=b.article_id and a.author = (select username from t_user where id = #{adminId})order by created DESC limit #{st},#{en};")
+    public List<Map<String, Object>> adminSelectPage(int adminId, int st, int en);
 
     //发表文章
     @Insert("insert into t_article (id, title, content, created, modified, categories, thumbnail) " +
@@ -55,9 +59,9 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     //根据ID更新文章
     public void updateArticle(TArticle tArticle);
 
-    //查询文章数量
-    @Select("Select count(*) from t_article")
-    public int queryCount();
+    //admin查询自己文章数量
+    @Select("Select count(*) from t_article where author = (select username from t_user where id = #{adminId})")
+    public int queryCount(int adminId);
 
     //模糊查询文章
     @Select("SELECT id,title,categories,thumbnail FROM t_article WHERE title LIKE'%${con}%' OR content LIKE '%${con}%'")
@@ -67,7 +71,7 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     @Select("SELECT id,title,categories,thumbnail FROM t_article WHERE categories=#{type}")
     public  List<Map<String, String>> selectbytype(String type);
     //根据作者搜索作者的文章
-    @Select("SELECT id,title,categories,thumbnail,created FROM t_article WHERE author=#{author}")
+    @Select("SELECT id,title,categories,thumbnail, created FROM t_article WHERE author=#{author}")
     public List<Map<String, String>> select_list_withAuthor(String author);
 
 

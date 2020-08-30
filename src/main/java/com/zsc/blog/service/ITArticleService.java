@@ -16,6 +16,7 @@ import java.util.Map;
  *
  * @author mff
  * @since 2020-07-26
+ * 带adminId参数的同名函数为admin操作，不带id参数的为root操作
  */
 public interface ITArticleService extends IService<TArticle> {
 
@@ -27,8 +28,11 @@ public interface ITArticleService extends IService<TArticle> {
     //返回一共有多少条数据
 
     //管理员后台查询，根据时间排序
-    public List<Map<String, Object>> admin_select_page(int st, int en, int num, int pageSize);
-    int allarticle();
+    public List<Map<String, Object>> adminSelectPage(int st, int en, int num, int pageSize);
+    public List<Map<String, Object>> adminSelectPage(int adminId, int st, int en, int num, int pageSize);
+    int allArticle();
+    int allArticle(int adminId);
+
     //发布文章
     public void publish(TArticle article);
 
@@ -40,9 +44,6 @@ public interface ITArticleService extends IService<TArticle> {
 
     //修改文章
     public void updateArticle(TArticle tArticle);
-
-    //查询文章数量
-    public int queryArticleNumber();
 
     //根据关键字模糊查询文章
     public  List<Map<String, String>> selectArticleby_key(String key);

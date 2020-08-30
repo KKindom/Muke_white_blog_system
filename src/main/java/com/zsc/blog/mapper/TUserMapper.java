@@ -4,6 +4,7 @@ import com.zsc.blog.entity.TUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -32,4 +33,8 @@ public interface TUserMapper extends BaseMapper<TUser> {
     //查询用户信息
     @Select("select * from t_user where permisson='cilent' order by id DESC limit #{st},#{en};")
     public List<TUser> selectUser(int st, int en);
+
+    //更改用户权限
+    @Update("update t_user set permisson='admin' where username = #{username}")
+    public void updateUserPermisson(String username);
 }

@@ -31,5 +31,15 @@ public class MailUtils {
         // 发送邮件
         mailSender.send(message);
     }
+
+    // 发送管理员申请的处理结果
+    public void sendApplyResultEmail(String mailTo, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(mailfrom);
+        message.setTo(mailTo);
+        message.setSubject(title);
+        message.setText(text);
+        mailSender.send(message);
+    }
 }
 
