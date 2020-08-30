@@ -176,6 +176,7 @@ public class ArticleController {
 
         String author= requestdata.get("author");
         List<Map<String, String>> mapList=itArticleService.selectArticleby_author(author);
+        System.out.println(mapList);
         return ResponseData.out(CodeEnum.SUCCESS,mapList);
     }
 
