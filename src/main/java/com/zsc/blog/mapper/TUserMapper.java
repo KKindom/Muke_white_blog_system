@@ -35,6 +35,6 @@ public interface TUserMapper extends BaseMapper<TUser> {
     public List<TUser> selectUser(int st, int en);
 
     //更改用户权限
-    @Update("update t_user set permisson='admin' where username = #{username}")
+    @Update("update t_user set permisson='root' where username = #{username}")
     public void updateUserPermisson(String username);
 }
