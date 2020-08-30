@@ -154,7 +154,7 @@ public class indexcontroller {
 //        System.out.println( tStatisticMapper.selectArticle_top10());
 //        System.out.println(tStatisticMapper.selectArticleby_author_top5("admin"));
 //        System.out.println(tCommentMapper.find());
-        //System.out.println(tCommentMapper.find2());
+        System.out.println(tCommentMapper.Selectcommentby_root("mff"));
        return photo_list.find_photo();
 //        try {
 //            fileUploadUtils.upload(file,1);

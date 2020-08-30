@@ -55,7 +55,23 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     @Select("SELECT t_comment.*,t_user.profilephoto from t_comment,t_user where t_comment.article_id=#{id} and t_comment.author=t_user.username")
     public List<Map<String,String>> selectcomlistby_a_id(Integer id);
 
-    //返回指定范围内的评论
+    //返回指定范围内的评论  测试用
     @Select("SELECT * FROM t_comment WHERE UNIX_TIMESTAMP(created)  >= UNIX_TIMESTAMP('2020-8-28 0:0:0')  AND  UNIX_TIMESTAMP(created)  <= UNIX_TIMESTAMP('2020-8-30 00:00:00')  ORDER BY id")
     public List<TComment> find();
+
+    //返回评论近几日的评论总数 （有评论的日期才有）  admin用 超管用
+    @Select("select DATE_FORMAT(created,'%Y-%m-%d')as date,COUNT(*) as num\n" +
+            "FROM t_comment \n" +
+            "where content != '' and created != ''\n" +
+            "GROUP BY DATE_FORMAT(created,'%Y-%m-%d');")
+    public List<Map<String,String>> Selectcommentby_admin();
+
+    //返回评论近几日的评论总数 （有评论的日期才有）  root用 管理员用
+    @Select("select DATE_FORMAT(c.created,'%Y-%m-%d')as date,COUNT(*) as num \n" +
+            "FROM t_comment as c,t_article  as a\n" +
+            "where c.content != '' and c.created != '' and a.id=c.article_id and a.author=#{username} \n" +
+            "GROUP BY DATE_FORMAT(c.created,'%Y-%m-%d');")
+    public List<Map<String,String>> Selectcommentby_root(String username);
+
+
 }

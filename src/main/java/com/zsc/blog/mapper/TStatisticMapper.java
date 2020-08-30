@@ -34,11 +34,11 @@ public interface TStatisticMapper extends BaseMapper<TStatistic> {
     @Update("update t_statistic as a set comments_num = (select count(*) from t_comment as b where a.article_id = b.article_id)")
     public void updateStatisticComment();
 
-    //查询所有文章中点击量前10
+    //查询所有文章中点击量前10 超管用
     @Select("select article_id,hits,t_article.title from t_statistic,t_article where article_id = t_article.id order by hits DESC limit 0,10;")
     public List<Map<String,String>> selectArticle_top10();
 
-    //查询作者文章点击量前5
+    //查询作者文章点击量前5   管理员用
     @Select("select article_id,hits,t_article.title from t_statistic,t_article where article_id = t_article.id and t_article.author=#{username} order by hits DESC limit 0,5;")
     public List<Map<String,String>> selectArticleby_author_top5(String username);
 
