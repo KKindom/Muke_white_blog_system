@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -54,4 +55,7 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     @Select("SELECT t_comment.*,t_user.profilephoto from t_comment,t_user where t_comment.article_id=#{id} and t_comment.author=t_user.username")
     public List<Map<String,String>> selectcomlistby_a_id(Integer id);
 
+    //返回指定范围内的评论
+    @Select("SELECT * FROM t_comment WHERE UNIX_TIMESTAMP(created)  >= UNIX_TIMESTAMP('2020-8-28 0:0:0')  AND  UNIX_TIMESTAMP(created)  <= UNIX_TIMESTAMP('2020-8-30 00:00:00')  ORDER BY id")
+    public List<TComment> find();
 }

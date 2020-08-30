@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.zsc.blog.entity.TArticle;
 import com.zsc.blog.entity.TStatistic;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,4 +33,13 @@ public interface TStatisticMapper extends BaseMapper<TStatistic> {
     //删除用户时更新文章评论数据
     @Update("update t_statistic as a set comments_num = (select count(*) from t_comment as b where a.article_id = b.article_id)")
     public void updateStatisticComment();
+
+    //查询所有文章中点击量前10
+    @Select("select article_id,hits,t_article.title from t_statistic,t_article where article_id = t_article.id order by hits DESC limit 0,10;")
+    public List<Map<String,String>> selectArticle_top10();
+
+    //查询作者文章点击量前5
+    @Select("select article_id,hits,t_article.title from t_statistic,t_article where article_id = t_article.id and t_article.author=#{username} order by hits DESC limit 0,5;")
+    public List<Map<String,String>> selectArticleby_author_top5(String username);
+
 }

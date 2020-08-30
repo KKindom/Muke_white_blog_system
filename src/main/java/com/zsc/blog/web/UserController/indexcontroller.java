@@ -6,8 +6,10 @@ import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.config.PassToken;
 import com.zsc.blog.entity.TUser;
+import com.zsc.blog.mapper.TArticleMapper;
 import com.zsc.blog.mapper.TCollectMapper;
 import com.zsc.blog.mapper.TCommentMapper;
+import com.zsc.blog.mapper.TStatisticMapper;
 import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITCommentService;
 import com.zsc.blog.service.ITUserService;
@@ -35,6 +37,8 @@ public class indexcontroller {
     @Autowired
     ITArticleService itArticleService;
     @Autowired
+    TStatisticMapper tStatisticMapper;
+    @Autowired
     ITUserService itUserService;
     @Autowired
     ITCommentService itCommentService;
@@ -48,6 +52,8 @@ public class indexcontroller {
     FileUploadUtils fileUploadUtils;
     @Autowired
     TCollectMapper tCollectMapper;
+    @Autowired
+    TCommentMapper tCommentMapper;
     @Resource
     Photo_list photo_list;
     @Value("${file.uploadFolder}")
@@ -143,6 +149,12 @@ public class indexcontroller {
     @PostMapping("/test3333")
     private String  aaa(@RequestParam(name = "file", required = false) MultipartFile file)
     {
+
+
+//        System.out.println( tStatisticMapper.selectArticle_top10());
+//        System.out.println(tStatisticMapper.selectArticleby_author_top5("admin"));
+//        System.out.println(tCommentMapper.find());
+        //System.out.println(tCommentMapper.find2());
        return photo_list.find_photo();
 //        try {
 //            fileUploadUtils.upload(file,1);
