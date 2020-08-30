@@ -15,6 +15,7 @@ import java.util.Set;
  *
  * @author mff
  * @since 2020-07-26
+ * 带rootId参数的同名函数为root操作，不带id参数的为admin操作
  */
 public interface ITUserService extends IService<TUser> {
     //插入用户
@@ -31,10 +32,12 @@ public interface ITUserService extends IService<TUser> {
     int find_usercount(String usrname);
     //查询用户数量
     public int queryUserNumber();
+    public int queryUserNumber(int rootId);
     //删除用户
     public void deleteUserWithId(int it);
     //分页查看用户列表
     public List<TUser> adminSelectUser(int st, int en, int num, int pageSize);
+    public List<TUser> adminSelectUser(int rootId, int st, int en, int num, int pageSize);
 
     //验证用户管理员权限
     public Pair<String, Integer> checkPermisson(String token);

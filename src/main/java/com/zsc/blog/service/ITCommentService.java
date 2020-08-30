@@ -14,6 +14,7 @@ import java.util.Map;
  *
  * @author mff
  * @since 2020-07-26
+ * 带rootId参数的同名函数为root操作，不带id参数的为admin操作
  */
 public interface ITCommentService extends IService<TComment> {
 
@@ -34,13 +35,17 @@ public interface ITCommentService extends IService<TComment> {
     //根据评论ID删除评论
     public void deleteCommentWithId(int id);
 
-    //查询评论数量
+    //查询所有评论数量
     public int queryCommentNumber();
+    public int queryCommentNumber(int rootId);
 
     //根据ID分页查询文章评论
     public List<Map<String, Object>> selectCommentPage(int id, int st, int en, int num, int pageSize);
-    public int queryCommentWithId(int id);
+    public List<Map<String, Object>> selectCommentPage(int rootId, int id, int st, int en, int num, int pageSize);
+    public int queryCommentWithAId(int id);
+    public int queryCommentWithAId(int rootId, int id);
 
     //分页查询所有评论
     public List<Map<String, Object>> selectCommentPageAll(int st, int en, int num, int pageSize);
+    public List<Map<String, Object>> selectCommentPageAll(int rootId, int st, int en, int num, int pageSize);
 }

@@ -4,6 +4,7 @@ import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.service.ITUserService;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,28 +20,57 @@ public class UserController {
     //查看用户列表
     @ResponseBody
     @PostMapping("admin/user/getList")
-    public ResponseData<Object> getList(@RequestHeader("token") String token, @RequestBody Map<String, String> data) {
-        int userCount = itUserService.queryUserNumber();
-        int pageNo = Integer.parseInt(data.get("pageNo"));
-        int pageSize = Integer.parseInt(data.get("pageSize"));
-        int MAX_Page= userCount/pageSize+1;
-        int last= userCount%pageSize;
+    public ResponseData<Object> getList(@RequestHeader("token") String token, @RequestBody Map<String, String> body) {
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
 
-        List<TUser> page_user;
-        if(MAX_Page>pageNo) {
-            page_user= itUserService.adminSelectUser((pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
+        int pageNo = Integer.parseInt(body.get("pageNo"));
+        int pageSize = Integer.parseInt(body.get("pageSize"));
+
+        if(data.getKey().equals("root")) {
+            int rootId = data.getValue();
+            int userCount = itUserService.queryUserNumber(rootId);
+            int MAX_Page = userCount / pageSize + 1;
+            int last = userCount % pageSize;
+
+            List<TUser> page_user;
+            if (MAX_Page > pageNo) {
+                page_user = itUserService.adminSelectUser(rootId,(pageNo - 1) * pageSize, pageSize, pageNo, pageSize);
+            } else {
+                page_user = itUserService.adminSelectUser(rootId,(pageNo - 1) * pageSize, last, pageNo, pageSize);
+            }
+            return ResponseData.out(CodeEnum.SUCCESS, page_user, userCount);
         }
         else {
-            page_user= itUserService.adminSelectUser((pageNo - 1)*pageSize,last,pageNo,pageSize);
+            int userCount = itUserService.queryUserNumber();
+            int MAX_Page = userCount / pageSize + 1;
+            int last = userCount % pageSize;
+
+            List<TUser> page_user;
+            if (MAX_Page > pageNo) {
+                page_user = itUserService.adminSelectUser((pageNo - 1) * pageSize, pageSize, pageNo, pageSize);
+            } else {
+                page_user = itUserService.adminSelectUser((pageNo - 1) * pageSize, last, pageNo, pageSize);
+            }
+            return ResponseData.out(CodeEnum.SUCCESS, page_user, userCount);
         }
-        return ResponseData.out(CodeEnum.SUCCESS, page_user, userCount);
     }
 
     //删除用户
     @ResponseBody
     @PostMapping("admin/user/delete")
-    public ResponseData<Object> deleteUser(@RequestHeader("token") String token, @RequestBody Map<String, Integer> data) {
-        int id = data.get("id");
+    public ResponseData<Object> deleteUser(@RequestHeader("token") String token, @RequestBody Map<String, Integer> body) {
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
+        int id = body.get("id");
+        TUser tUser = itUserService.selectById(Integer.toString(id));
+        if(tUser.getPermisson().equals("admin")  || (data.getKey().equals("root")  && tUser.getPermisson().equals("root") )) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
         itUserService.deleteUserWithId(id);
         return ResponseData.out(CodeEnum.SUCCESS, null);
     }

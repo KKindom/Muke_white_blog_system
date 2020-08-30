@@ -23,7 +23,7 @@ public class AdminManagerController {
     @PostMapping("admin/apply/getList")
     public ResponseData<Object> getRequest(@RequestHeader("token")String token, @RequestBody Map<String, String> Body) {
         Pair<String, Integer> data = itUserService.checkPermisson(token);
-        if(data.getKey() != "admin") {
+        if(data.getKey().equals("admin")) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
         int pageNo = Integer.parseInt(Body.get("pageNo"));
@@ -36,7 +36,7 @@ public class AdminManagerController {
     @PostMapping("admin/apply/accept")
     public ResponseData<Object> acceptRequest(@RequestHeader("token")String token, @RequestBody Map<String, String> Body) {
         Pair<String, Integer> data = itUserService.checkPermisson(token);
-        if(data.getKey() != "admin") {
+        if(data.getKey().equals("admin")) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
         String username = Body.get("username");
@@ -48,7 +48,7 @@ public class AdminManagerController {
     @PostMapping("admin/apply/refuse")
     public ResponseData<Object> refuseRequest(@RequestHeader("token")String token, @RequestBody Map<String, String> Body) {
         Pair<String, Integer> data = itUserService.checkPermisson(token);
-        if(data.getKey() != "admin") {
+        if(data.getKey().equals("admin")) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
         String username = Body.get("username");

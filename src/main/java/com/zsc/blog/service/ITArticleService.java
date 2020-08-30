@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author mff
  * @since 2020-07-26
- * 带adminId参数的同名函数为admin操作，不带id参数的为root操作
+ * 带rootId参数的重载函数为root操作，不带rootid参数的为admin操作
  */
 public interface ITArticleService extends IService<TArticle> {
 
@@ -29,9 +29,9 @@ public interface ITArticleService extends IService<TArticle> {
 
     //管理员后台查询，根据时间排序
     public List<Map<String, Object>> adminSelectPage(int st, int en, int num, int pageSize);
-    public List<Map<String, Object>> adminSelectPage(int adminId, int st, int en, int num, int pageSize);
+    public List<Map<String, Object>> adminSelectPage(int rootId, int st, int en, int num, int pageSize);
     int allArticle();
-    int allArticle(int adminId);
+    int allArticle(int rootId);
 
     //发布文章
     public void publish(TArticle article);

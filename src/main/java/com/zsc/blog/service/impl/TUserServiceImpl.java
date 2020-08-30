@@ -8,7 +8,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zsc.blog.Utils.MailUtils;
 import com.zsc.blog.Utils.RedisUtil;
-import com.zsc.blog.entity.TStatistic;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.mapper.TCollectMapper;
 import com.zsc.blog.mapper.TCommentMapper;
@@ -18,8 +17,6 @@ import com.zsc.blog.service.ITUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -86,7 +83,13 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
 
     @Override
     public int queryUserNumber(){
+        System.out.println(tUserMapper.queryCount());
         return tUserMapper.queryCount();
+    }
+
+    @Override
+    public int queryUserNumber(int rootId){
+        return tUserMapper.queryCountByRoot(rootId);
     }
 
     @Override
@@ -105,12 +108,25 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     @Override
     public List<TUser> adminSelectUser(int st, int en, int num, int pageSize) {
         List<TUser> resultList;
-        if (redisUtil.get("userPage_"+num+"pageSize_"+pageSize)==null) {
+        if (redisUtil.get("adminUserPage_"+num+"pageSize_"+pageSize)==null) {
             resultList=tUserMapper.selectUser(st, en);
-            redisUtil.set("userPage_"+num+"pageSize_"+pageSize,resultList, 30);
+            redisUtil.set("adminUserPage_"+num+"pageSize_"+pageSize,resultList, 30);
         }
         else {
-            resultList =(List<TUser>)redisUtil.get("userPage_"+num+"pageSize_"+pageSize);
+            resultList =(List<TUser>)redisUtil.get("adminUserPage_"+num+"pageSize_"+pageSize);
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<TUser> adminSelectUser(int rootId, int st, int en, int num, int pageSize) {
+        List<TUser> resultList;
+        if (redisUtil.get("root"+rootId+"userPage_"+num+"pageSize_"+pageSize)==null) {
+            resultList=tUserMapper.selectUserByRoot(rootId, st, en);
+            redisUtil.set("root"+rootId+"userPage_"+num+"pageSize_"+pageSize,resultList, 30);
+        }
+        else {
+            resultList =(List<TUser>)redisUtil.get("root"+rootId+"userPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }

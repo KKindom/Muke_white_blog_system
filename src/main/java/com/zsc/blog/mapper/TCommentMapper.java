@@ -19,11 +19,20 @@ import java.util.Map;
  * @since 2020-07-26
  */
 public interface TCommentMapper extends BaseMapper<TComment> {
-    //分页查询评论
+    //分页查询评论,admin版
     @Select("select * from t_comment where article_id = #{id} order by created DESC,id DESC limit #{st},#{en};")
     public List<Map<String, Object>> selectCommentPage(Integer id, Integer st, Integer en);
-    @Select("select b.id, b.created, b.content, status, a.author as articleAuthor, b.author as commentAuthor, title from t_article as a, t_comment as b where a.id = b.article_id order by b.created DESC,b.id DESC limit #{st},#{en};")
+    @Select("select b.id, b.created, b.content, status, a.author as articleAuthor, b.author as commentAuthor, title from t_article as a, t_comment as b" +
+            " where a.id = b.article_id order by b.created DESC,b.id DESC limit #{st},#{en};")
     public List<Map<String, Object>> selectCommentPageAll(Integer st, Integer en);
+
+    //分页查询,root用户版
+    @Select("select * from t_comment as a, t_user as b where a.article_id = #{id} and a.author = b.username and (b.permisson = 'client' or b.id = #{rootId}) " +
+            "order by created DESC,id DESC limit #{st},#{en};")
+    public List<Map<String, Object>> selectCommentPageByRoot(Integer rootId, Integer id, Integer st, Integer en);
+    @Select("select b.id, b.created, b.content, status, a.author as articleAuthor, b.author as commentAuthor, title from t_article as a, t_comment as b, t_user as c" +
+            " where a.id = b.article_id and b.author = c.username and (c.permisson = 'client' or c.id = #{rootId}) order by b.created DESC,b.id DESC limit #{st},#{en};")
+    public List<Map<String, Object>> selectCommentPageAllByRoot(Integer rootId, Integer st, Integer en);
 
     //通过文章ID删除评论信息
     @Delete("delete from t_comment where article_id = #{id}")
@@ -40,12 +49,15 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     @Delete("delete from t_comment where id = #{id} and author=#{username}")
     public void deleteCommentWithauthor(Integer id,String username);
 
-    @Select("select count(*) from t_comment where article_id = #{id}")
-    public int queryCountWithId(Integer id);
+    //查询评论数量,root用
+    @Select("select count(*) from t_comment as a, t_user as b where a.author = b.username and (b.permisson = 'client' or b.id = #{rootId})")
+    public int querytCount(Integer rootId);
 
-    //查询评论数量
-    @Select("Select count(*) from t_comment")
-    public int queryCount();
+    //根据文章ID查询评论数量
+    @Select("select count(*) from t_comment as a, t_user as b where a.article_id = #{id} and a.author = b.username and (b.permisson = 'client' or b.id = #{rootId})")
+    public int queryCountWithAIdByRoot(Integer rootId, Integer id);
+    @Select("select count(*) from t_comment where article_id = #{id}")
+    public int queryCountWithAId(Integer id);
 
     //根据用户名返回用户的评论
     @Select("SELECT t_comment.*,t_article.title ,t_user.profilephoto from t_comment,t_article,t_user where t_comment.author=#{username} and t_article.id=t_comment.article_id and t_user.username=#{username}")

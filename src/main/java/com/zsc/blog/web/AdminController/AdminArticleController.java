@@ -6,6 +6,7 @@ import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.*;
 import com.zsc.blog.mapper.TArticleMapper;
 import com.zsc.blog.service.ITArticleService;
+import com.zsc.blog.service.ITUserService;
 import com.zsc.blog.service.impl.TUserServiceImpl;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,40 +29,69 @@ public class AdminArticleController {
     @Autowired
     TArticleMapper tArticleMapper;
     @Autowired
-    TUserServiceImpl tUserService;
+    ITUserService itUserService;
 
     //展示文章列表
     @ResponseBody
     @PostMapping("admin/article/getList")
     public ResponseData<Object> GetList(@RequestHeader("token") String token, @RequestBody Map<String, String> Body) {
-        Pair<String, Integer> data = tUserService.checkPermisson(token);
-        if(data.getKey() != "admin" && data.getKey() != "root") {
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
-        int adminId = data.getValue();
-        int articleCount = itArticleService.allArticle(adminId);
         int pageNo = Integer.parseInt(Body.get("pageNo"));
         int pageSize = Integer.parseInt(Body.get("pageSize"));
-        int MAX_Page= articleCount/pageSize+1;
-        int last= articleCount%pageSize;
+        if(data.getKey().equals("root") ) {
+            int rootId = data.getValue();
+            int articleCount = itArticleService.allArticle(rootId);
+            int MAX_Page = articleCount / pageSize + 1;
+            int last = articleCount % pageSize;
 
-        List<Map<String, Object>> page_articles;
-        if(MAX_Page>pageNo) {
-            page_articles= itArticleService.adminSelectPage(adminId,(pageNo - 1)*pageSize,pageSize,pageNo,pageSize);
+            List<Map<String, Object>> page_articles;
+            if (MAX_Page > pageNo) {
+                page_articles = itArticleService.adminSelectPage(rootId, (pageNo - 1) * pageSize, pageSize, pageNo, pageSize);
+            } else {
+                page_articles = itArticleService.adminSelectPage(rootId, (pageNo - 1) * pageSize, last, pageNo, pageSize);
+            }
+            if (page_articles.size() == 0) {
+                return ResponseData.out(CodeEnum.FAILURE, null);
+            }
+            return ResponseData.out(CodeEnum.SUCCESS, page_articles, articleCount);
         }
         else {
-            page_articles= itArticleService.adminSelectPage(adminId,(pageNo - 1)*pageSize,last,pageNo,pageSize);
+            int articleCount = itArticleService.allArticle();
+            int MAX_Page = articleCount / pageSize + 1;
+            int last = articleCount % pageSize;
+
+            List<Map<String, Object>> page_articles;
+            if (MAX_Page > pageNo) {
+                page_articles = itArticleService.adminSelectPage((pageNo - 1) * pageSize, pageSize, pageNo, pageSize);
+            } else {
+                page_articles = itArticleService.adminSelectPage((pageNo - 1) * pageSize, last, pageNo, pageSize);
+            }
+            if (page_articles.size() == 0) {
+                return ResponseData.out(CodeEnum.FAILURE, null);
+            }
+            return ResponseData.out(CodeEnum.SUCCESS, page_articles, articleCount);
         }
-        if(page_articles.size() == 0) {
-            return ResponseData.out(CodeEnum.FAILURE, null);
-        }
-        return ResponseData.out(CodeEnum.SUCCESS, page_articles, articleCount);
     }
 
     //根据ID删除文章
     @ResponseBody
     @PostMapping("admin/article/deletearticle")
-    public ResponseData<Object> Delete(@RequestParam int id) {
+    public ResponseData<Object> Delete(@RequestHeader("token") String token, @RequestParam int id) {
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
+        TArticle tArticle = itArticleService.selectArticleWithId(id);
+        TUser articleAuthor = itUserService.selectByusername(tArticle.getAuthor());
+        if(articleAuthor.getPermisson().equals("admin")  && data.getKey().equals("root") ) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
+        if(data.getKey().equals("root")  && articleAuthor.getId() != data.getValue()) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, "这不是你发布的文章");
+        }
         itArticleService.deleteArticleWithId(id);
         return ResponseData.out(CodeEnum.SUCCESS, null);
     }
@@ -76,6 +106,10 @@ public class AdminArticleController {
                                            @RequestHeader("token")String token) {
 
         //FileUploadUtils fileUploadUtils = new FileUploadUtils();
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
         AttachFile attachFile = new AttachFile();
         try {
             attachFile = fileUploadUtils.upload(file, 3);
@@ -84,6 +118,7 @@ public class AdminArticleController {
         }
         TArticle article = new TArticle();
         article.setCreated(new Timestamp(new Date().getTime()));
+        article.setAuthor(itUserService.selectById(data.getValue().toString()).getUsername());
         article.setContent(content);
         article.setTitle(title);
         article.setCategories(categories);
@@ -102,9 +137,17 @@ public class AdminArticleController {
                          @RequestParam(value = "title", required = false)String title,
                          @RequestParam(value = "categories", required = false)String categories,
                          @RequestHeader("token")String token) {
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
         TArticle tArticle = itArticleService.selectArticleWithId(id);
+        TUser articleAuthor = itUserService.selectByusername(tArticle.getAuthor());
+        if(data.getKey().equals("root")  && articleAuthor.getId() != data.getValue()) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, "这不是你的文章！");
+        }
         tArticle.setModified(new Timestamp(new Date().getTime()));
-        System.out.println(tArticle.getModified());
+        //System.out.println(tArticle.getModified());
         if(file != null) {
             AttachFile attachFile = new AttachFile();
             try {

@@ -1,9 +1,7 @@
 package com.zsc.blog.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.entity.TComment;
-import com.zsc.blog.entity.TUser;
 import com.zsc.blog.mapper.TCommentMapper;
 import com.zsc.blog.mapper.TStatisticMapper;
 import com.zsc.blog.service.ITCommentService;
@@ -101,10 +99,24 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
 
     @Override
     public int queryCommentNumber() {
-        return tCommentMapper.queryCount();
+        return tCommentMapper.selectCount(null);
     }
+
     @Override
-    public int queryCommentWithId(int id) { return tCommentMapper.queryCountWithId(id);}
+    public int queryCommentNumber(int rootId) {
+        return tCommentMapper.querytCount(rootId);
+    }
+
+    @Override
+    public int queryCommentWithAId(int id) {
+        return tCommentMapper.queryCountWithAId(id);
+    }
+
+    @Override
+    public int queryCommentWithAId(int rootId, int id) {
+        return tCommentMapper.queryCountWithAIdByRoot(rootId, id);
+    }
+
     @Override
     public void deleteCommentWithId(int id) {
         redisUtil.removeAll("comment");
@@ -116,12 +128,25 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     @Override
     public List<Map<String, Object>> selectCommentPage(int id, int st, int en, int num, int pageSize) {
         List<Map<String, Object>> resultList;
-        if (redisUtil.get("article_"+id+"commentPage_"+num+"pageSize_"+pageSize)==null) {
+        if (redisUtil.get("adminarticle_"+id+"commentPage_"+num+"pageSize_"+pageSize)==null) {
             resultList=tCommentMapper.selectCommentPage(id, st, en);
-            redisUtil.set("article_"+id+"commentPage_"+num+"pageSize_"+pageSize,resultList,30);
+            redisUtil.set("adminarticle_"+id+"commentPage_"+num+"pageSize_"+pageSize,resultList,30);
         }
         else {
-            resultList =(List<Map<String, Object>>)redisUtil.get("article_"+id+"commentPage_"+num+"pageSize_"+pageSize);
+            resultList =(List<Map<String, Object>>)redisUtil.get("adminarticle_"+id+"commentPage_"+num+"pageSize_"+pageSize);
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectCommentPage(int rootId, int id, int st, int en, int num, int pageSize) {
+        List<Map<String, Object>> resultList;
+        if (redisUtil.get("root"+rootId+"article_"+id+"commentPage_"+num+"pageSize_"+pageSize)==null) {
+            resultList=tCommentMapper.selectCommentPageByRoot(rootId, id, st, en);
+            redisUtil.set("root"+rootId+"article_"+id+"commentPage_"+num+"pageSize_"+pageSize,resultList,30);
+        }
+        else {
+            resultList =(List<Map<String, Object>>)redisUtil.get("root"+rootId+"article_"+id+"commentPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }
@@ -129,12 +154,25 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     @Override
     public List<Map<String, Object>> selectCommentPageAll(int st, int en, int num, int pageSize) {
         List<Map<String, Object>> resultList;
-        if (redisUtil.get("commentPage_"+num+"pageSize_"+pageSize)==null) {
+        if (redisUtil.get("admincommentPage_"+num+"pageSize_"+pageSize)==null) {
             resultList=tCommentMapper.selectCommentPageAll(st, en);
-            redisUtil.set("commentPage_"+num+"pageSize_"+pageSize,resultList,30);
+            redisUtil.set("admincommentPage_"+num+"pageSize_"+pageSize,resultList,30);
         }
         else {
             resultList =(List<Map<String, Object>>)redisUtil.get("commentPage_"+num+"pageSize_"+pageSize);
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectCommentPageAll(int rootId, int st, int en, int num, int pageSize) {
+        List<Map<String, Object>> resultList;
+        if (redisUtil.get("root"+rootId+"commentPage_"+num+"pageSize_"+pageSize)==null) {
+            resultList=tCommentMapper.selectCommentPageAllByRoot(rootId, st, en);
+            redisUtil.set("root"+rootId+"commentPage_"+num+"pageSize_"+pageSize,resultList,30);
+        }
+        else {
+            resultList =(List<Map<String, Object>>)redisUtil.get("root"+rootId+"commentPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }

@@ -36,8 +36,8 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     public List<Map<String, Object>> adminSelectPage(int st, int en);
     @Select("select " +
             "a.id, a.author, title as articleName, comments_num, created as time,hits as pageView,thumbnail as img,categories as type from t_article as a,t_statistic as b  " +
-            "where a.id=b.article_id and a.author = (select username from t_user where id = #{adminId})order by created DESC limit #{st},#{en};")
-    public List<Map<String, Object>> adminSelectPage(int adminId, int st, int en);
+            "where a.id=b.article_id and a.author = (select username from t_user where id = #{rootId})order by created DESC limit #{st},#{en};")
+    public List<Map<String, Object>> adminSelectPageByRoot(int rootId, int st, int en);
 
     //发表文章
     @Insert("insert into t_article (id, title, content, created, modified, categories, thumbnail) " +

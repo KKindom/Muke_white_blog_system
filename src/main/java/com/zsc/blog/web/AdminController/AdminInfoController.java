@@ -12,6 +12,7 @@ import com.zsc.blog.entity.TUser;
 import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITCommentService;
 import com.zsc.blog.service.ITUserService;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,11 +61,15 @@ public class AdminInfoController {
 
     @ResponseBody
     @PostMapping("admin")
-    public ResponseData<Object> GetBlogInfo() {
-        Map<String, Integer> data = new HashMap<>();
-        data.put("user", itUserService.queryUserNumber());
-        data.put("article", itArticleService.allArticle());
-        data.put("comment", itCommentService.queryCommentNumber());
-        return ResponseData.out(CodeEnum.SUCCESS, data);
+    public ResponseData<Object> GetBlogInfo(@RequestHeader("token") String token) {
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        //if(data.getKey().equals("admin") ) {
+            Map<String, Integer> result = new HashMap<>();
+            result.put("user", itUserService.queryUserNumber());
+            result.put("article", itArticleService.allArticle());
+            result.put("comment", itCommentService.queryCommentNumber());
+            return ResponseData.out(CodeEnum.SUCCESS, result);
+        //}
+        //else if()
     }
 }

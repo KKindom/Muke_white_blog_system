@@ -107,7 +107,7 @@ public class Login_RController {
             newuser.setEmail(Registerdata.get("mail"));
             newuser.setPassword(encrypt_decryptUtil.Encrypt(Registerdata.get("password")));
             newuser.setProfilephoto(photo);
-            newuser.setPermisson("cilent");
+            newuser.setPermisson("client");
             itUserService.insert_user(newuser);
             return ResponseData.out(CodeEnum.SUCCESS_registeruser, newuser);
         }

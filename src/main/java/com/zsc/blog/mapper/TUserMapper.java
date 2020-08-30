@@ -23,16 +23,21 @@ public interface TUserMapper extends BaseMapper<TUser> {
     public TUser selectbyname(String username);
 
     //查询用户数量
-    @Select("Select count(*) from t_user where permisson='cilent'")
+    @Select("select count(*) from t_user where permisson!='admin'") //admin用
     public int queryCount();
+
+    @Select("select count(*) from t_user where permisson='client'") //root用
+    public int queryCountByRoot(int rootId);
 
     //删除用户
     @Delete("Delete * from t_user where id=#{id}")
     public void deleteUser(int id);
 
     //查询用户信息
-    @Select("select * from t_user where permisson='cilent' order by id DESC limit #{st},#{en};")
+    @Select("select * from t_user where permisson!='admin' order by id DESC limit #{st},#{en};")
     public List<TUser> selectUser(int st, int en);
+    @Select("select * from t_user where permisson='client' order by id DESC limit #{st},#{en};")
+    public List<TUser> selectUserByRoot(int rootId, int st, int en);
 
     //更改用户权限
     @Update("update t_user set permisson='root' where username = #{username}")

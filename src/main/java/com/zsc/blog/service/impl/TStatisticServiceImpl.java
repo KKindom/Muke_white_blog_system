@@ -21,8 +21,8 @@ import javax.annotation.Resource;
  */
 @Service
 public class TStatisticServiceImpl extends ServiceImpl<TStatisticMapper, TStatistic> implements ITStatisticService {
-   @Autowired
-   TStatisticMapper tStatisticMapper;
+    @Autowired
+    TStatisticMapper tStatisticMapper;
     @Resource
     RedisUtil redisUtil;
 
