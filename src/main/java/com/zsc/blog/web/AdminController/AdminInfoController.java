@@ -11,6 +11,7 @@ import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.service.ITArticleService;
 import com.zsc.blog.service.ITCommentService;
+import com.zsc.blog.service.ITStatisticService;
 import com.zsc.blog.service.ITUserService;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class AdminInfoController {
@@ -31,6 +34,8 @@ public class AdminInfoController {
     ITCommentService itCommentService;
     @Autowired
     ITArticleService itArticleService;
+    @Autowired
+    ITStatisticService itStatisticService;
     @Autowired
     RedisUtil redisUtil;
 
@@ -63,15 +68,26 @@ public class AdminInfoController {
         if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
-        //if(data.getKey().equals("admin") ) {
-            Map<String, Integer> result = new HashMap<>();
+        if(data.getKey().equals("admin") ) {
+            Map<String, Object> result = new HashMap<>();
+            result.put("commentsTop5", itStatisticService.selectArticleWithComments_top5());
+            result.put("hitsTop5", itStatisticService.selectArticleWithHits_top5());
+            result.put("newUser", itUserService.selectNewUser());
+            result.put("newComment", itCommentService.selectNewComment());
+
             result.put("user", itUserService.queryUserNumber());
             result.put("article", itArticleService.allArticle());
             result.put("comment", itCommentService.queryCommentNumber());
             return ResponseData.out(CodeEnum.SUCCESS, result);
-       // }
-        //else{
-        //    return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
-        //}
+        }
+        else {
+            int rootId = data.getValue();
+            Map<String, Object> result = new HashMap<>();
+            result.put("commentsTop5", itStatisticService.selectArticleWithComments_top5(rootId));
+            result.put("hitsTop5", itStatisticService.selectArticleWithHits_top5(rootId));
+            result.put("newComment", itCommentService.selectNewComment(rootId));
+
+            return ResponseData.out(CodeEnum.SUCCESS, result);
+        }
     }
 }

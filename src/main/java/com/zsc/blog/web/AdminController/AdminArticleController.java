@@ -1,6 +1,7 @@
 package com.zsc.blog.web.AdminController;
 
 import com.zsc.blog.Utils.FileUploadUtils;
+import com.zsc.blog.Utils.SensitiveFilterService;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.*;
@@ -110,6 +111,14 @@ public class AdminArticleController {
         if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
+        //初始化过滤器
+        SensitiveFilterService filter = SensitiveFilterService.getInstance();
+        //过滤文字
+        String hou = filter.replaceSensitiveWord(content, 1, "*");
+        //判定是否过滤成功  true为过滤失败 有敏感字 false为过滤成功 可通过
+        if(filter.end()) {
+            return ResponseData.out(CodeEnum.FAILURE_Sensitive, null);
+        }
         AttachFile attachFile = new AttachFile();
         try {
             attachFile = fileUploadUtils.upload(file, 3);
@@ -147,7 +156,6 @@ public class AdminArticleController {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, "这不是你的文章！");
         }
         tArticle.setModified(new Timestamp(new Date().getTime()));
-        //System.out.println(tArticle.getModified());
         if(file != null) {
             AttachFile attachFile = new AttachFile();
             try {

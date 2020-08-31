@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class AdminLoginController {
     @ResponseBody
     @PostMapping("admin/logout")
     public ResponseData<Object> logout(@RequestHeader("token") String token) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date localDate = new Date();
         long a = 0;
         try {
@@ -67,8 +68,7 @@ public class AdminLoginController {
             a = (localDate.getTime() - startDate.getTime()) / (60*60*24*1000);
         } catch (ParseException e) {
             e.printStackTrace();
-        }
-
-        return ResponseData.out(CodeEnum.SUCCESS, a);
+        }*/
+        return ResponseData.out(CodeEnum.SUCCESS, null);
     }
 }
