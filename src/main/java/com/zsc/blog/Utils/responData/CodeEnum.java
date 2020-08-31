@@ -40,6 +40,8 @@ public enum CodeEnum {
     FAILURE_apply_author(500,"对不起，请不要重复申请，每次申请有效期为1天，请等待管理员的审批！"),
     /* 提交申请重复*/
     FAILURE_no_permisson(500,"对不起，你的账号被临时封禁了，请联系管理员的解封！管理员联系方式：110 邮箱：1184045779@qq.com");
+    /* 内容包括敏感词*/
+    FAILURE_Sensitive(500, "文章内容中包含敏感词，请修改后重新发布！");
 
     public int code;
     public String  msg;
