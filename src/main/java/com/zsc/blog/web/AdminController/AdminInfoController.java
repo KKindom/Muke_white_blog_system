@@ -16,6 +16,7 @@ import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,41 +36,42 @@ public class AdminInfoController {
 
     @ResponseBody
     @PostMapping("admin/userInfo")
-    public ResponseData<Object> GetAdminInfo(@RequestHeader("token") String token) {
-        /*if (StringUtils.isEmpty(token)) {
-            token = request.getParameter("token");
-        }*/
+    public ResponseData<Object> GetAdminInfo(@RequestHeader("token")String token) {
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
         DecodedJWT jwt = null;
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256("jung")).build();
         jwt = verifier.verify(token);
         String dataString = jwt.getClaim("data").asString();
         String userName = JSON.parseObject(dataString).getString("username");
 
-        Map<String,String> data=new HashMap<>();
-        /*判断非admin权限，似乎没有必要
-        if(permission != "admin") {
-            data.put("error", "Illegal account!");
-            return ResponseData.out(CodeEnum.FAILURE, data);
-        }*/
+        Map<String,String> result=new HashMap<>();
         TUser user = itUserService.selectByusername(userName);
-        data.put("nickname", user.getNickname());
-        data.put("imgurl", user.getProfilephoto());
-        data.put("permissions", user.getPermisson());
+        result.put("nickname", user.getNickname());
+        result.put("imgurl", user.getProfilephoto());
+        result.put("permissions", user.getPermisson());
 
-        return ResponseData.out(CodeEnum.SUCCESS, data);
+        return ResponseData.out(CodeEnum.SUCCESS, result);
     }
 
     @ResponseBody
     @PostMapping("admin")
     public ResponseData<Object> GetBlogInfo(@RequestHeader("token") String token) {
         Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
         //if(data.getKey().equals("admin") ) {
             Map<String, Integer> result = new HashMap<>();
             result.put("user", itUserService.queryUserNumber());
             result.put("article", itArticleService.allArticle());
             result.put("comment", itCommentService.queryCommentNumber());
             return ResponseData.out(CodeEnum.SUCCESS, result);
+       // }
+        //else{
+        //    return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         //}
-        //else if()
     }
 }

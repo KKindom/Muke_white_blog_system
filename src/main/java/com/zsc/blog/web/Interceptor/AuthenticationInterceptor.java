@@ -29,7 +29,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     RedisTemplate redisTemplate;
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws MyException  {
-        String token = httpServletRequest.getHeader("accessToken");// 从 http 请求头中取出 token
+        String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
         System.out.println("dsa"+token);
         // 如果不是映射到方法直接通过
         if (!(object instanceof HandlerMethod)) {

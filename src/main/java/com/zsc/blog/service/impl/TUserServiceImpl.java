@@ -137,9 +137,9 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256("jung")).build();
         jwt = verifier.verify(token);
         String dataString = jwt.getClaim("data").asString();
-        String permissions = JSON.parseObject(dataString).getString("permissions");
+        String permisson = JSON.parseObject(dataString).getString("permisson");
         int id = Integer.parseInt(JSON.parseObject(dataString).getString("id"));
-        return new Pair<String, Integer>(permissions, id);
+        return new Pair<String, Integer>(permisson, id);
     }
 
     @Override

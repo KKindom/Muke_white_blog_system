@@ -29,6 +29,7 @@ public class AdminCommentController {
         int articleId = body.get("id");
         int pageNo = body.get("pageNo");
         int pageSize = body.get("pageSize");
+
         if(data.getKey().equals("root") ) {
             int rootId = data.getValue();
             int commentCount = itCommentService.queryCommentWithAId(rootId, articleId);

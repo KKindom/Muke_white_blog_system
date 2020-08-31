@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +59,16 @@ public class AdminLoginController {
     @ResponseBody
     @PostMapping("admin/logout")
     public ResponseData<Object> logout(@RequestHeader("token") String token) {
-        return ResponseData.out(CodeEnum.SUCCESS, null);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date localDate = new Date();
+        long a = 0;
+        try {
+            Date startDate = sdf.parse("2020-08-27");
+            a = (localDate.getTime() - startDate.getTime()) / (60*60*24*1000);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseData.out(CodeEnum.SUCCESS, a);
     }
 }

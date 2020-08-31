@@ -28,7 +28,7 @@ public interface TCommentMapper extends BaseMapper<TComment> {
 
     //分页查询,root用户版
     @Select("select * from t_comment as a, t_user as b where a.article_id = #{id} and a.author = b.username and (b.permisson = 'client' or b.id = #{rootId}) " +
-            "order by a.created DESC, a.id DESC limit #{st},#{en};")
+            "order by a.created DESC,a.id DESC limit #{st},#{en};")
     public List<Map<String, Object>> selectCommentPageByRoot(Integer rootId, Integer id, Integer st, Integer en);
     @Select("select b.id, b.created, b.content, status, a.author as articleAuthor, b.author as commentAuthor, title from t_article as a, t_comment as b, t_user as c" +
             " where a.id = b.article_id and b.author = c.username and (c.permisson = 'client' or c.id = #{rootId}) order by b.created DESC,b.id DESC limit #{st},#{en};")

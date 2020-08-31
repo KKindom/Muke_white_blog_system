@@ -22,7 +22,7 @@ public class UserController {
     @PostMapping("admin/user/getList")
     public ResponseData<Object> getList(@RequestHeader("token") String token, @RequestBody Map<String, String> body) {
         Pair<String, Integer> data = itUserService.checkPermisson(token);
-        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
+        if(!data.getKey().equals("admin")) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
 
@@ -63,7 +63,7 @@ public class UserController {
     @PostMapping("admin/user/delete")
     public ResponseData<Object> deleteUser(@RequestHeader("token") String token, @RequestBody Map<String, Integer> body) {
         Pair<String, Integer> data = itUserService.checkPermisson(token);
-        if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
+        if(!data.getKey().equals("admin")) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
         int id = body.get("id");
