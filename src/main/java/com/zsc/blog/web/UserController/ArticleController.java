@@ -1,6 +1,7 @@
 package com.zsc.blog.web.UserController;
 
 import com.zsc.blog.Utils.RedisUtil;
+import com.zsc.blog.Utils.SensitiveFilterService;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.entity.*;
@@ -127,6 +128,14 @@ public class ArticleController {
         String status=requestdata.get("status");
         //string 转 时间戳
         Timestamp ldt =new Timestamp(new Date().getTime());
+
+        //关键字过滤
+        //初始化过滤器
+        SensitiveFilterService filter = SensitiveFilterService.getInstance();
+        //过滤文字
+        content = filter.replaceSensitiveWord(content, 1, "*");
+
+
         //初始化赋值评论
         TComment newcomment=new TComment();
         newcomment.setArticleId(Integer.valueOf(article_id));
