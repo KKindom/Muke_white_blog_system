@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @program: demo
@@ -116,6 +115,14 @@ public class Login_RController {
             newuser.setProfilephoto(photo);
             newuser.setPermisson("client");
             itUserService.insert_user(newuser);
+            //插入缓存今日新增用户
+            String data=getdata();
+            if(redisUtil.get(data)==null)
+            redisUtil.set(data,(int)1,604800);
+            else
+            {
+                redisUtil.set(data,(int)redisUtil.get(data)+1,604800);
+            }
             return ResponseData.out(CodeEnum.SUCCESS_registeruser, newuser);
         }
 
@@ -137,5 +144,13 @@ public class Login_RController {
         Map<String ,Integer> codemap=new HashMap<>();
         codemap.put("code",vcode);
         return ResponseData.out(CodeEnum.SUCCESS_sendvcode,codemap);
+    }
+
+    public String getdata()
+    {
+        Date date=new Date();
+        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String str = sdf.format(date);
+        return str;
     }
 }

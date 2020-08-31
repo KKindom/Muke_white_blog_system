@@ -75,14 +75,14 @@ public interface TCommentMapper extends BaseMapper<TComment> {
     @Select("select DATE_FORMAT(created,'%Y-%m-%d')as date,COUNT(*) as num\n" +
             "FROM t_comment \n" +
             "where content != '' and created != ''\n" +
-            "GROUP BY DATE_FORMAT(created,'%Y-%m-%d');")
+            "GROUP BY DATE_FORMAT(created,'%Y-%m-%d') order by DATE_FORMAT(created,'%Y-%m-%d') desc;")
     public List<Map<String,String>> Selectcommentby_admin();
 
     //返回评论近几日的评论总数 （有评论的日期才有）  root用 管理员用
     @Select("select DATE_FORMAT(c.created,'%Y-%m-%d')as date,COUNT(*) as num \n" +
             "FROM t_comment as c,t_article  as a\n" +
             "where c.content != '' and c.created != '' and a.id=c.article_id and a.author=#{username} \n" +
-            "GROUP BY DATE_FORMAT(c.created,'%Y-%m-%d');")
+            "GROUP BY DATE_FORMAT(c.created,'%Y-%m-%d') order by DATE_FORMAT(c.created,'%Y-%m-%d') desc;")
     public List<Map<String,String>> Selectcommentby_root(String username);
 
 

@@ -23,8 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @program: demo
@@ -150,11 +153,14 @@ public class indexcontroller {
     private String  aaa(@RequestParam(name = "file", required = false) MultipartFile file)
     {
 
-
+        Date date=new Date();
+        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String str = sdf.format(date);
+        System.out.println(str);
 //        System.out.println( tStatisticMapper.selectArticle_top10());
 //        System.out.println(tStatisticMapper.selectArticleby_author_top5("admin"));
 //        System.out.println(tCommentMapper.find());
-        System.out.println(tCommentMapper.Selectcommentby_root("mff"));
+        System.out.println(tCommentMapper.Selectcommentby_admin());
        return photo_list.find_photo();
 //        try {
 //            fileUploadUtils.upload(file,1);
