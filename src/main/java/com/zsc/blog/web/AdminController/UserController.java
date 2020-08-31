@@ -74,4 +74,43 @@ public class UserController {
         itUserService.deleteUserWithId(id);
         return ResponseData.out(CodeEnum.SUCCESS, null);
     }
+
+    //关小黑屋
+    @ResponseBody
+    @PostMapping("admin/user/block")
+    public ResponseData<Object> blockingUser(@RequestHeader("token")String token, @RequestBody Map<String, Integer> body){
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
+        int id = body.get("id");
+        itUserService.blockUserWithId(id);
+        return ResponseData.out(CodeEnum.SUCCESS, null);
+    }
+
+    //移出小黑屋
+    @ResponseBody
+    @PostMapping("admin/user/unblock")
+    public ResponseData<Object> unBlockingUser(@RequestHeader("token")String token, @RequestBody Map<String, Integer> body){
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
+        int id = body.get("id");
+        itUserService.unBlockUserWithId(id);
+        return ResponseData.out(CodeEnum.SUCCESS, null);
+    }
+
+    //移除创作者权限
+    @ResponseBody
+    @PostMapping("admin/user/removeRoot")
+    public ResponseData<Object> removeRootPermisson(@RequestHeader("token")String token, @RequestBody Map<String, Integer> body) {
+        Pair<String, Integer> data = itUserService.checkPermisson(token);
+        if(!data.getKey().equals("admin")) {
+            return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
+        }
+        int id = body.get("id");
+        itUserService.removeRootPermisson(id);
+        return ResponseData.out(CodeEnum.SUCCESS, null);
+    }
 }

@@ -159,7 +159,7 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
             redisUtil.set("admincommentPage_"+num+"pageSize_"+pageSize,resultList,30);
         }
         else {
-            resultList =(List<Map<String, Object>>)redisUtil.get("commentPage_"+num+"pageSize_"+pageSize);
+            resultList =(List<Map<String, Object>>)redisUtil.get("admincommentPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }

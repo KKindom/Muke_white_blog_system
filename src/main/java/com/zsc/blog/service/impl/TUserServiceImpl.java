@@ -143,31 +143,31 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     }
 
     @Override
-    public Pair<Integer, List<String>> getRequestList(int pageNo, int pageSize) {
-        List<String> list = new ArrayList<String>();
-        if(redisUtil.get("requestList") == null) {
+    public Pair<Integer, List<TUser>> getRequestList(int pageNo, int pageSize) {
+        List<TUser> list = new ArrayList<TUser>();
+        if(redisUtil.get("requestnameList") == null) {
             Set<String> data = redisUtil.keys("Apply_Author_");
             Iterator<String> it = data.iterator();
             while (it.hasNext()) {
                 String str = it.next();
-                list.add(str);
+                list.add(tUserMapper.selectbyname((String)redisUtil.get(str)));
             }
-            redisUtil.set("requestList", list, 30);
+            redisUtil.set("requestnameList", list, 30);
         }
         else {
-            list = (List<String>)redisUtil.get("requestList");
+            list = (List<TUser>)redisUtil.get("requestnameList");
         }
         int requestCount = list.size();
         int MAX_Page= requestCount/pageSize+1;
         int last= list.size();
-        List<String> resultList = new ArrayList<String>();
+        List<TUser> resultList = new ArrayList<TUser>();
         if(MAX_Page > pageNo) {
             resultList = list.subList((pageNo - 1)*pageSize, pageNo*pageSize);
         }
         else {
             resultList = list.subList((pageNo - 1)*pageSize, requestCount);
         }
-        return new Pair<Integer, List<String>>(requestCount, resultList);
+        return new Pair<Integer, List<TUser>>(requestCount, resultList);
     }
 
     @Override
@@ -184,5 +184,20 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
             String content = "对不起，你的申请没有通过。";
             mailUtils.sendApplyResultEmail(email, content);
         }
+    }
+
+    @Override
+    public void removeRootPermisson(int id) {
+        tUserMapper.lowerUserPermissonWithId(id);
+    }
+
+    @Override
+    public void blockUserWithId(int id) {
+        tUserMapper.blockUser(id);
+    }
+
+    @Override
+    public void unBlockUserWithId(int id) {
+        tUserMapper.unBlockUser(id);
     }
 }

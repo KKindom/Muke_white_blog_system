@@ -35,6 +35,10 @@ public interface ITUserService extends IService<TUser> {
     public int queryUserNumber(int rootId);
     //删除用户
     public void deleteUserWithId(int it);
+    //将用户加入和移除黑名单
+    public void blockUserWithId(int id);
+    public void unBlockUserWithId(int id);
+
     //分页查看用户列表
     public List<TUser> adminSelectUser(int st, int en, int num, int pageSize);
     public List<TUser> adminSelectUser(int rootId, int st, int en, int num, int pageSize);
@@ -43,7 +47,9 @@ public interface ITUserService extends IService<TUser> {
     public Pair<String, Integer> checkPermisson(String token);
 
     //获取成为管理员申请列表
-    public Pair<Integer, List<String>> getRequestList(int pageNo, int pageSize);
+    public Pair<Integer, List<TUser>> getRequestList(int pageNo, int pageSize);
     //处理成为管理员申请
     public void processRequest(String username, int type); //type=1为同意，type=0为拒绝
+    //移除管理员权限
+    public void removeRootPermisson(int id);
 }
