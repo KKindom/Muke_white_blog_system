@@ -136,6 +136,17 @@ public class ArticleController {
         content = filter.replaceSensitiveWord(content, 1, "*");
 
 
+        //加入缓存
+        //插入缓存今日新增用户
+        String data=getdata();
+        if(redisUtil.get(data)==null)
+            redisUtil.set(data+"_comment",(int)1,604800);
+        else
+        {
+            redisUtil.set(data+"_comment",(int)redisUtil.get(data)+1,604800);
+        }
+
+
         //初始化赋值评论
         TComment newcomment=new TComment();
         newcomment.setArticleId(Integer.valueOf(article_id));
@@ -207,5 +218,11 @@ public class ArticleController {
         }
         return tUsertime;
     }
-
+    public String getdata()
+    {
+        Date date=new Date();
+        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String str = sdf.format(date);
+        return str;
+    }
 }
