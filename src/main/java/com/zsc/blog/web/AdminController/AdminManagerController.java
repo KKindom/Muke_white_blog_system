@@ -2,6 +2,7 @@ package com.zsc.blog.web.AdminController;
 
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
+import com.zsc.blog.entity.TUser;
 import com.zsc.blog.service.ITUserService;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class AdminManagerController {
         }
         int pageNo = Integer.parseInt(Body.get("pageNo"));
         int pageSize = Integer.parseInt(Body.get("pageSize"));
-        Pair<Integer, List<String>> result = itUserService.getRequestList(pageNo, pageSize);
+        Pair<Integer, List<TUser>> result = itUserService.getRequestList(pageNo, pageSize);
         return ResponseData.out(CodeEnum.SUCCESS, result.getValue(), result.getKey());
     }
 

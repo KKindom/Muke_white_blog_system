@@ -100,11 +100,11 @@ public class Login_RController {
 
         }
         //判定缓存中以及数据库中是否存在用户名，有则返回重复用户名错误
-       else if (redisUtil.get(R_username) != null || itUserService.selectByusername(R_username) != null) {
+        else if (redisUtil.get(R_username) != null || itUserService.selectByusername(R_username) != null) {
             return ResponseData.out(CodeEnum.FAILURE_error_username, null);
         }
-       //均满足后插入数据库
-       else
+        //均满足后插入数据库
+        else
         {
             //随机获取头像
             String photo=photo_list.find_photo();

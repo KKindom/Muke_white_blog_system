@@ -154,22 +154,8 @@ public class indexcontroller {
 //        System.out.println( tStatisticMapper.selectArticle_top10());
 //        System.out.println(tStatisticMapper.selectArticleby_author_top5("admin"));
 //        System.out.println(tCommentMapper.find());
-//        System.out.println(tCommentMapper.Selectcommentby_root("mff"));
-//       return photo_list.find_photo();
-
-        //初始化过滤器
-        SensitiveFilterService filter = SensitiveFilterService.getInstance();
-        String txt = "你好傻吗";
-        //过滤文字
-        String hou = filter.replaceSensitiveWord(txt, 1, "*");
-        //判定是否过滤成功  true为过滤失败 有敏感字 false为过滤成功 可通过
-        System.out.println(filter.end());
-        System.out.println("替换前的文字为：" + txt);
-        System.out.println("替换后的文字为：" + hou);
-        return "adas";
-//如果需要过滤则用“”替换
-//如果需要屏蔽，则用“*”替换
-
+        System.out.println(tCommentMapper.Selectcommentby_root("mff"));
+       return photo_list.find_photo();
 //        try {
 //            fileUploadUtils.upload(file,1);
 //        } catch (IOException e) {

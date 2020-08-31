@@ -33,6 +33,12 @@ public interface TUserMapper extends BaseMapper<TUser> {
     @Delete("Delete * from t_user where id=#{id}")
     public void deleteUser(int id);
 
+    //将用户加入和移除黑名单
+    @Update("update t_user set permisson='blocked' where id = #{id}")
+    public void blockUser(int id);
+    @Update("update t_user set permisson='client' where id = #{id}")
+    public void unBlockUser(int id);
+
     //查询用户信息
     @Select("select * from t_user where permisson!='admin' order by id DESC limit #{st},#{en};")
     public List<TUser> selectUser(int st, int en);
@@ -42,4 +48,6 @@ public interface TUserMapper extends BaseMapper<TUser> {
     //更改用户权限
     @Update("update t_user set permisson='root' where username = #{username}")
     public void updateUserPermisson(String username);
+    @Update("update t_user set permisson='client' where id=#{id}")
+    public void lowerUserPermissonWithId(int id);
 }

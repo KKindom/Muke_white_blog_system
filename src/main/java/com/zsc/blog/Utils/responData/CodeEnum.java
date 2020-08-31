@@ -43,7 +43,7 @@ public enum CodeEnum {
 
     public int code;
     public String  msg;
-      CodeEnum(int code, String message) {
+    CodeEnum(int code, String message) {
         this.code = code;
         this. msg = message;
     }
@@ -61,7 +61,7 @@ public enum CodeEnum {
     }
     public void setCode(int Code)
     {
-         this.code=Code;
+        this.code=Code;
     }
     public void setmsg(String Msg)
     {
@@ -69,6 +69,6 @@ public enum CodeEnum {
     }
 
     public String getMsg() {
-       return this.msg;
+        return this.msg;
     }
 }
