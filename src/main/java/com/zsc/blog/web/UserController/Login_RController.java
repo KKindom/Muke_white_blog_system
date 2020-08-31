@@ -47,7 +47,7 @@ public class Login_RController {
         String username = userdata.get("username");
         String password = userdata.get("password");
         TUser back_user = itUserService.selectByusername(username);
-        if (back_user != null) {
+        if (back_user != null && (! back_user.getPermisson().equals("ban"))) {
             //解密数据库传来的密码
             String psw = back_user.getPassword();
             psw = encrypt_decryptUtil.Decrypt(psw);
@@ -72,7 +72,14 @@ public class Login_RController {
             }
             return ResponseData.out(CodeEnum.FAILURE_error_password, null);
         }
-        return ResponseData.out(CodeEnum.FAILURE_no_username, null);
+        else if(back_user== null)
+        {
+            return ResponseData.out(CodeEnum.FAILURE_no_username, null);
+        }
+        else
+        {
+            return ResponseData.out(CodeEnum.FAILURE_no_permisson, null);
+        }
     }
 
     @ResponseBody
