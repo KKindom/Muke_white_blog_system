@@ -6,6 +6,7 @@ import javafx.util.Pair;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -33,6 +34,8 @@ public interface ITUserService extends IService<TUser> {
     //查询用户数量
     public int queryUserNumber();
     public int queryUserNumber(int rootId);
+    //查询7日新增用户
+    public Map<String, Object> selectNewUser();
     //删除用户
     public void deleteUserWithId(int it);
     //将用户加入和移除黑名单

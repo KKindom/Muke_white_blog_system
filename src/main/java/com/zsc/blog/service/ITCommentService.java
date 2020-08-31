@@ -48,4 +48,9 @@ public interface ITCommentService extends IService<TComment> {
     //分页查询所有评论
     public List<Map<String, Object>> selectCommentPageAll(int st, int en, int num, int pageSize);
     public List<Map<String, Object>> selectCommentPageAll(int rootId, int st, int en, int num, int pageSize);
+
+    //查看7日内新增评论
+    public Map<String, Object> selectNewComment();
+    public Map<String, Object> selectNewComment(int rootId);
+
 }

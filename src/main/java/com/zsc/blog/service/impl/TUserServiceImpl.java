@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -68,6 +70,36 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     {
         redisUtil.set(tUser.getUsername(),tUser);
         tUserMapper.insert(tUser);
+    }
+
+    @Override
+    public Map<String, Object> selectNewUser() {
+        Map<String, Object> result = new HashMap<>();
+        Calendar calendar = Calendar.getInstance();
+        for(int i = 0; i < 7; i++) {
+            calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - (i==0?0:1));
+            Date today = calendar.getTime();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String str = format.format(today);
+            Set<String> keys = redisUtil.keys("str");
+            if(keys.isEmpty()) {
+                result.put(str, 0);
+            }
+            else {
+                Iterator<String> it = keys.iterator();
+                while (it.hasNext()) {
+                    String now = it.next();
+                    result.put(str, redisUtil.get(now));
+                }
+            }
+        }
+        //将result按时间降序排序
+        LinkedHashMap<String, Object> ascLinkedHashMap = result.entrySet().stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> newValue,
+                        LinkedHashMap::new));
+        return ascLinkedHashMap;
     }
 
     @Override

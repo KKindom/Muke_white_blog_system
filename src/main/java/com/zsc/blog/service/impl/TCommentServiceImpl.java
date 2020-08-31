@@ -2,16 +2,19 @@ package com.zsc.blog.service.impl;
 
 import com.zsc.blog.Utils.RedisUtil;
 import com.zsc.blog.entity.TComment;
+import com.zsc.blog.entity.TUser;
 import com.zsc.blog.mapper.TCommentMapper;
 import com.zsc.blog.mapper.TStatisticMapper;
+import com.zsc.blog.mapper.TUserMapper;
 import com.zsc.blog.service.ITCommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -27,6 +30,8 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     TCommentMapper tCommentMapper;
     @Autowired
     TStatisticMapper tStatisticMapper;
+    @Autowired
+    TUserMapper tUserMapper;
     @Resource
     RedisUtil redisUtil;
 
@@ -175,5 +180,83 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
             resultList =(List<Map<String, Object>>)redisUtil.get("root"+rootId+"commentPage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
+    }
+
+    @Override
+    public Map<String, Object> selectNewComment() {
+        if(redisUtil.get("adminNewComment") == null) {
+            List<Map<String, Object>> list = tCommentMapper.Selectcommentby_admin();
+            Map<String, Object> queryResult = new HashMap<>();
+            Iterator<Map<String, Object>> it = list.iterator();
+            System.out.println(list);
+            while (it.hasNext()) {
+                Map<String, Object> now = it.next();
+                queryResult.put((String)now.get("date"), (long)now.get("num"));
+            }
+            Calendar calendar = Calendar.getInstance();
+            Map<String, Object> result = new HashMap<>();
+            for (int i = 0; i < 7; i++) {
+                calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - (i == 0 ? 0 : 1));
+                Date today = calendar.getTime();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String str = format.format(today);
+                if (queryResult.get(str) == null) {
+                    result.put(str, 0);
+                } else {
+                    result.put(str, queryResult.get(str));
+                }
+            }
+            //将result按时间降序排序
+            LinkedHashMap<String, Object> ascLinkedHashMap = result.entrySet().stream()
+                    .sorted(Collections.reverseOrder(Map.Entry.comparingByKey()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                            (oldValue, newValue) -> newValue,
+                            LinkedHashMap::new));
+            redisUtil.set("adminNewComment", ascLinkedHashMap, 60);
+            return ascLinkedHashMap;
+        }
+        else {
+            Map<String, Object> result = (Map<String, Object>)redisUtil.get("adminNewComment");
+            return result;
+        }
+    }
+
+    @Override
+    public Map<String, Object> selectNewComment(int rootId) {
+        TUser tUser = tUserMapper.selectById(rootId);
+        if(redisUtil.get("root"+rootId+"NewComment") == null) {
+            List<Map<String, Object>> list = tCommentMapper.Selectcommentby_root(tUser.getUsername());
+            Map<String, Object> queryResult = new HashMap<>();
+            Iterator<Map<String, Object>> it = list.iterator();
+            while (it.hasNext()) {
+                Map<String, Object> now = it.next();
+                queryResult.put((String)now.get("date"), (long)now.get("num"));
+            }
+            Calendar calendar = Calendar.getInstance();
+            Map<String, Object> result = new HashMap<>();
+            for (int i = 0; i < 7; i++) {
+                calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - (i == 0 ? 0 : 1));
+                Date today = calendar.getTime();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String str = format.format(today);
+                if (queryResult.get(str) == null) {
+                    result.put(str, 0);
+                } else {
+                    result.put(str, queryResult.get(str));
+                }
+            }
+            //将result按时间降序排序
+            LinkedHashMap<String, Object> ascLinkedHashMap = result.entrySet().stream()
+                    .sorted(Collections.reverseOrder(Map.Entry.comparingByKey()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                            (oldValue, newValue) -> newValue,
+                            LinkedHashMap::new));
+            redisUtil.set("root"+rootId+"NewComment", ascLinkedHashMap, 60);
+            return ascLinkedHashMap;
+        }
+        else {
+            Map<String, Object> result = (Map<String, Object>)redisUtil.get("root"+rootId+"NewComment");
+            return result;
+        }
     }
 }
