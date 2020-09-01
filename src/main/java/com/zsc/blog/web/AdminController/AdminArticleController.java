@@ -54,9 +54,6 @@ public class AdminArticleController {
             } else {
                 page_articles = itArticleService.adminSelectPage(rootId, (pageNo - 1) * pageSize, last, pageNo, pageSize);
             }
-            if (page_articles.size() == 0) {
-                return ResponseData.out(CodeEnum.FAILURE, null);
-            }
             return ResponseData.out(CodeEnum.SUCCESS, page_articles, articleCount);
         }
         else {
@@ -69,9 +66,6 @@ public class AdminArticleController {
                 page_articles = itArticleService.adminSelectPage((pageNo - 1) * pageSize, pageSize, pageNo, pageSize);
             } else {
                 page_articles = itArticleService.adminSelectPage((pageNo - 1) * pageSize, last, pageNo, pageSize);
-            }
-            if (page_articles.size() == 0) {
-                return ResponseData.out(CodeEnum.FAILURE, null);
             }
             return ResponseData.out(CodeEnum.SUCCESS, page_articles, articleCount);
         }
