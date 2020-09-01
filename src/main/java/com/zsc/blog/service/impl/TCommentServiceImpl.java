@@ -46,7 +46,7 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
         if(redisUtil.get("commentlistby_id_"+id)==null)
         {
             list=tCommentMapper.selectcomlistby_a_id(id);
-            redisUtil.set("commentlistby_id_"+id,list,18000);
+            redisUtil.set("commentlistby_id_"+id,list,60);
             System.out.println("commentlistby_id_"+id+"加入缓存成功！");
         }
         else
@@ -67,7 +67,9 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
         else
         {
             redisUtil.del("commentlist_"+username);
+            tCommentMapper.insert(tComment);
         }
+        redisUtil.del("commentlistby_id_"+tComment.getArticleId());
         System.out.println("插入评论成功！");
     }
 
@@ -77,7 +79,7 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
         if (redisUtil.get(  "commentlist_"+username) == null)
         {
             CommentList = tCommentMapper.selcetcommentbyusername(username);
-            redisUtil.set("commentlist_"+username,CommentList,180000);
+            redisUtil.set("commentlist_"+username,CommentList,60);
 
         }
         else

@@ -46,7 +46,7 @@ public class Login_RController {
         String username = userdata.get("username");
         String password = userdata.get("password");
         TUser back_user = itUserService.selectByusername(username);
-        if (back_user != null && (! back_user.getPermisson().equals("ban"))) {
+        if (back_user != null && (! back_user.getPermisson().equals("blocked"))) {
             //解密数据库传来的密码
             String psw = back_user.getPassword();
             psw = encrypt_decryptUtil.Decrypt(psw);

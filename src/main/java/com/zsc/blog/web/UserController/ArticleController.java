@@ -132,7 +132,7 @@ public class ArticleController {
 
 
         //加入缓存
-        //插入缓存今日新增用户
+        //插入缓存今日新增评论
         String data=getdata();
         if(redisUtil.get(data)==null)
             redisUtil.set(data+"_comment",(int)1,604800);

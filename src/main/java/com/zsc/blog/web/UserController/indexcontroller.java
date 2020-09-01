@@ -5,6 +5,7 @@ import com.zsc.blog.Utils.*;
 import com.zsc.blog.Utils.responData.CodeEnum;
 import com.zsc.blog.Utils.responData.ResponseData;
 import com.zsc.blog.config.PassToken;
+import com.zsc.blog.entity.TArticle;
 import com.zsc.blog.entity.TUser;
 import com.zsc.blog.mapper.TArticleMapper;
 import com.zsc.blog.mapper.TCollectMapper;
@@ -161,6 +162,12 @@ public class indexcontroller {
 //        System.out.println(tStatisticMapper.selectArticleby_author_top5("admin"));
 //        System.out.println(tCommentMapper.find());
         System.out.println(tCommentMapper.Selectcommentby_admin());
+        TArticle tArticle=new TArticle();
+        tArticle.setCategories("dasdas");
+        tArticle.setContent("dsadasdas");
+        tArticle.setTitle("asdasdas");
+        tArticle.setAuthor("ASdasdasd");
+        itArticleService.publish(tArticle);
        return photo_list.find_photo();
 //        try {
 //            fileUploadUtils.upload(file,1);
