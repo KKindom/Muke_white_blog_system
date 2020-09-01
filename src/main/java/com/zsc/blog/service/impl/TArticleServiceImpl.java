@@ -119,14 +119,14 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         tArticleMapper.publishArticle(article);
         tStatisticMapper.addStatistic(article);
 
-        HashMap<String, Object> hashMap = new HashMap<>();
+        /*HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", article.getId().toString());
         hashMap.put("title", article.getTitle());
         hashMap.put("content", article.getContent());
         hashMap.put("created", article.getCreated());
         //hashMap.put("modified", article.getModified().toString());
-        hashMap.put("categories", article.getCategories());
-        redisUtil.set("article_" + article.getId().toString(), hashMap);
+        hashMap.put("categories", article.getCategories());*/
+        redisUtil.set("article_" + article.getId().toString(), article);
     }
 
     @Override
@@ -171,14 +171,14 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     public void updateArticle(TArticle article) {
         redisUtil.del("article_" + Integer.toString(article.getId()));
         redisUtil.removeAll("page");
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("id", article.getId().toString());
-        hashMap.put("title", article.getTitle());
-        hashMap.put("content", article.getContent());
-        hashMap.put("created", article.getCreated());
-        hashMap.put("modified", article.getModified().toString());
-        hashMap.put("categories", article.getCategories());
-        redisUtil.set("article_" + article.getId().toString(), hashMap);
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("id", article.getId().toString());
+//        hashMap.put("title", article.getTitle());
+//        hashMap.put("content", article.getContent());
+//        hashMap.put("created", article.getCreated());
+//        hashMap.put("modified", article.getModified().toString());
+//        hashMap.put("categories", article.getCategories());
+        redisUtil.set("article_" + article.getId().toString(), article);
         tArticleMapper.updateArticle(article);
     }
 

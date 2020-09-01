@@ -40,8 +40,8 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     public List<Map<String, Object>> adminSelectPageByRoot(int rootId, int st, int en);
 
     //发表文章
-    @Insert("insert into t_article (id, title, content, created, modified, categories, thumbnail) " +
-            "values(#{id}, #{title}, #{content}, #{created}, #{modified}, #{categories}, #{thumbnail})")
+    @Insert("insert into t_article (id, title, content, created, modified, categories, thumbnail,author) " +
+            "values(#{id}, #{title}, #{content}, #{created}, #{modified}, #{categories}, #{thumbnail},#{author})")
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     public Integer publishArticle(TArticle article);
 

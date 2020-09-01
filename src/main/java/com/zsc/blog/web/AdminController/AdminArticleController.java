@@ -74,13 +74,15 @@ public class AdminArticleController {
     //根据ID删除文章
     @ResponseBody
     @PostMapping("admin/article/deletearticle")
-    public ResponseData<Object> Delete(@RequestHeader("token") String token, @RequestParam int id) {
+    public ResponseData<Object> Delete(@RequestHeader("token") String token, @RequestParam("id") int id) {
         Pair<String, Integer> data = itUserService.checkPermisson(token);
         if(!data.getKey().equals("admin") && !data.getKey().equals("root")) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
         TArticle tArticle = itArticleService.selectArticleWithId(id);
         TUser articleAuthor = itUserService.selectByusername(tArticle.getAuthor());
+        String aa=articleAuthor.getPermisson();
+        String bb=data.getKey();
         if(articleAuthor.getPermisson().equals("admin")  && data.getKey().equals("root") ) {
             return ResponseData.out(CodeEnum.FAILURE_error_permisson, null);
         }
@@ -125,7 +127,7 @@ public class AdminArticleController {
         article.setContent(content);
         article.setTitle(title);
         article.setCategories(categories);
-        article.setThumbnail(attachFile.getVirtual_path());
+        //article.setThumbnail(attachFile.getVirtual_path());
 
         itArticleService.publish(article);
         return ResponseData.out(CodeEnum.SUCCESS, null);
