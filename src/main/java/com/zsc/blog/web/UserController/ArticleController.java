@@ -62,10 +62,7 @@ public class ArticleController {
         {
             page_articles= itArticleService.select_page(nowpage*4-4,last,nowpage);
         }
-        if(page_articles.size()==0)
-        {
-            return ResponseData.out(CodeEnum.FAILURE, null);
-        }
+
 
         return ResponseData.out(CodeEnum.SUCCESS, page_articles,num_all);
     }
@@ -84,9 +81,7 @@ public class ArticleController {
             page_articles = itArticleService.select_newpage(nowpage * 4 - 4, last, nowpage);
         }
         //System.out.println(page_articles);
-        if (page_articles.size() == 0) {
-            return ResponseData.out(CodeEnum.FAILURE, null);
-        }
+
         return ResponseData.out(CodeEnum.SUCCESS, page_articles, num_all);
     }
     //点击显示文字内容以及评论
