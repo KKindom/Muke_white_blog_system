@@ -42,6 +42,7 @@ public interface TArticleMapper extends BaseMapper<TArticle> {
     //发表文章
     @Insert("insert into t_article (id, title, content, created, modified, categories, thumbnail) " +
             "values(#{id}, #{title}, #{content}, #{created}, #{modified}, #{categories}, #{thumbnail})")
+    @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     public Integer publishArticle(TArticle article);
 
     //获取新文章id

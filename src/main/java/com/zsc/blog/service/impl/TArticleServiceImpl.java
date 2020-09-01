@@ -116,9 +116,9 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
 
     @Override
     public void publish(@Autowired TArticle article) {
-        article.setId(tArticleMapper.getNextId());
-        tStatisticMapper.addStatistic(article);
         tArticleMapper.publishArticle(article);
+        tStatisticMapper.addStatistic(article);
+
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", article.getId().toString());
         hashMap.put("title", article.getTitle());
