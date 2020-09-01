@@ -30,7 +30,7 @@ public interface TUserMapper extends BaseMapper<TUser> {
     public int queryCountByRoot(int rootId);
 
     //删除用户
-    @Delete("Delete * from t_user where id=#{id}")
+    @Delete("Delete  from t_user where id=#{id}")
     public void deleteUser(int id);
 
     //将用户加入和移除黑名单
