@@ -68,7 +68,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
             redisUtil.set("adminpage_"+num+"pageSize_"+pageSize,resultList,10);
         }
         else {
-            resultList =(List<Map<String, Object>>)redisUtil.get("rootpage_"+num+"pageSize_"+pageSize);
+            resultList =(List<Map<String, Object>>)redisUtil.get("adminpage_"+num+"pageSize_"+pageSize);
         }
         return resultList;
     }
