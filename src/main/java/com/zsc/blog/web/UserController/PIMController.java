@@ -42,7 +42,7 @@ public class PIMController
     @Autowired
     FileUploadUtils fileUploadUtils;
     //验证码
-    String  Identifying_code;
+    Map<String,String>  Identifying_code=new HashMap<>();
     //修改头像函数
     @ResponseBody
     @RequestMapping(value = "/updata_photo",method = RequestMethod.POST)
@@ -90,11 +90,12 @@ public class PIMController
         System.out.println("原先密码为"+password);
         System.out.println("现在密码为:"+newpassword);
         TUser olduser=itUserService.selectByusername(username);
+        String mail=olduser.getEmail();
         //判定传来的原始密码和数据库原密码是否匹配
         if(encrypt_decryptUtil.Decrypt(olduser.getPassword()).equals(password))
         {
             //验证验证码
-            if(vcode.equals(Identifying_code)) {
+            if(vcode.equals(Identifying_code.get(mail))) {
                 //加密密码
                 olduser.setPassword(encrypt_decryptUtil.Encrypt(newpassword));
                 itUserService.updata_I(olduser);
@@ -164,7 +165,7 @@ public class PIMController
         String email=tUser.getEmail();
         //设置随机数
         int vcode=(int)((Math.random()*9+1)*1000);
-        Identifying_code=vcode+"";
+        Identifying_code.put(email,String.valueOf(vcode));
         //发送邮件
         mailUtils.sendSimpleEmail(email,vcode);
         //返回验证码

@@ -37,7 +37,7 @@ public class Login_RController {
     @Autowired
     Encrypt_DecryptUtil encrypt_decryptUtil;
     //验证码
-    String  Identifying_code;
+    Map<String,String>  Identifying_code=new HashMap<>();
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -91,9 +91,10 @@ public class Login_RController {
     @PostMapping("/Register")
     public ResponseData<Object> Register(@RequestBody Map<String, String> Registerdata) {
         String R_username = Registerdata.get("username");
+        String mail=Registerdata.get("mail");
         System.out.println(Identifying_code);
         //判定验证码是否正确
-        if(!Registerdata.get("code").equals(Identifying_code))
+        if(!Registerdata.get("code").equals(Identifying_code.get(mail)))
         {
             return ResponseData.out(CodeEnum.FAILURE_error_vcode, null);
 
@@ -110,7 +111,7 @@ public class Login_RController {
             TUser newuser = new TUser();
             newuser.setUsername(R_username);
             newuser.setNickname(Registerdata.get("nickname"));
-            newuser.setEmail(Registerdata.get("mail"));
+            newuser.setEmail(mail);
             newuser.setPassword(encrypt_decryptUtil.Encrypt(Registerdata.get("password")));
             newuser.setProfilephoto(photo);
             newuser.setPermisson("client");
@@ -136,7 +137,7 @@ public class Login_RController {
         String email=Email.get("mail");
         //设置随机数
         int vcode=(int)((Math.random()*9+1)*1000);
-        Identifying_code=vcode+"";
+        Identifying_code.put(email,String.valueOf(vcode));
         System.out.println(Identifying_code);
         //发送邮件
         mailUtils.sendSimpleEmail(email,vcode);
