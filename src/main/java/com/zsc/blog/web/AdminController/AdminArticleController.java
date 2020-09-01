@@ -127,7 +127,7 @@ public class AdminArticleController {
         article.setContent(content);
         article.setTitle(title);
         article.setCategories(categories);
-        //article.setThumbnail(attachFile.getVirtual_path());
+        article.setThumbnail(attachFile.getVirtual_path());
 
         itArticleService.publish(article);
         return ResponseData.out(CodeEnum.SUCCESS, null);

@@ -50,7 +50,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
             System.out.println("page我查数据库");
             resultlist=tArticleMapper.selectpagetest(st, en);
             System.out.println("查询" +st+en);
-            redisUtil.set("page_"+num,resultlist,1800);
+            redisUtil.set("page_"+num,resultlist,5);
         }
         else
         {
@@ -104,7 +104,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
             System.out.println("new我查数据库");
             resultlist=tArticleMapper.selectnewpagetest(st, en);
             System.out.println("查询" +st+en);
-            redisUtil.set("newpage_"+num,resultlist,1800);
+            redisUtil.set("newpage_"+num,resultlist,5);
         }
         else
         {
