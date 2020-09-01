@@ -118,7 +118,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     public void publish(@Autowired TArticle article) {
         tArticleMapper.publishArticle(article);
         tStatisticMapper.addStatistic(article);
-
+        redisUtil.removeAll("page");
         /*HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", article.getId().toString());
         hashMap.put("title", article.getTitle());

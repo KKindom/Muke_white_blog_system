@@ -130,7 +130,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         String username = tUser.getUsername();
         redisUtil.del(username);
         redisUtil.removeAll("comment");
-        redisUtil.removeAll("userPage_");
+        redisUtil.removeAll("serPage_");
         tUserMapper.deleteUser(id);
         tCollectMapper.deleteColletWithUid(id);
         tCommentMapper.deleteCommentWithUser(username);
@@ -177,17 +177,17 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     @Override
     public Pair<Integer, List<TUser>> getRequestList(int pageNo, int pageSize) {
         List<TUser> list = new ArrayList<TUser>();
-        if(redisUtil.get("requestnameList") == null) {
+        if(redisUtil.get("request"+"Page_"+pageNo+"PageSize_"+pageSize) == null) {
             Set<String> data = redisUtil.keys("Apply_Author_");
             Iterator<String> it = data.iterator();
             while (it.hasNext()) {
                 String str = it.next();
                 list.add(tUserMapper.selectbyname((String)redisUtil.get(str)));
             }
-            redisUtil.set("requestnameList", list, 30);
+            redisUtil.set("request"+"Page_"+pageNo+"PageSize_"+pageSize, list, 30);
         }
         else {
-            list = (List<TUser>)redisUtil.get("requestnameList");
+            list = (List<TUser>)redisUtil.get("request"+"Page_"+pageNo+"PageSize_"+pageSize);
         }
         int requestCount = list.size();
         int MAX_Page= requestCount/pageSize+1;
@@ -205,6 +205,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     @Override
     public void processRequest(String username, int type) {
         redisUtil.del("Apply_Author_" + username);
+        redisUtil.removeAll("request");
         TUser tUser = tUserMapper.selectbyname(username);
         String email = tUser.getEmail();
         if(type == 1) {
@@ -220,16 +221,19 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
 
     @Override
     public void removeRootPermisson(int id) {
+        redisUtil.removeAll("serPage");
         tUserMapper.lowerUserPermissonWithId(id);
     }
 
     @Override
     public void blockUserWithId(int id) {
+        redisUtil.removeAll("serPage");
         tUserMapper.blockUser(id);
     }
 
     @Override
     public void unBlockUserWithId(int id) {
+        redisUtil.removeAll("serPage");
         tUserMapper.unBlockUser(id);
     }
 }
