@@ -65,7 +65,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         List<Map<String, Object>> resultList;
         if (redisUtil.get("adminpage_"+num+"pageSize_"+pageSize)==null) {
             resultList=tArticleMapper.adminSelectPage(st, en);
-            redisUtil.set("adminpage_"+num+"pageSize_"+pageSize,resultList,10);
+            redisUtil.set("adminpage_"+num+"pageSize_"+pageSize,resultList,1800);
         }
         else {
             resultList =(List<Map<String, Object>>)redisUtil.get("adminpage_"+num+"pageSize_"+pageSize);
@@ -78,7 +78,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         List<Map<String, Object>> resultList;
         if (redisUtil.get("root" + rootId + "page_"+num+"pageSize_"+pageSize)==null) {
             resultList=tArticleMapper.adminSelectPageByRoot(rootId, st, en);
-            redisUtil.set("root" + rootId + "page_"+num+"pageSize_"+pageSize,resultList,10);
+            redisUtil.set("root" + rootId + "page_"+num+"pageSize_"+pageSize,resultList,1800);
         }
         else {
             resultList =(List<Map<String, Object>>)redisUtil.get("root" + rootId + "page_"+num+"pageSize_"+pageSize);
@@ -119,6 +119,8 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         tArticleMapper.publishArticle(article);
         tStatisticMapper.addStatistic(article);
         redisUtil.removeAll("page");
+        redisUtil.removeAll("Afind");
+        redisUtil.removeAll("Articlelist");
         /*HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", article.getId().toString());
         hashMap.put("title", article.getTitle());
@@ -142,6 +144,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         redisUtil.removeAll("comment");
         redisUtil.removeAll("page");
         redisUtil.removeAll("Afind");
+        redisUtil.removeAll("Articlelist");
         //删除作者文章缓存
         TArticle tArticle=tArticleMapper.selectById(id);
         String author=tArticle.getAuthor();
@@ -171,6 +174,8 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
     public void updateArticle(TArticle article) {
         redisUtil.del("article_" + Integer.toString(article.getId()));
         redisUtil.removeAll("page");
+        redisUtil.removeAll("Afind");
+        redisUtil.removeAll("Articlelist");
 //        HashMap<String, Object> hashMap = new HashMap<>();
 //        hashMap.put("id", article.getId().toString());
 //        hashMap.put("title", article.getTitle());
@@ -188,7 +193,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         if(redisUtil.get("Afindlike_"+key)==null)
         {
             tArticleList=tArticleMapper.select_content_withAll(key);
-            redisUtil.set("Afindlike_"+key,tArticleList,180000);
+            redisUtil.set("Afindlike_"+key,tArticleList,1800);
             System.out.println("添加缓存成功");
         }
         else
@@ -205,7 +210,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         if(redisUtil.get("Afindtype_"+type)==null)
         {
             tArticleList=tArticleMapper.selectbytype(type);
-            redisUtil.set("Afindtype_"+type,tArticleList,180000);
+            redisUtil.set("Afindtype_"+type,tArticleList,1800);
             System.out.println("添加缓存成功");
         }
         else
@@ -222,7 +227,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         if(redisUtil.get("Articlelist_"+author)==null)
         {
             tArticleList=tArticleMapper.select_list_withAuthor(author);
-            redisUtil.set("Articlelist_"+author,tArticleList,180000);
+            redisUtil.set("Articlelist_"+author,tArticleList,1800);
         }
         else
         {
