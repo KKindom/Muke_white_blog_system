@@ -49,7 +49,8 @@ public class SensitiveWordInit {
 
 //敏感词库
         File file = new File(
-                "D:\\blog_system_f\\src\\main\\resources\\templates\\find.txt");
+                "/SpringData/find.txt");
+ //               "D:\\blog_system_f\\src\\main\\resources\\templates/find.txt");
         try {
 // 读取文件输入流
             InputStreamReader read = new InputStreamReader(new FileInputStream(

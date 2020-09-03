@@ -81,7 +81,7 @@ public class FileUploadUtils {
         // 储存文件的物理路径，使用本地路径储存
         String filepath = realPath;
         System.out.println("上传图片名为：" + fileName+"--虚拟文件路径为：" + saveToPath +"--物理文件路径为：" + realPath);
-        System.out.println("需要传回的图片url为：http://localhost:8080"+saveToPath+fileName);
+        System.out.println("需要传回的图片url为：http://60.205.178.189:8080"+saveToPath+fileName);
 
         //获取文件保存路径
     File dir=new File(filepath);
@@ -95,7 +95,7 @@ public class FileUploadUtils {
             File newfile = new File(dir, fileName);
             file.transferTo(newfile);
             //设置文件返回的虚拟路径
-        attachFile.setVirtual_path("http://localhost:8080"+saveToPath+fileName);
+        attachFile.setVirtual_path("http://60.205.178.189:8080"+saveToPath+fileName);
         attachFile.setPhysical_path(filepath+fileName);
         attachFile.setFilename(fileName);
         attachFile.setType(file.getContentType());

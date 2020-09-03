@@ -31,6 +31,7 @@ public class SensitiveFilterService {
 
     // 单例
     private static SensitiveFilterService instance = null;
+
     //判定是否有敏感词汇
     public boolean check=false;
 
@@ -66,6 +67,7 @@ public class SensitiveFilterService {
 
 // 存在,加入list中
             if (length > 0) {
+
                 sensitiveWordList.add(txt.substring(i, i + length));
 
 // 减1的原因，是因为for会自增
@@ -163,14 +165,17 @@ public class SensitiveFilterService {
             matchFlag = 0;
 
         }
-        if(flag)
-            check=flag;
+        if(matchFlag>=1)
+            check=true;
         return matchFlag;
     }
 
     public boolean  end()
     {
-        return check;
+        Boolean a=false;
+        a=check;
+        check=false;
+        return a;
     }
 
 

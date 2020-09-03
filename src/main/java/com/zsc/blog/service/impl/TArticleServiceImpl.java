@@ -128,6 +128,7 @@ public class TArticleServiceImpl extends ServiceImpl<TArticleMapper, TArticle> i
         hashMap.put("created", article.getCreated());
         //hashMap.put("modified", article.getModified().toString());
         hashMap.put("categories", article.getCategories());*/
+
         redisUtil.set("article_" + article.getId().toString(), article);
     }
 

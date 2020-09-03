@@ -10,19 +10,11 @@ import lombok.Data;
  **/
 @Data
 public class BaseResponse {
-
-    /**
-     * 状态码
-     */
+    //状态码
     private Integer code;
-
-    /**
-     * 响应消息
-     */
+    //响应消息
     private String msg;
-
     protected BaseResponse() {}
-
     protected BaseResponse(CodeEnum code) {
         this.code = code.getCode();
         this.msg = code.getMsg();
