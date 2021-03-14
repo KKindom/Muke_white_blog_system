@@ -1,12 +1,40 @@
-# blog_system
+# 慕客白博客系统(后端)
+
+一个跨平台的博客系统，包括移动端(客户端)以及web端管理和pc端程序。
+
+写这个博客的目的是为了检验自己springboot的学习情况。
+
+## 后端技术路线
+
+Springboot+mybatis+redis+mysql
+
+大力感谢[**@KKindom**](https://github.com/KKindom)(后端)[**@hiedo**](https://github.com/hiedo)(后端)以及 [**@zqa2012**](https://github.com/zqa2012)(前端)的技术支持
+
+前端地址：(暂未添加)
+
+## 主要实现效果
+
+![image-20210314225117917](https://raw.githubusercontent.com/KKindom/Muke_white_blog_system/master/image/image-20210314225004109.png)
+
+![image-20210314225132561](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225132561.png)
+
+
+
+![image-20210314225142639](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225142639.png)
+
+![image-20210314225149403](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225149403.png)
+
+![image-20210314225202212](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225202212.png)
+
+![image-20210314225253511](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225253511.png)
+
+
 
 ## 若要部署 请修改一下内容
 
 ### 1 配置SSL证书
 
 ####  位置：appliation.yml
-
-
 
 ### 添加证书
 
@@ -30,11 +58,3 @@
 ### 7配置邮箱发送密匙
 
 ### 8前端部署完成后即可访问
-
-
-
-
-
-
-
-
