@@ -2,7 +2,7 @@
 
 ## 若要部署 请修改一下内容
 
-### 1 配置SSL证书 在resoures下
+### 1 配置SSL证书
 
 ####  位置：appliation.yml
 
