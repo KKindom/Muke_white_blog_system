@@ -2,9 +2,9 @@ server:
   port: 8080
   ssl:
     key-store:
-      classpath: 4436316_jungha.top.pfx
-      key-store-password: suWQzapk
-      keyStoreType: PKCS12
+      classpath:xxx
+      key-store-password: xxx
+      keyStoreType: xxx
 
   address: 0.0.0.0
 spring:
