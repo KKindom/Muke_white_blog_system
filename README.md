@@ -21,6 +21,7 @@
 #### 第98行改为自己服务器地址以及端口号
 
 ### 4在服务器根目录上创建SpringData文件夹 并将find.txt放入其中
+#### findx.txt 中存放不雅词汇，用于上传博客时过滤脏话
 
 ### 5在服务器SpringData/File_rec目录下将user_profile_photo文件夹放入其中
 
