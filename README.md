@@ -16,7 +16,7 @@ Springboot+mybatis+redis+mysql
 
 ![image-20210314225117917](https://raw.githubusercontent.com/KKindom/Muke_white_blog_system/master/image/image-20210314225004109.png)
 
-![image-20210314225132561](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225132561.png)
+![image-20210314225132561](https://github.com/KKindom/Muke_white_blog_system/blob/master/image/image-20210314225030821.png)
 
 
 
