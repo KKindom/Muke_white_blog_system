@@ -20,13 +20,13 @@ Springboot+mybatis+redis+mysql
 
 
 
-![image-20210314225142639](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225142639.png)
+![image-20210314225142639](https://github.com/KKindom/Muke_white_blog_system/blob/master/image/image-20210314225054164.png)
 
-![image-20210314225149403](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225149403.png)
+![image-20210314225149403](https://github.com/KKindom/Muke_white_blog_system/blob/master/image/image-20210314225117917.png)
 
-![image-20210314225202212](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225202212.png)
+![image-20210314225202212](https://github.com/KKindom/Muke_white_blog_system/blob/master/image/image-20210314225132561.png)
 
-![image-20210314225253511](C:\Users\马飞凡\AppData\Roaming\Typora\typora-user-images\image-20210314225253511.png)
+![image-20210314225253511](https://github.com/KKindom/Muke_white_blog_system/blob/master/image/image-20210314225149403.png)
 
 
 
